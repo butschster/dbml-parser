@@ -28,7 +28,7 @@ Table users as U {
     }
 }
 DBML
-        )[0];
+        )->getTables()['users'];
 
     }
 

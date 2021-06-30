@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Butschster\Dbml;
 
+use Butschster\Dbml\Ast\SchemaNode;
 use Butschster\Dbml\Exceptions\GrammarFileNotFoundException;
 use Phplrt\Contracts\Lexer\LexerInterface;
 use Phplrt\Lexer\Lexer;
@@ -11,7 +12,7 @@ use Phplrt\Parser\BuilderInterface;
 use Phplrt\Parser\ContextInterface;
 use Phplrt\Contracts\Parser\ParserInterface;
 
-class DbmlParser implements ParserInterface
+class DbmlParser
 {
     private ParserInterface $parser;
 
@@ -25,11 +26,13 @@ class DbmlParser implements ParserInterface
 
     /**
      * Parse DBML schema
-     * {@inheritDoc}
+     * @param string $dbml
+     * @return SchemaNode|null
+     * @throws \Phplrt\Contracts\Exception\RuntimeExceptionInterface
      */
-    public function parse($source, array $options = []): iterable
+    public function parse(string $dbml, array $options = []): ?SchemaNode
     {
-        return $this->parser->parse($source, $options);
+        return $this->parser->parse($dbml, $options)[0] ?? null;
     }
 
     /**

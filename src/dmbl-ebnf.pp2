@@ -69,7 +69,14 @@
 * --------------------------------------------------------------------------
 * @see https://www.dbml.org
 */
-#Schema
+#Run
+:
+    Schema()
+;
+
+#Schema -> {
+   return new \Butschster\Dbml\Ast\SchemaNode($children);
+}
 :
     (
         Project() |

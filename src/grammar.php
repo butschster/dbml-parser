@@ -1,6 +1,6 @@
 <?php
 return [
-    'initial' => 'Schema',
+    'initial' => 'Run',
     'tokens' => [
         'default' => [
             'T_WHITESPACE' => '\\s+',
@@ -64,6 +64,7 @@ return [
         'RefLeftColumn' => new \Phplrt\Grammar\Concatenation([85]),
         'RefRightColumn' => new \Phplrt\Grammar\Concatenation([85]),
         'RefType' => new \Phplrt\Grammar\Alternation([82, 83, 84]),
+        'Run' => new \Phplrt\Grammar\Concatenation(['Schema']),
         'Schema' => new \Phplrt\Grammar\Repetition(2, 0, INF),
         'SettingNote' => new \Phplrt\Grammar\Concatenation([118, 'String', 119]),
         'String' => new \Phplrt\Grammar\Alternation([122, 123]),
@@ -213,6 +214,9 @@ return [
         0 => new \Phplrt\Grammar\Repetition(124, 0, INF)
     ],
     'reducers' => [
+        'Schema' => function (\Phplrt\Parser\Context $ctx, $children) {
+            return new \Butschster\Dbml\Ast\SchemaNode($children);
+        },
         'Project' => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
             return new \Butschster\Dbml\Ast\ProjectNode(

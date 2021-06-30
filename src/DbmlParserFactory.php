@@ -4,16 +4,15 @@ declare(strict_types=1);
 namespace Butschster\Dbml;
 
 use Butschster\Dbml\Exceptions\GrammarFileNotFoundException;
-use Phplrt\Contracts\Parser\ParserInterface;
 
 class DbmlParserFactory
 {
     /**
      * Create parser from given grammar file
      * @param string $path grammar.php file path
-     * @return ParserInterface
+     * @return DbmlParser
      */
-    public static function createFromFile(string $path): ParserInterface
+    public static function createFromFile(string $path): DbmlParser
     {
         if (!file_exists($path)) {
             throw new GrammarFileNotFoundException(
