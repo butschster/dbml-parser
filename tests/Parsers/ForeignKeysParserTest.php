@@ -38,21 +38,19 @@ DBML
                     <T_WORD offset="41">integer</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
-            <TableColumnSettings offset="49">
-                <TableColumnRef offset="50">
-                    <RefType offset="55">
-                        <T_GT offset="55">></T_GT>
-                    </RefType>
-                    <RefRightColumn offset="57">
-                        <TableName offset="57">
-                            <T_WORD offset="57">users</T_WORD>
-                        </TableName>
-                        <TableColumnName offset="63">
-                            <T_WORD offset="63">id</T_WORD>
-                        </TableColumnName>
-                    </RefRightColumn>
-                </TableColumnRef>
-            </TableColumnSettings>
+            <TableColumnRef offset="50">
+                <RefType offset="55">
+                    <T_GT offset="55">></T_GT>
+                </RefType>
+                <RefRightColumn offset="57">
+                    <TableName offset="57">
+                        <T_WORD offset="57">users</T_WORD>
+                    </TableName>
+                    <TableColumnName offset="63">
+                        <T_WORD offset="63">id</T_WORD>
+                    </TableColumnName>
+                </RefRightColumn>
+            </TableColumnRef>
         </TableColumn>
     </Table>
 </Schema>
@@ -94,26 +92,24 @@ DBML
                     <T_WORD offset="41">integer</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
-            <TableColumnSettings offset="49">
-                <TableColumnRef offset="50">
-                    <RefType offset="55">
-                        <T_GT offset="55">></T_GT>
-                    </RefType>
-                    <RefRightColumn offset="57">
-                        <TableName offset="57">
-                            <T_WORD offset="57">users</T_WORD>
-                        </TableName>
-                        <RefCompositeTableColumn offset="63">
-                            <TableColumnName offset="64">
-                                <T_WORD offset="64">id</T_WORD>
-                            </TableColumnName>
-                            <TableColumnName offset="68">
-                                <T_WORD offset="68">country_code</T_WORD>
-                            </TableColumnName>
-                        </RefCompositeTableColumn>
-                    </RefRightColumn>
-                </TableColumnRef>
-            </TableColumnSettings>
+            <TableColumnRef offset="50">
+                <RefType offset="55">
+                    <T_GT offset="55">></T_GT>
+                </RefType>
+                <RefRightColumn offset="57">
+                    <TableName offset="57">
+                        <T_WORD offset="57">users</T_WORD>
+                    </TableName>
+                    <RefCompositeTableColumn offset="63">
+                        <TableColumnName offset="64">
+                            <T_WORD offset="64">id</T_WORD>
+                        </TableColumnName>
+                        <TableColumnName offset="68">
+                            <T_WORD offset="68">country_code</T_WORD>
+                        </TableColumnName>
+                    </RefCompositeTableColumn>
+                </RefRightColumn>
+            </TableColumnRef>
         </TableColumn>
     </Table>
 </Schema>
@@ -143,34 +139,32 @@ DBML
                     <T_WORD offset="21">integer</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
-            <TableColumnSettings offset="29">
-                <TableColumnRef offset="30">
-                    <RefType offset="35">
-                        <T_LT offset="35"><</T_LT>
-                    </RefType>
-                    <RefRightColumn offset="37">
-                        <TableName offset="37">
-                            <T_WORD offset="37">posts</T_WORD>
-                        </TableName>
-                        <TableColumnName offset="43">
-                            <T_WORD offset="43">user_id</T_WORD>
-                        </TableColumnName>
-                    </RefRightColumn>
-                </TableColumnRef>
-                <TableColumnRef offset="52">
-                    <RefType offset="57">
-                        <T_LT offset="57"><</T_LT>
-                    </RefType>
-                    <RefRightColumn offset="59">
-                        <TableName offset="59">
-                            <T_WORD offset="59">reviews</T_WORD>
-                        </TableName>
-                        <TableColumnName offset="67">
-                            <T_WORD offset="67">user_id</T_WORD>
-                        </TableColumnName>
-                    </RefRightColumn>
-                </TableColumnRef>
-            </TableColumnSettings>
+            <TableColumnRef offset="30">
+                <RefType offset="35">
+                    <T_LT offset="35"><</T_LT>
+                </RefType>
+                <RefRightColumn offset="37">
+                    <TableName offset="37">
+                        <T_WORD offset="37">posts</T_WORD>
+                    </TableName>
+                    <TableColumnName offset="43">
+                        <T_WORD offset="43">user_id</T_WORD>
+                    </TableColumnName>
+                </RefRightColumn>
+            </TableColumnRef>
+            <TableColumnRef offset="52">
+                <RefType offset="57">
+                    <T_LT offset="57"><</T_LT>
+                </RefType>
+                <RefRightColumn offset="59">
+                    <TableName offset="59">
+                        <T_WORD offset="59">reviews</T_WORD>
+                    </TableName>
+                    <TableColumnName offset="67">
+                        <T_WORD offset="67">user_id</T_WORD>
+                    </TableColumnName>
+                </RefRightColumn>
+            </TableColumnRef>
         </TableColumn>
     </Table>
 </Schema>

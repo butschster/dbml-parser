@@ -3,22 +3,10 @@ declare(strict_types=1);
 
 namespace Butschster\Dbml\Ast\Values;
 
-class IntNode
+class IntNode extends AbstractValue
 {
-    private int $value;
-
-    public function __construct(private int $offset, string $number)
+    public function __construct(int $offset, $value)
     {
-        $this->value = (int) $number;
-    }
-
-    public function getOffset()
-    {
-        return $this->offset;
-    }
-
-    public function getValue(): int
-    {
-        return $this->value;
+        parent::__construct($offset, (int) $value);
     }
 }

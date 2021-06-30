@@ -34,7 +34,9 @@ DBML
         </TableColumn>
         <TableIndex offset="53">
             <TableIndexSingleField offset="53">
-                <T_WORD offset="53">id</T_WORD>
+                <String offset="53">
+                    <T_WORD offset="53">id</T_WORD>
+                </String>
             </TableIndexSingleField>
         </TableIndex>
     </Table>
@@ -72,7 +74,9 @@ DBML
         </TableColumn>
         <TableIndex offset="53">
             <TableIndexSingleField offset="53">
-                <T_WORD offset="53">id</T_WORD>
+                <String offset="53">
+                    <T_WORD offset="53">id</T_WORD>
+                </String>
             </TableIndexSingleField>
             <TableIndexSettings offset="56">
                 <TableIndexSettingWithValue offset="57">
@@ -93,7 +97,7 @@ DBML
                     </String>
                 </TableIndexSettingWithValue>
                 <TableIndexSetting offset="109">
-                    <T_TABLE_SETTING offset="109">pk</T_TABLE_SETTING>
+                    <T_TABLE_SETTING_PK offset="109">pk</T_TABLE_SETTING_PK>
                 </TableIndexSetting>
             </TableIndexSettings>
         </TableIndex>
@@ -132,12 +136,16 @@ DBML
         </TableColumn>
         <TableIndex offset="53">
             <TableIndexCompositeField offset="53">
-                <T_WORD offset="54">country</T_WORD>
-                <T_WORD offset="63">booking_date</T_WORD>
+                <String offset="54">
+                    <T_WORD offset="54">country</T_WORD>
+                </String>
+                <String offset="63">
+                    <T_WORD offset="63">booking_date</T_WORD>
+                </String>
             </TableIndexCompositeField>
             <TableIndexSettings offset="77">
                 <TableIndexSetting offset="78">
-                    <T_TABLE_SETTING offset="78">pk</T_TABLE_SETTING>
+                    <T_TABLE_SETTING_PK offset="78">pk</T_TABLE_SETTING_PK>
                 </TableIndexSetting>
             </TableIndexSettings>
         </TableIndex>
@@ -176,8 +184,12 @@ DBML
         </TableColumn>
         <TableIndex offset="53">
             <TableIndexCompositeField offset="53">
-                <T_EXPRESSION offset="54">`id*2`</T_EXPRESSION>
-                <T_EXPRESSION offset="61">`getdate()`</T_EXPRESSION>
+                <Expression offset="54">
+                    <T_EXPRESSION offset="54">`id*2`</T_EXPRESSION>
+                </Expression>
+                <Expression offset="61">
+                    <T_EXPRESSION offset="61">`getdate()`</T_EXPRESSION>
+                </Expression>
             </TableIndexCompositeField>
         </TableIndex>
     </Table>
@@ -222,18 +234,24 @@ DBML
         </TableColumn>
         <TableIndex offset="49">
             <TableIndexCompositeField offset="49">
-                <T_WORD offset="50">id</T_WORD>
-                <T_WORD offset="54">country</T_WORD>
+                <String offset="50">
+                    <T_WORD offset="50">id</T_WORD>
+                </String>
+                <String offset="54">
+                    <T_WORD offset="54">country</T_WORD>
+                </String>
             </TableIndexCompositeField>
             <TableIndexSettings offset="63">
                 <TableIndexSetting offset="64">
-                    <T_TABLE_SETTING offset="64">pk</T_TABLE_SETTING>
+                    <T_TABLE_SETTING_PK offset="64">pk</T_TABLE_SETTING_PK>
                 </TableIndexSetting>
             </TableIndexSettings>
         </TableIndex>
         <TableIndex offset="99">
             <TableIndexSingleField offset="99">
-                <T_WORD offset="99">created_at</T_WORD>
+                <String offset="99">
+                    <T_WORD offset="99">created_at</T_WORD>
+                </String>
             </TableIndexSingleField>
             <TableIndexSettings offset="110">
                 <TableIndexSettingWithValue offset="111">
@@ -251,23 +269,31 @@ DBML
         </TableIndex>
         <TableIndex offset="157">
             <TableIndexSingleField offset="157">
-                <T_WORD offset="157">booking_date</T_WORD>
+                <String offset="157">
+                    <T_WORD offset="157">booking_date</T_WORD>
+                </String>
             </TableIndexSingleField>
         </TableIndex>
         <TableIndex offset="176">
             <TableIndexCompositeField offset="176">
-                <T_WORD offset="177">country</T_WORD>
-                <T_WORD offset="186">booking_date</T_WORD>
+                <String offset="177">
+                    <T_WORD offset="177">country</T_WORD>
+                </String>
+                <String offset="186">
+                    <T_WORD offset="186">booking_date</T_WORD>
+                </String>
             </TableIndexCompositeField>
             <TableIndexSettings offset="200">
                 <TableIndexSetting offset="201">
-                    <T_TABLE_SETTING offset="201">unique</T_TABLE_SETTING>
+                    <T_TABLE_SETTING_UNIQUE offset="201">unique</T_TABLE_SETTING_UNIQUE>
                 </TableIndexSetting>
             </TableIndexSettings>
         </TableIndex>
         <TableIndex offset="215">
             <TableIndexSingleField offset="215">
-                <T_WORD offset="215">booking_date</T_WORD>
+                <String offset="215">
+                    <T_WORD offset="215">booking_date</T_WORD>
+                </String>
             </TableIndexSingleField>
             <TableIndexSettings offset="228">
                 <TableIndexSettingWithValue offset="229">
@@ -280,19 +306,29 @@ DBML
         </TableIndex>
         <TableIndex offset="247">
             <TableIndexCompositeField offset="247">
-                <T_EXPRESSION offset="248">`id*2`</T_EXPRESSION>
+                <Expression offset="248">
+                    <T_EXPRESSION offset="248">`id*2`</T_EXPRESSION>
+                </Expression>
             </TableIndexCompositeField>
         </TableIndex>
         <TableIndex offset="262">
             <TableIndexCompositeField offset="262">
-                <T_EXPRESSION offset="263">`id*3`</T_EXPRESSION>
-                <T_EXPRESSION offset="270">`getdate()`</T_EXPRESSION>
+                <Expression offset="263">
+                    <T_EXPRESSION offset="263">`id*3`</T_EXPRESSION>
+                </Expression>
+                <Expression offset="270">
+                    <T_EXPRESSION offset="270">`getdate()`</T_EXPRESSION>
+                </Expression>
             </TableIndexCompositeField>
         </TableIndex>
         <TableIndex offset="289">
             <TableIndexCompositeField offset="289">
-                <T_EXPRESSION offset="290">`id*3`</T_EXPRESSION>
-                <T_WORD offset="297">id</T_WORD>
+                <Expression offset="290">
+                    <T_EXPRESSION offset="290">`id*3`</T_EXPRESSION>
+                </Expression>
+                <String offset="297">
+                    <T_WORD offset="297">id</T_WORD>
+                </String>
             </TableIndexCompositeField>
         </TableIndex>
     </Table>

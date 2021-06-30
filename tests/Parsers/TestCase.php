@@ -25,8 +25,22 @@ class TestCase extends \Butschster\Tests\TestCase
 
     public function assertAst(string $dbml, string $ast)
     {
+        $ast = array_map(function (string $line) {
+            if (empty($line)) {
+                return $line;
+            }
+            return str_repeat(' ', 4) . $line;
+        }, explode("\n", $ast));
+
+        $ast = implode("\n", $ast);
+
         $this->assertEquals(
-            $ast,
+            <<<AST
+<Document offset="0">
+$ast
+</Document>
+AST
+            ,
             (string)$this->compiler->parse($dbml)
         );
     }

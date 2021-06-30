@@ -3,22 +3,10 @@ declare(strict_types=1);
 
 namespace Butschster\Dbml\Ast\Values;
 
-class BooleanNode
+class BooleanNode extends AbstractValue
 {
-    private bool $value;
-
-    public function __construct(private int $offset, bool $value)
+    public function __construct(int $offset, $value)
     {
-        $this->value = $value;
-    }
-
-    public function getValue(): bool
-    {
-        return $this->value;
-    }
-
-    public function getOffset(): int
-    {
-        return $this->offset;
+        parent::__construct($offset, (bool) $value);
     }
 }

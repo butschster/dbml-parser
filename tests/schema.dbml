@@ -1,10 +1,10 @@
-//// -- LEVEL 1
-//// -- Tables and References
-
 Project test {
   database_type: 'PostgreSQL'
   Note: 'Description of the project'
 }
+
+//// -- LEVEL 1
+//// -- Tables and References
 
 // Creating tables
 Table users as U {

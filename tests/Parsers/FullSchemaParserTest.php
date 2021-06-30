@@ -9,24 +9,24 @@ class FullSchemaParserTest extends TestCase
     {
         $this->assertAst(file_get_contents(__DIR__.'/../schema.dbml')
             , <<<AST
-<Schema offset="47">
-    <Project offset="47">
-        <ProjectName offset="55">
-            <String offset="55">
-                <T_WORD offset="55">test</T_WORD>
+<Schema offset="0">
+    <Project offset="0">
+        <ProjectName offset="8">
+            <String offset="8">
+                <T_WORD offset="8">test</T_WORD>
             </String>
         </ProjectName>
-        <ProjectSetting offset="64">
-            <ProjectSettingKey offset="64">
-                <T_WORD offset="64">database_type</T_WORD>
+        <ProjectSetting offset="17">
+            <ProjectSettingKey offset="17">
+                <T_WORD offset="17">database_type</T_WORD>
             </ProjectSettingKey>
-            <String offset="79">
-                <T_QUOTED_STRING offset="79">'PostgreSQL'</T_QUOTED_STRING>
+            <String offset="32">
+                <T_QUOTED_STRING offset="32">'PostgreSQL'</T_QUOTED_STRING>
             </String>
         </ProjectSetting>
-        <Note offset="94">
-            <String offset="100">
-                <T_QUOTED_STRING offset="100">'Description of the project'</T_QUOTED_STRING>
+        <Note offset="47">
+            <String offset="53">
+                <T_QUOTED_STRING offset="53">'Description of the project'</T_QUOTED_STRING>
             </String>
         </Note>
     </Project>
@@ -46,11 +46,9 @@ class FullSchemaParserTest extends TestCase
                     <T_WORD offset="175">int</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
-            <TableColumnSettings offset="179">
-                <T_TABLE_SETTING offset="180">pk</T_TABLE_SETTING>
-                <T_TABLE_SETTING offset="184">unique</T_TABLE_SETTING>
-                <T_TABLE_SETTING offset="192">increment</T_TABLE_SETTING>
-            </TableColumnSettings>
+            <T_TABLE_SETTING_PK offset="180">pk</T_TABLE_SETTING_PK>
+            <T_TABLE_SETTING_UNIQUE offset="184">unique</T_TABLE_SETTING_UNIQUE>
+            <T_TABLE_SETTING_INCREMENT offset="192">increment</T_TABLE_SETTING_INCREMENT>
         </TableColumn>
         <TableColumn offset="223">
             <TableColumnName offset="223">
@@ -61,14 +59,12 @@ class FullSchemaParserTest extends TestCase
                     <T_WORD offset="233">varchar</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
-            <TableColumnSettings offset="241">
-                <T_TABLE_SETTING offset="242">not null</T_TABLE_SETTING>
-                <T_TABLE_SETTING offset="252">unique</T_TABLE_SETTING>
-                <T_TABLE_SETTING offset="260">default</T_TABLE_SETTING>
-                <Int offset="269">
-                    <T_INT offset="269">1</T_INT>
-                </Int>
-            </TableColumnSettings>
+            <T_TABLE_SETTING_NOT_NULL offset="242">not null</T_TABLE_SETTING_NOT_NULL>
+            <T_TABLE_SETTING_UNIQUE offset="252">unique</T_TABLE_SETTING_UNIQUE>
+            <T_TABLE_SETTING_DEFAULT offset="260">default</T_TABLE_SETTING_DEFAULT>
+            <Int offset="269">
+                <T_INT offset="269">1</T_INT>
+            </Int>
         </TableColumn>
         <TableColumn offset="274">
             <TableColumnName offset="274">
@@ -144,9 +140,7 @@ class FullSchemaParserTest extends TestCase
                     <T_WORD offset="420">int</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
-            <TableColumnSettings offset="424">
-                <T_TABLE_SETTING offset="425">pk</T_TABLE_SETTING>
-            </TableColumnSettings>
+            <T_TABLE_SETTING_PK offset="425">pk</T_TABLE_SETTING_PK>
         </TableColumn>
         <TableColumn offset="431">
             <TableColumnName offset="431">
@@ -226,21 +220,19 @@ class FullSchemaParserTest extends TestCase
                     <T_WORD offset="802">int</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
-            <TableColumnSettings offset="806">
-                <TableColumnRef offset="807">
-                    <RefType offset="812">
-                        <T_GT offset="812">></T_GT>
-                    </RefType>
-                    <RefRightColumn offset="814">
-                        <TableName offset="814">
-                            <T_WORD offset="814">orders</T_WORD>
-                        </TableName>
-                        <TableColumnName offset="821">
-                            <T_WORD offset="821">id</T_WORD>
-                        </TableColumnName>
-                    </RefRightColumn>
-                </TableColumnRef>
-            </TableColumnSettings>
+            <TableColumnRef offset="807">
+                <RefType offset="812">
+                    <T_GT offset="812">></T_GT>
+                </RefType>
+                <RefRightColumn offset="814">
+                    <TableName offset="814">
+                        <T_WORD offset="814">orders</T_WORD>
+                    </TableName>
+                    <TableColumnName offset="821">
+                        <T_WORD offset="821">id</T_WORD>
+                    </TableColumnName>
+                </RefRightColumn>
+            </TableColumnRef>
         </TableColumn>
         <TableColumn offset="827">
             <TableColumnName offset="827">
@@ -261,12 +253,10 @@ class FullSchemaParserTest extends TestCase
                     <T_WORD offset="853">int</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
-            <TableColumnSettings offset="857">
-                <T_TABLE_SETTING offset="858">default</T_TABLE_SETTING>
-                <Int offset="867">
-                    <T_INT offset="867">1</T_INT>
-                </Int>
-            </TableColumnSettings>
+            <T_TABLE_SETTING_DEFAULT offset="858">default</T_TABLE_SETTING_DEFAULT>
+            <Int offset="867">
+                <T_INT offset="867">1</T_INT>
+            </Int>
         </TableColumn>
     </Table>
     <Ref offset="890">
@@ -303,9 +293,7 @@ class FullSchemaParserTest extends TestCase
                     <T_WORD offset="953">int</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
-            <TableColumnSettings offset="957">
-                <T_TABLE_SETTING offset="958">pk</T_TABLE_SETTING>
-            </TableColumnSettings>
+            <T_TABLE_SETTING_PK offset="958">pk</T_TABLE_SETTING_PK>
         </TableColumn>
         <TableColumn offset="979">
             <TableColumnName offset="979">
@@ -316,10 +304,8 @@ class FullSchemaParserTest extends TestCase
                     <T_WORD offset="987">int</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
-            <TableColumnSettings offset="991">
-                <T_TABLE_SETTING offset="992">not null</T_TABLE_SETTING>
-                <T_TABLE_SETTING offset="1002">unique</T_TABLE_SETTING>
-            </TableColumnSettings>
+            <T_TABLE_SETTING_NOT_NULL offset="992">not null</T_TABLE_SETTING_NOT_NULL>
+            <T_TABLE_SETTING_UNIQUE offset="1002">unique</T_TABLE_SETTING_UNIQUE>
         </TableColumn>
         <TableColumn offset="1012">
             <TableColumnName offset="1012">
@@ -340,13 +326,11 @@ class FullSchemaParserTest extends TestCase
                     <T_WORD offset="1040">varchar</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
-            <TableColumnSettings offset="1048">
-                <SettingNote offset="1049">
-                    <String offset="1055">
-                        <T_QUOTED_STRING offset="1055">'''When order created'''</T_QUOTED_STRING>
-                    </String>
-                </SettingNote>
-            </TableColumnSettings>
+            <SettingNote offset="1049">
+                <String offset="1055">
+                    <T_QUOTED_STRING offset="1055">'''When order created'''</T_QUOTED_STRING>
+                </String>
+            </SettingNote>
         </TableColumn>
     </Table>
     <Table offset="1103">
@@ -396,9 +380,7 @@ class FullSchemaParserTest extends TestCase
                     <T_WORD offset="1441">int</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
-            <TableColumnSettings offset="1445">
-                <T_TABLE_SETTING offset="1446">pk</T_TABLE_SETTING>
-            </TableColumnSettings>
+            <T_TABLE_SETTING_PK offset="1446">pk</T_TABLE_SETTING_PK>
         </TableColumn>
         <TableColumn offset="1452">
             <TableColumnName offset="1452">
@@ -419,9 +401,7 @@ class FullSchemaParserTest extends TestCase
                     <T_WORD offset="1479">int</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
-            <TableColumnSettings offset="1483">
-                <T_TABLE_SETTING offset="1484">not null</T_TABLE_SETTING>
-            </TableColumnSettings>
+            <T_TABLE_SETTING_NOT_NULL offset="1484">not null</T_TABLE_SETTING_NOT_NULL>
         </TableColumn>
         <TableColumn offset="1496">
             <TableColumnName offset="1496">
@@ -452,17 +432,19 @@ class FullSchemaParserTest extends TestCase
                     <T_WORD offset="1544">datetime</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
-            <TableColumnSettings offset="1553">
-                <T_TABLE_SETTING offset="1554">default</T_TABLE_SETTING>
-                <Expression offset="1563">
-                    <T_EXPRESSION offset="1563">`now()`</T_EXPRESSION>
-                </Expression>
-            </TableColumnSettings>
+            <T_TABLE_SETTING_DEFAULT offset="1554">default</T_TABLE_SETTING_DEFAULT>
+            <Expression offset="1563">
+                <T_EXPRESSION offset="1563">`now()`</T_EXPRESSION>
+            </Expression>
         </TableColumn>
         <TableIndex offset="1589">
             <TableIndexCompositeField offset="1589">
-                <T_WORD offset="1590">merchant_id</T_WORD>
-                <T_WORD offset="1603">status</T_WORD>
+                <String offset="1590">
+                    <T_WORD offset="1590">merchant_id</T_WORD>
+                </String>
+                <String offset="1603">
+                    <T_WORD offset="1603">status</T_WORD>
+                </String>
             </TableIndexCompositeField>
             <TableIndexSettings offset="1611">
                 <TableIndexSettingWithValue offset="1612">
@@ -481,11 +463,13 @@ class FullSchemaParserTest extends TestCase
         </TableIndex>
         <TableIndex offset="1651">
             <TableIndexSingleField offset="1651">
-                <T_WORD offset="1651">id</T_WORD>
+                <String offset="1651">
+                    <T_WORD offset="1651">id</T_WORD>
+                </String>
             </TableIndexSingleField>
             <TableIndexSettings offset="1654">
                 <TableIndexSetting offset="1655">
-                    <T_TABLE_SETTING offset="1655">unique</T_TABLE_SETTING>
+                    <T_TABLE_SETTING_UNIQUE offset="1655">unique</T_TABLE_SETTING_UNIQUE>
                 </TableIndexSetting>
             </TableIndexSettings>
         </TableIndex>
@@ -512,7 +496,9 @@ class FullSchemaParserTest extends TestCase
         </RefRightColumn>
     </Ref>
     <TableGroup offset="1727">
-        <T_WORD offset="1738">hello_world</T_WORD>
+        <TableGroupName offset="1738">
+            <T_WORD offset="1738">hello_world</T_WORD>
+        </TableGroupName>
         <TableName offset="1756">
             <T_WORD offset="1756">just_test</T_WORD>
         </TableName>

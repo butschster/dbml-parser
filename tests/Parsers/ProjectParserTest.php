@@ -75,14 +75,14 @@ DBML
         <Note offset="59">
             <String offset="65">
                 <T_QUOTED_STRING offset="65">'''
-        # DBML - Database Markup Language
-        (database markup language) is a simple, readable DSL language designed to define database structures.
+    # DBML - Database Markup Language
+    (database markup language) is a simple, readable DSL language designed to define database structures.
 
-        ## Benefits
-        * It is simple, flexible and highly human-readable
-        * It is database agnostic, focusing on the essential database structure definition without worrying about the detailed syntaxes of each database
-        * Comes with a free, simple database visualiser at [dbdiagram.io](http://dbdiagram.io)
-    '''</T_QUOTED_STRING>
+    ## Benefits
+    * It is simple, flexible and highly human-readable
+    * It is database agnostic, focusing on the essential database structure definition without worrying about the detailed syntaxes of each database
+    * Comes with a free, simple database visualiser at [dbdiagram.io](http://dbdiagram.io)
+'''</T_QUOTED_STRING>
             </String>
         </Note>
     </Project>

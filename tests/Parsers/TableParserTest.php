@@ -33,15 +33,13 @@ DBML
                     </Int>
                 </TableColumnTypeSize>
             </TableColumnType>
-            <TableColumnSettings offset="43">
-                <T_TABLE_SETTING offset="44">unique</T_TABLE_SETTING>
-                <T_TABLE_SETTING offset="52">not null</T_TABLE_SETTING>
-                <SettingNote offset="62">
-                    <String offset="68">
-                        <T_QUOTED_STRING offset="68">'to include unit number'</T_QUOTED_STRING>
-                    </String>
-                </SettingNote>
-            </TableColumnSettings>
+            <T_TABLE_SETTING_UNIQUE offset="44">unique</T_TABLE_SETTING_UNIQUE>
+            <T_TABLE_SETTING_NOT_NULL offset="52">not null</T_TABLE_SETTING_NOT_NULL>
+            <SettingNote offset="62">
+                <String offset="68">
+                    <T_QUOTED_STRING offset="68">'to include unit number'</T_QUOTED_STRING>
+                </String>
+            </SettingNote>
         </TableColumn>
         <TableColumn offset="98">
             <TableColumnName offset="98">
@@ -52,19 +50,17 @@ DBML
                     <T_WORD offset="101">integer</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
-            <TableColumnSettings offset="109">
-                <T_TABLE_SETTING offset="111">pk</T_TABLE_SETTING>
-                <T_TABLE_SETTING offset="115">unique</T_TABLE_SETTING>
-                <T_TABLE_SETTING offset="123">default</T_TABLE_SETTING>
-                <Int offset="132">
-                    <T_INT offset="132">123</T_INT>
-                </Int>
-                <SettingNote offset="137">
-                    <String offset="143">
-                        <T_QUOTED_STRING offset="143">'Number'</T_QUOTED_STRING>
-                    </String>
-                </SettingNote>
-            </TableColumnSettings>
+            <T_TABLE_SETTING_PK offset="111">pk</T_TABLE_SETTING_PK>
+            <T_TABLE_SETTING_UNIQUE offset="115">unique</T_TABLE_SETTING_UNIQUE>
+            <T_TABLE_SETTING_DEFAULT offset="123">default</T_TABLE_SETTING_DEFAULT>
+            <Int offset="132">
+                <T_INT offset="132">123</T_INT>
+            </Int>
+            <SettingNote offset="137">
+                <String offset="143">
+                    <T_QUOTED_STRING offset="143">'Number'</T_QUOTED_STRING>
+                </String>
+            </SettingNote>
         </TableColumn>
     </Table>
 </Schema>
@@ -126,12 +122,10 @@ DBML
                     <T_WORD offset="25">varchar</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
-            <TableColumnSettings offset="33">
-                <T_TABLE_SETTING offset="34">default</T_TABLE_SETTING>
-                <String offset="43">
-                    <T_QUOTED_STRING offset="43">'h'</T_QUOTED_STRING>
-                </String>
-            </TableColumnSettings>
+            <T_TABLE_SETTING_DEFAULT offset="34">default</T_TABLE_SETTING_DEFAULT>
+            <String offset="43">
+                <T_QUOTED_STRING offset="43">'h'</T_QUOTED_STRING>
+            </String>
         </TableColumn>
     </Table>
 </Schema>
@@ -161,12 +155,10 @@ DBML
                     <T_WORD offset="25">varchar</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
-            <TableColumnSettings offset="33">
-                <T_TABLE_SETTING offset="34">default</T_TABLE_SETTING>
-                <Int offset="43">
-                    <T_INT offset="43">1</T_INT>
-                </Int>
-            </TableColumnSettings>
+            <T_TABLE_SETTING_DEFAULT offset="34">default</T_TABLE_SETTING_DEFAULT>
+            <Int offset="43">
+                <T_INT offset="43">1</T_INT>
+            </Int>
         </TableColumn>
     </Table>
 </Schema>
@@ -196,12 +188,10 @@ DBML
                     <T_WORD offset="25">varchar</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
-            <TableColumnSettings offset="33">
-                <T_TABLE_SETTING offset="34">default</T_TABLE_SETTING>
-                <Float offset="43">
-                    <T_FLOAT offset="43">123.456</T_FLOAT>
-                </Float>
-            </TableColumnSettings>
+            <T_TABLE_SETTING_DEFAULT offset="34">default</T_TABLE_SETTING_DEFAULT>
+            <Float offset="43">
+                <T_FLOAT offset="43">123.456</T_FLOAT>
+            </Float>
         </TableColumn>
     </Table>
 </Schema>
@@ -231,12 +221,10 @@ DBML
                     <T_WORD offset="25">varchar</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
-            <TableColumnSettings offset="33">
-                <T_TABLE_SETTING offset="34">default</T_TABLE_SETTING>
-                <Expression offset="43">
-                    <T_EXPRESSION offset="43">`now() - interval '5 days'`</T_EXPRESSION>
-                </Expression>
-            </TableColumnSettings>
+            <T_TABLE_SETTING_DEFAULT offset="34">default</T_TABLE_SETTING_DEFAULT>
+            <Expression offset="43">
+                <T_EXPRESSION offset="43">`now() - interval '5 days'`</T_EXPRESSION>
+            </Expression>
         </TableColumn>
     </Table>
 </Schema>
@@ -266,12 +254,10 @@ DBML
                     <T_WORD offset="25">varchar</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
-            <TableColumnSettings offset="33">
-                <T_TABLE_SETTING offset="34">default</T_TABLE_SETTING>
-                <Null offset="43">
-                    <T_NULL offset="43">null</T_NULL>
-                </Null>
-            </TableColumnSettings>
+            <T_TABLE_SETTING_DEFAULT offset="34">default</T_TABLE_SETTING_DEFAULT>
+            <Null offset="43">
+                <T_NULL offset="43">null</T_NULL>
+            </Null>
         </TableColumn>
     </Table>
 </Schema>
@@ -301,12 +287,10 @@ DBML
                     <T_WORD offset="25">varchar</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
-            <TableColumnSettings offset="33">
-                <T_TABLE_SETTING offset="34">default</T_TABLE_SETTING>
-                <Boolean offset="43">
-                    <T_BOOL_TRUE offset="43">true</T_BOOL_TRUE>
-                </Boolean>
-            </TableColumnSettings>
+            <T_TABLE_SETTING_DEFAULT offset="34">default</T_TABLE_SETTING_DEFAULT>
+            <Boolean offset="43">
+                <T_BOOL_TRUE offset="43">true</T_BOOL_TRUE>
+            </Boolean>
         </TableColumn>
     </Table>
 </Schema>
@@ -336,12 +320,39 @@ DBML
                     <T_WORD offset="25">varchar</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
-            <TableColumnSettings offset="33">
-                <T_TABLE_SETTING offset="34">default</T_TABLE_SETTING>
-                <Boolean offset="43">
-                    <T_BOOL_FALSE offset="43">false</T_BOOL_FALSE>
-                </Boolean>
-            </TableColumnSettings>
+            <T_TABLE_SETTING_DEFAULT offset="34">default</T_TABLE_SETTING_DEFAULT>
+            <Boolean offset="43">
+                <T_BOOL_FALSE offset="43">false</T_BOOL_FALSE>
+            </Boolean>
+        </TableColumn>
+    </Table>
+</Schema>
+AST
+        );
+    }
+
+    function test_table_name_can_be_int_should_be_parsed()
+    {
+        $this->assertAst(<<<DBML
+Table 1 {
+  id int
+}
+DBML
+            , <<<AST
+<Schema offset="0">
+    <Table offset="0">
+        <TableName offset="6">
+            <T_INT offset="6">1</T_INT>
+        </TableName>
+        <TableColumn offset="12">
+            <TableColumnName offset="12">
+                <T_WORD offset="12">id</T_WORD>
+            </TableColumnName>
+            <TableColumnType offset="15">
+                <TableColumnTypeName offset="15">
+                    <T_WORD offset="15">int</T_WORD>
+                </TableColumnTypeName>
+            </TableColumnType>
         </TableColumn>
     </Table>
 </Schema>

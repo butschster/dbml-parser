@@ -5,26 +5,17 @@ namespace Butschster\Dbml\Ast\Values;
 
 use Phplrt\Lexer\Token\Token;
 
-class StringNode
+class StringNode extends AbstractValue
 {
-    private string $value;
 
-    public function __construct(private int $offset, Token $token)
+    public function __construct(int $offset, Token $token)
     {
-        $this->value = match ($token->getName()) {
+        $value = match ($token->getName()) {
             'T_WORD' => $token->getValue(),
             'T_QUOTED_STRING' => $this->unquoteTokenValue($token->getValue())
         };
-    }
 
-    public function getValue(): string
-    {
-        return $this->value;
-    }
-
-    public function getOffset(): int
-    {
-        return $this->offset;
+        parent::__construct($offset, $value);
     }
 
     private function unquoteTokenValue(string $value): string

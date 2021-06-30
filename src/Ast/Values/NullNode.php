@@ -3,21 +3,11 @@ declare(strict_types=1);
 
 namespace Butschster\Dbml\Ast\Values;
 
-class NullNode
+class NullNode extends AbstractValue
 {
-    public function __construct(
-        private int $offset
-    )
+    public function __construct(int $offset)
     {
-    }
-
-    public function getValue()
-    {
-        return null;
-    }
-
-    public function getOffset(): int
-    {
-        return $this->offset;
+        parent::__construct($offset, null);
     }
 }
+

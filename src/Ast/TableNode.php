@@ -6,11 +6,14 @@ namespace Butschster\Dbml\Ast;
 use Butschster\Dbml\Ast\Table\AliasNode;
 use Butschster\Dbml\Ast\Table\ColumnNode;
 use Butschster\Dbml\Ast\Table\IndexNode;
+use Butschster\Dbml\Exceptions\ColumnNotFoundException;
 
 class TableNode
 {
     private ?string $alias = null;
+    /** @var ColumnNode[] */
     private array $columns = [];
+    /** @var IndexNode[] */
     private array $indexes = [];
     private ?string $note = null;
 
@@ -24,7 +27,7 @@ class TableNode
             } else if ($child instanceof NoteNode) {
                 $this->note = $child->getValue();
             } else if ($child instanceof ColumnNode) {
-                $this->columns[] = $child;
+                $this->columns[$child->getName()] = $child;
             } else if ($child instanceof IndexNode) {
                 $this->indexes[] = $child;
             }
@@ -49,6 +52,15 @@ class TableNode
     public function getColumns(): array
     {
         return $this->columns;
+    }
+
+    public function getColumn(string $name): ColumnNode
+    {
+        if (!isset($this->columns[$name])) {
+            throw new ColumnNotFoundException("Column [{$name}] not found.");
+        }
+
+        return $this->columns[$name];
     }
 
     public function getNote(): ?string

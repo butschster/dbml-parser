@@ -2,27 +2,33 @@
 * DBML (database markup language) is a simple, readable DSL language designed to define database structures.
 */
 
-%skip   T_WHITESPACE        \s+
-%skip   T_COMMENT           //[^\n]*\n
+%skip   T_WHITESPACE                \s+
+%skip   T_COMMENT                   //[^\n]*\n
 
 /**
 * --------------------------------------------------------------------------
 *  Values
 * --------------------------------------------------------------------------
 */
-%token T_BOOL_TRUE              (?<=\b)true\b
-%token T_BOOL_FALSE             (?<=\b)false\b
-%token T_NULL                   (?<=\b)null\b
+%token T_BOOL_TRUE                  (?<=\b)true\b
+%token T_BOOL_FALSE                 (?<=\b)false\b
+%token T_NULL                       (?<=\b)null\b
 
 
-%token  T_PROJECT               (?<=\b)Project\b
-%token  T_TABLE                 (?<=\b)Table\b
-%token  T_TABLE_ALIAS           (?<=\b)as\b
-%token  T_TABLE_INDEXES         (?<=\b)(Indexes|indexes)\b
-%token  T_TABLE_REF             (Ref|ref)
-%token  T_TABLE_GROUP           (?<=\b)TableGroup\b
-%token  T_ENUM                  (?<=\b)(Enum|enum)\b
-%token  T_TABLE_SETTING         (primary\skey|pk|null|not\snull|unique|default|increment)
+%token  T_PROJECT                   (?<=\b)Project\b
+%token  T_TABLE                     (?<=\b)Table\b
+%token  T_TABLE_ALIAS               (?<=\b)as\b
+%token  T_TABLE_INDEXES             (?<=\b)(Indexes|indexes)\b
+%token  T_TABLE_REF                 (Ref|ref)
+%token  T_TABLE_GROUP               (?<=\b)TableGroup\b
+%token  T_ENUM                      (?<=\b)(Enum|enum)\b
+%token  T_TABLE_SETTING_PK          (?<=\b)(primary\ske|pk)\b
+%token  T_TABLE_SETTING_UNIQUE      (?<=\b)unique\b
+%token  T_TABLE_SETTING_INCREMENT   (?<=\b)increment\b
+%token  T_TABLE_SETTING_DEFAULT     (?<=\b)default\b
+%token  T_TABLE_SETTING_NULL        (?<=\b)null\b
+%token  T_TABLE_SETTING_NOT_NULL    (?<=\b)not\snull\b
+
 %token  T_SETTING_NOTE          note:
 %token  T_NOTE                  (?<=\b)Note\b
 
@@ -31,17 +37,17 @@
  *  Numbers
  * --------------------------------------------------------------------------
  */
-%token  T_FLOAT                 [0-9]+\.[0-9]+
-%token  T_INT                   [0-9]+
+%token  T_FLOAT                 [0-9]+\.[0-9]+                      // 123.123
+%token  T_INT                   [0-9]+                              // 123
 
 /**
  * --------------------------------------------------------------------------
  *  String
  * --------------------------------------------------------------------------
  */
-%token  T_QUOTED_STRING         ('{3}|["']{1})([^'"][\s\S]*?)\1
-%token  T_EXPRESSION            (`{1})([\s\S]+?)\1
-%token  T_WORD                  [a-zA-Z_]+
+%token  T_QUOTED_STRING         ('{3}|["']{1})([^'"][\s\S]*?)\1     // 'string' "string" '''string'''
+%token  T_EXPRESSION            (`{1})([\s\S]+?)\1                  // `string`
+%token  T_WORD                  [a-zA-Z0-9_]+                       // table_name1
 
 /**
 * --------------------------------------------------------------------------
@@ -69,7 +75,7 @@
 * --------------------------------------------------------------------------
 * @see https://www.dbml.org
 */
-#Run
+#Document
 :
     Schema()
 ;
@@ -159,7 +165,7 @@
     );
 }
 :
-    <T_WORD>
+    <T_WORD> | <T_INT>
 ;
 
 #TableAlias -> {
@@ -180,7 +186,7 @@
 
 #TableColumn -> {
     return new \Butschster\Dbml\Ast\Table\ColumnNode(
-        $token->getOffset(), $children[0], $children[1], $children[2] ?? null
+        $token->getOffset(), $children[0], $children[1], array_slice($children, 2)
     );
 }
 :
@@ -219,11 +225,7 @@
     ::T_LPAREN:: Int() ::T_RPAREN::
 ;
 
-#TableColumnSettings -> {
-    return new \Butschster\Dbml\Ast\Table\Column\SettingsNode(
-        $token->getOffset(), $children
-    );
-}
+TableColumnSettings
 :
     ::T_LBRACK::
     (
@@ -235,14 +237,77 @@
     ::T_RBRACK::
 ;
 
-TableColumnSetting -> \Butschster\Dbml\Ast\Table\Column\SettingNode
+TableColumnSetting
 :
-    <T_TABLE_SETTING> ::T_COMMA::?
+    ColumnSettingKeyword() ::T_COMMA::?
 ;
 
-TableColumnSettingWithValue
+ColumnSettingKeyword
 :
-    <T_TABLE_SETTING> ::T_COLON::
+    ColumnSettingPrimaryKey() |
+    ColumnSettingUnique() |
+    ColumnSettingIncrement() |
+    ColumnSettingNull() |
+    ColumnSettingNotNull()
+;
+
+ColumnSettingKeyValue
+:
+    <T_TABLE_SETTING_DEFAULT>
+;
+
+ColumnSettingNull -> {
+    return new \Butschster\Dbml\Ast\Table\Column\Setting\NullNode(
+      $token->getOffset()
+  );
+}
+:
+    <T_TABLE_SETTING_NULL>
+;
+
+ColumnSettingNotNull -> {
+    return new \Butschster\Dbml\Ast\Table\Column\Setting\NotNullNode(
+      $token->getOffset()
+  );
+}
+:
+    <T_TABLE_SETTING_NOT_NULL>
+;
+
+ColumnSettingIncrement -> {
+    return new \Butschster\Dbml\Ast\Table\Column\Setting\IncrementNode(
+      $token->getOffset()
+  );
+}
+:
+    <T_TABLE_SETTING_INCREMENT>
+;
+
+ColumnSettingPrimaryKey -> {
+    return new \Butschster\Dbml\Ast\Table\Column\Setting\PrimaryKeyNode(
+      $token->getOffset()
+  );
+}
+:
+    <T_TABLE_SETTING_PK>
+;
+
+ColumnSettingUnique -> {
+    return new \Butschster\Dbml\Ast\Table\Column\Setting\UniqueNode(
+      $token->getOffset()
+  );
+}
+:
+    <T_TABLE_SETTING_UNIQUE>
+;
+
+TableColumnSettingWithValue -> {
+    return new \Butschster\Dbml\Ast\Table\Column\SettingWithValueNode(
+        $token->getOffset(), $children[0]->getValue(), $children[1]
+    );
+}
+:
+    ColumnSettingKeyValue() ::T_COLON::
     (
         Expression() |
         Float() |
@@ -266,7 +331,11 @@ TableIndexes
     ::T_RBRACE::
 ;
 
-#TableIndex -> \Butschster\Dbml\Ast\Table\IndexNode
+#TableIndex -> {
+    return new \Butschster\Dbml\Ast\Table\IndexNode(
+        $token->getOffset(), $children[0], array_slice($children, 1)
+    );
+}
 :
     TableIndexFiled() TableIndexSettings()?
 ;
@@ -277,17 +346,25 @@ TableIndexFiled
     TableIndexSingleField()
 ;
 
-#TableIndexSingleField -> \Butschster\Dbml\Ast\Table\Index\SingleFieldNode
+#TableIndexSingleField -> {
+    return new \Butschster\Dbml\Ast\Table\Index\FieldsNode(
+      $token->getOffset(), [$children]
+    );
+}
 :
-    <T_WORD>
+    String()|Expression()
 ;
 
-#TableIndexCompositeField -> \Butschster\Dbml\Ast\Table\Index\CompositeFieldNode
+#TableIndexCompositeField -> {
+    return new \Butschster\Dbml\Ast\Table\Index\FieldsNode(
+       $token->getOffset(), $children
+    );
+ }
 :
-    ::T_LPAREN:: ((<T_WORD>|<T_EXPRESSION>) ::T_COMMA::?)* ::T_RPAREN::
+    ::T_LPAREN:: ((String()|Expression()) ::T_COMMA::?)* ::T_RPAREN::
 ;
 
-#TableIndexSettings -> \Butschster\Dbml\Ast\Table\Index\SettingsNode
+#TableIndexSettings
 :
     ::T_LBRACK::
     (
@@ -298,12 +375,22 @@ TableIndexFiled
     ::T_RBRACK::
 ;
 
-#TableIndexSetting -> \Butschster\Dbml\Ast\Table\Index\SettingNode
+#TableIndexSetting
 :
-    <T_TABLE_SETTING> ::T_COMMA::?
+    IndexSettingName() ::T_COMMA::?
 ;
 
-#TableIndexSettingWithValue -> \Butschster\Dbml\Ast\Table\Index\SettingWithValueNode
+IndexSettingName
+:
+     ColumnSettingPrimaryKey() |
+     ColumnSettingUnique()
+;
+
+#TableIndexSettingWithValue -> {
+    return new \Butschster\Dbml\Ast\Table\Column\SettingWithValueNode(
+        $token->getOffset(), $children[0]->getValue(), $children[1]
+    );
+}
 :
     <T_WORD> ::T_COLON:: String() ::T_COMMA::?
 ;
@@ -314,7 +401,11 @@ TableIndexFiled
 * --------------------------------------------------------------------------
 * @see https://www.dbml.org/docs/#relationships-foreign-key-definitions
 */
-#Ref -> \Butschster\Dbml\Ast\RefNode
+#Ref -> {
+    return new \Butschster\Dbml\Ast\RefNode(
+        $token->getOffset(),
+    );
+}
 :
     ::T_TABLE_REF::
     (
@@ -323,7 +414,11 @@ TableIndexFiled
     )
 ;
 
-#TableColumnRef -> \Butschster\Dbml\Ast\Table\Column\RefNode
+#TableColumnRef -> {
+    return new \Butschster\Dbml\Ast\Table\Column\RefNode(
+        $token->getOffset(), $children[0], $children[1]
+    );
+}
 :
     ::T_TABLE_REF:: ::T_COLON:: RefType() RefRightColumn() ::T_COMMA::?
 ;
@@ -393,9 +488,14 @@ RefKey
 */
 #TableGroup -> \Butschster\Dbml\Ast\TableGroupNode
 :
-    ::T_TABLE_GROUP:: <T_WORD> ::T_LBRACE:: EOL()
+    ::T_TABLE_GROUP:: TableGroupName() ::T_LBRACE:: EOL()
     (TableName() EOL())*
     ::T_RBRACE:: EOL()
+;
+
+#TableGroupName
+:
+    <T_WORD>
 ;
 
 /**
@@ -453,7 +553,11 @@ EnumNote
     )
 ;
 
-#SettingNote -> \Butschster\Dbml\Ast\NoteSettingNode
+#SettingNote -> {
+    return new \Butschster\Dbml\Ast\NoteNode(
+        $token->getOffset(), \end($children)
+    );
+}
 :
     ::T_SETTING_NOTE:: String() ::T_COMMA::?
 ;
@@ -464,7 +568,11 @@ EnumNote
 * --------------------------------------------------------------------------
 *
 */
-#Expression -> \Butschster\Dbml\Ast\Values\ExpressionNode
+#Expression -> {
+   return new \Butschster\Dbml\Ast\Values\ExpressionNode(
+       $token->getOffset(), $children->getValue()
+   );
+}
 :
     <T_EXPRESSION>
 ;

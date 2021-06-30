@@ -8,14 +8,14 @@ use Butschster\Dbml\Ast\Values\IntNode;
 
 class TypeNode
 {
-    private string $type;
+    private string $name;
     private ?int $size = null;
 
     public function __construct(
         private int $offset, NameNode $type, ?IntNode $size = null
     )
     {
-        $this->type = $type->getValue();
+        $this->name = $type->getValue();
         $this->size = $size ? $size->getValue() : null;
     }
 
@@ -24,9 +24,9 @@ class TypeNode
         return $this->offset;
     }
 
-    public function getType(): string
+    public function getName(): string
     {
-        return $this->type;
+        return $this->name;
     }
 
     public function getSize(): ?int
