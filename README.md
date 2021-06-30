@@ -2,6 +2,7 @@
 
 [![Support me on Patreon](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3Dbutschster%26type%3Dpatrons&style=flat)](https://patreon.com/butschster)
 [![Latest Stable Version](https://poser.pugx.org/butschster/dbml-parser/v/stable)](https://packagist.org/packages/butschster/dbml-parser)
+[![Build Status](https://github.com/butschster/dbml-parser/actions/workflows/php.yml/badge.svg)](https://github.com/butschster/dbml-parser/actions/workflows/php.yml)
 [![Total Downloads](https://poser.pugx.org/butschster/dbml-parser/downloads)](https://packagist.org/packages/butschster/dbml-parser)
 [![License](https://poser.pugx.org/butschster/dbml-parser/license)](https://packagist.org/packages/butschster/dbml-parser)
 
