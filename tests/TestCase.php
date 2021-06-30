@@ -10,5 +10,5 @@ use Butschster\Dbml\Tokenizer\TokenCollection;
 class TestCase extends \PHPUnit\Framework\TestCase
 {
     protected const GRAMMAR_FILE_PATH = '/../../src/grammar.php';
-    protected const EBNF_FILE_PATH = '/../../src/dmbl-ebnf.pp2';
+    protected const EBNF_FILE_PATH = '/../../ebnf.pp2';
 }

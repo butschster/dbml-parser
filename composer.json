@@ -1,32 +1,41 @@
 {
-  "name": "butschster/dbml",
-  "description": "",
-  "keywords": [],
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Pavel Buchnev",
-      "email": "butschster@gmail.com"
-    }
-  ],
-  "require": {
-    "php": ">=8.0",
-    "phplrt/phplrt": "^3.1"
-  },
-  "require-dev": {
-    "mockery/mockery": "^1.0",
-    "phpunit/phpunit": "^9.3"
-  },
-  "autoload": {
-    "psr-4": {
-      "Butschster\\Dbml\\": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Butschster\\Tests\\": "tests/"
-    }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true
+    "name": "butschster/dbml-parser",
+    "description": "DBML (database markup language) parser written on PHP8.",
+    "keywords": [
+        "php8",
+        "php",
+        "dbml",
+        "sql",
+        "ddl",
+        "database",
+        "dbml-parser"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Pavel Buchnev",
+            "email": "butschster@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.0",
+        "phplrt/runtime": "^3.1."
+    },
+    "require-dev": {
+        "phplrt/phplrt": "^3.1",
+        "mockery/mockery": "^1.0",
+        "phpunit/phpunit": "^9.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Butschster\\Dbml\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Butschster\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

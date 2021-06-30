@@ -25,7 +25,7 @@ class TableNode
             if ($child instanceof AliasNode) {
                 $this->alias = $child->getValue();
             } else if ($child instanceof NoteNode) {
-                $this->note = $child->getValue();
+                $this->note = $child->getDescription();
             } else if ($child instanceof ColumnNode) {
                 $this->columns[$child->getName()] = $child;
             } else if ($child instanceof IndexNode) {
@@ -34,11 +34,17 @@ class TableNode
         }
     }
 
+    /**
+     * Get table name
+     */
     public function getName(): string
     {
         return $this->name;
     }
 
+    /**
+     * Get table alias
+     */
     public function getAlias(): ?string
     {
         return $this->alias;
@@ -49,25 +55,51 @@ class TableNode
         return $this->offset;
     }
 
+    /**
+     * Get columns
+     * @return ColumnNode[]
+     */
     public function getColumns(): array
     {
         return $this->columns;
     }
 
+    /**
+     * Check if table column exists
+     */
+    public function hasColumn(string $name): bool
+    {
+        return isset($this->columns[$name]);
+    }
+
+    /**
+     * Get column by name
+     * @param string $name
+     * @return ColumnNode
+     * @throws ColumnNotFoundException
+     */
     public function getColumn(string $name): ColumnNode
     {
-        if (!isset($this->columns[$name])) {
+        if (!$this->hasColumn($name)) {
             throw new ColumnNotFoundException("Column [{$name}] not found.");
         }
 
         return $this->columns[$name];
     }
 
+    /**
+     * Get table note
+     * @return string|null
+     */
     public function getNote(): ?string
     {
         return $this->note;
     }
 
+    /**
+     * Get table indexes
+     * @return IndexNode[]
+     */
     public function getIndexes(): array
     {
         return $this->indexes;

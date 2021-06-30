@@ -24,11 +24,17 @@ class TypeNode
         return $this->offset;
     }
 
+    /**
+     * Get type name
+     */
     public function getName(): string
     {
         return $this->name;
     }
 
+    /**
+     * Get max size
+     */
     public function getSize(): ?int
     {
         return $this->size;

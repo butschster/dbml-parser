@@ -13,7 +13,7 @@ use Butschster\Dbml\Ast\Values\AbstractValue;
 class IndexNode
 {
     /** @var AbstractValue[] */
-    private array $fields = [];
+    private array $columns = [];
     private array $settings = [];
     private ?string $name = null;
     private ?string $type = null;
@@ -25,13 +25,13 @@ class IndexNode
         private int $offset, FieldsNode $fields, array $settings = []
     )
     {
-        $this->fields = $fields->getFields();
+        $this->columns = $fields->getFields();
 
         foreach ($settings as $setting) {
             if ($setting instanceof PrimaryKeyNode) {
                 $this->primaryKey = true;
             } else if ($setting instanceof NoteNode) {
-                $this->note = $setting->getValue();
+                $this->note = $setting->getDescription();
             } else if ($setting instanceof UniqueNode) {
                 $this->unique = true;
             } else if ($setting instanceof SettingWithValueNode && $setting->getName() === 'name') {
@@ -44,9 +44,9 @@ class IndexNode
         $this->settings = $settings;
     }
 
-    public function getFields(): array
+    public function getColumns(): array
     {
-        return $this->fields;
+        return $this->columns;
     }
 
     public function getSettings(): array

@@ -17,7 +17,7 @@ class TableNodeTest extends TestCase
         $this->node = $this->parser->parse(<<<DBML
 Table users as U {
     id int [pk, unique, increment, note: 'hello world'] // auto-increment
-    full_name varchar(150) [not null, unique, default: 1, ref: > profiles.id]
+    full_name varchar(150) [not null, unique, default: 1, ref: > profiles.id, ref: > countries.(id, name)]
     created_at timestamp
     country_code int
     type int
@@ -30,7 +30,7 @@ Table users as U {
     }
 }
 DBML
-        )->getTables()['users'];
+        )->getTable('users');
 
     }
 
@@ -69,7 +69,7 @@ DBML
 
     function test_gets_full_name_column()
     {
-        // full_name varchar(150) [not null, unique, default: 1, ref: > profiles.id]
+        // full_name varchar(150) [not null, unique, default: 1, ref: > profiles.id, ref: > countries.(id, name)]
         $column = $this->node->getColumn('full_name');
 
         $this->assertEquals('full_name', $column->getName());
@@ -82,6 +82,19 @@ DBML
         $this->assertTrue($column->isUnique());
         $this->assertFalse($column->isIncrement());
         $this->assertFalse($column->isNull());
+
+        $this->assertCount(2, $column->getRefs());
+        $ref = $column->getRefs()[0];
+
+        $this->assertNull($ref->getLeftTable());
+        $this->assertEquals('profiles', $ref->getRightTable()->getTable());
+        $this->assertEquals(['id'], $ref->getRightTable()->getColumns());
+
+        $ref = $column->getRefs()[1];
+
+        $this->assertNull($ref->getLeftTable());
+        $this->assertEquals('countries', $ref->getRightTable()->getTable());
+        $this->assertEquals(['id', 'name'], $ref->getRightTable()->getColumns());
     }
 
     function test_gets_created_at_column()
@@ -103,7 +116,6 @@ DBML
 
     function test_gets_name()
     {
-        var_dump($this->node);
         $this->assertEquals('users', $this->node->getName());
     }
 
@@ -132,8 +144,8 @@ DBML
         // id [name: 'created_at_index', note: 'Date', type: hash, pk]
         $index = $this->node->getIndexes()[0];
 
-        $this->assertCount(1, $index->getFields());
-        $this->assertEquals('id', $index->getFields()[0]->getValue());
+        $this->assertCount(1, $index->getColumns());
+        $this->assertEquals('id', $index->getColumns()[0]->getValue());
         $this->assertCount(4, $index->getSettings());
 
         $this->assertTrue($index->isPrimaryKey());
@@ -147,9 +159,9 @@ DBML
         // (id, name)
         $index = $this->node->getIndexes()[1];
 
-        $this->assertCount(2, $index->getFields());
-        $this->assertEquals('id', $index->getFields()[0]->getValue());
-        $this->assertEquals('name', $index->getFields()[1]->getValue());
+        $this->assertCount(2, $index->getColumns());
+        $this->assertEquals('id', $index->getColumns()[0]->getValue());
+        $this->assertEquals('name', $index->getColumns()[1]->getValue());
         $this->assertCount(0, $index->getSettings());
 
         $this->assertFalse($index->isPrimaryKey());

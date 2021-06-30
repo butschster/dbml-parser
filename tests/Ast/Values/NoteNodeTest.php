@@ -19,7 +19,7 @@ class NoteNodeTest extends TestCase
             123, $string
         );
 
-        $this->assertEquals('hello world', $note->getValue());
+        $this->assertEquals('hello world', $note->getDescription());
         $this->assertEquals(123, $note->getOffset());
     }
 }

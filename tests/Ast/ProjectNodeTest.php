@@ -3,24 +3,52 @@ declare(strict_types=1);
 
 namespace Butschster\Tests\Ast;
 
+use Butschster\Dbml\Ast\ProjectNode;
+use Butschster\Dbml\Exceptions\ProjectSettingNotFoundException;
+
 class ProjectNodeTest extends TestCase
 {
-    function test_parse_project_with_note()
+    private ?ProjectNode $node;
+
+    protected function setUp(): void
     {
-        $schema = $this->parser->parse(<<<DBML
-Project project_name {
+        parent::setUp();
+
+        $this->node = $this->parser->parse(<<<DBML
+Project project_test {
   database_type: 'PostgreSQL'
   Note: 'Description of the project'
 }
 DBML
-        );
+        )->getProject();
+    }
 
-        $project = $schema->getProject();
-        $setting = $project->getSettings()[0];
+    function test_gets_name()
+    {
+        $this->assertEquals('project_test', $this->node->getName());
+    }
 
-        $this->assertEquals('project_name', $project->getName());
-        $this->assertEquals('Description of the project', $project->getNote());
-        $this->assertCount(1, $project->getSettings());
+    function test_gets_node()
+    {
+        $this->assertEquals('Description of the project', $this->node->getNote());
+    }
+
+    function test_gets_settings()
+    {
+        $this->assertCount(1, $this->node->getSettings());
+    }
+
+    function test_non_exists_setting_should_throw_an_exception()
+    {
+        $this->expectException(ProjectSettingNotFoundException::class);
+        $this->expectErrorMessage('Project setting [test] not found.');
+
+        $this->node->getSetting('test');
+    }
+
+    function test_gets_setting_database_type()
+    {
+        $setting = $this->node->getSetting('database_type');
 
         $this->assertEquals('database_type', $setting->getKey());
         $this->assertEquals('PostgreSQL', $setting->getValue());
@@ -29,29 +57,23 @@ DBML
 
     function test_parse_project_without_note()
     {
-        $schema = $this->parser->parse(<<<DBML
+        $project = $this->parser->parse(<<<DBML
 Project project_name {
   database_type: 'PostgreSQL'
 }
 DBML
-        );
+        )->getProject();
 
-        $project = $schema->getProject();
-
-        $this->assertEquals('project_name', $project->getName());
         $this->assertNull($project->getNote());
     }
 
     function test_parse_project_without_settings()
     {
-        $schema = $this->parser->parse(<<<DBML
+        $project = $this->parser->parse(<<<DBML
 Project project_name {
-
 }
 DBML
-        );
-
-        $project = $schema->getProject();
+        )->getProject();
 
         $this->assertEquals('project_name', $project->getName());
         $this->assertCount(0, $project->getSettings());

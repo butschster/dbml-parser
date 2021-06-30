@@ -27,6 +27,7 @@ class DbmlParser
     /**
      * Parse DBML schema
      * @param string $dbml
+     * @param array $options
      * @return SchemaNode|null
      * @throws \Phplrt\Contracts\Exception\RuntimeExceptionInterface
      */

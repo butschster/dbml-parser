@@ -7,11 +7,11 @@ use Butschster\Dbml\Ast\Values\StringNode;
 
 class NoteNode
 {
-    private string $value;
+    private string $description;
 
     public function __construct(private int $offset, StringNode $string)
     {
-        $this->value = $string->getValue();
+        $this->description = $string->getValue();
     }
 
     public function getOffset(): int
@@ -19,8 +19,11 @@ class NoteNode
         return $this->offset;
     }
 
-    public function getValue(): string
+    /**
+     * Get note description
+     */
+    public function getDescription(): string
     {
-        return $this->value;
+        return $this->description;
     }
 }

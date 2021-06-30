@@ -14,6 +14,6 @@ class TestCase extends \Butschster\Tests\Parsers\TestCase
     {
         parent::setUp();
 
-        $this->parser = DbmlParserFactory::createFromFile(__DIR__ . static::GRAMMAR_FILE_PATH);
+        $this->parser = DbmlParserFactory::create();
     }
 }

@@ -8,16 +8,14 @@ use Butschster\Dbml\Exceptions\GrammarFileNotFoundException;
 class DbmlParserFactory
 {
     /**
-     * Create parser from given grammar file
-     * @param string $path grammar.php file path
+     * Create parser from grammar file
      * @return DbmlParser
      */
-    public static function createFromFile(string $path): DbmlParser
+    public static function create(): DbmlParser
     {
+        $path = __DIR__ . '/grammar.php';
         if (!file_exists($path)) {
-            throw new GrammarFileNotFoundException(
-                "File {$path} not found"
-            );
+            throw new GrammarFileNotFoundException("Grammar file [{$path}] not found.");
         }
 
         $data = require $path;

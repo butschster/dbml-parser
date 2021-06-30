@@ -19,13 +19,13 @@ class SettingWithValueNode extends SettingNode
         $this->value = $value;
     }
 
-    public function getValue(): AbstractValue
-    {
-        return $this->value;
-    }
-
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function getValue(): AbstractValue
+    {
+        return $this->value;
     }
 }

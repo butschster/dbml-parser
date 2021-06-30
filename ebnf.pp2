@@ -1,7 +1,7 @@
 /**
 * DBML (database markup language) is a simple, readable DSL language designed to define database structures.
+* @see https://www.dbml.org
 */
-
 %skip   T_WHITESPACE                \s+
 %skip   T_COMMENT                   //[^\n]*\n
 
@@ -28,6 +28,15 @@
 %token  T_TABLE_SETTING_DEFAULT     (?<=\b)default\b
 %token  T_TABLE_SETTING_NULL        (?<=\b)null\b
 %token  T_TABLE_SETTING_NOT_NULL    (?<=\b)not\snull\b
+
+%token  T_REF_ACTION_CASCADE        (?<=\b)cascade\b
+%token  T_REF_ACTION_RESTRICT       (?<=\b)restrict\b
+%token  T_REF_ACTION_SET_NULL       (?<=\b)set\snull\b
+%token  T_REF_ACTION_SET_DEFAULT    (?<=\b)set\default\b
+%token  T_REF_ACTION_NO_ACTION      (?<=\b)no\saction\b
+
+%token  T_REF_ACTION_DELETE         (?<=\b)delete\b
+%token  T_REF_ACTION_UPDATE         (?<=\b)update\b
 
 %token  T_SETTING_NOTE          note:
 %token  T_NOTE                  (?<=\b)Note\b
@@ -73,7 +82,7 @@
 * --------------------------------------------------------------------------
 *  DBML Grammar
 * --------------------------------------------------------------------------
-* @see https://www.dbml.org
+* @see https://www.dbml.org/docs
 */
 #Document
 :
@@ -194,7 +203,7 @@
 ;
 
 #TableColumnName -> {
-    return new \Butschster\Dbml\Ast\Table\NameNode(
+    return new \Butschster\Dbml\Ast\Table\Column\NameNode(
         $token->getOffset(), $children->getValue()
     );
 }
@@ -401,83 +410,169 @@ IndexSettingName
 * --------------------------------------------------------------------------
 * @see https://www.dbml.org/docs/#relationships-foreign-key-definitions
 */
-#Ref -> {
-    return new \Butschster\Dbml\Ast\RefNode(
-        $token->getOffset(),
-    );
-}
+#Ref
 :
     ::T_TABLE_REF::
-    (
-        TableShortRef() |
-        TableLongRef()
-    )
+    (RefShort() | RefLong())
 ;
 
 #TableColumnRef -> {
-    return new \Butschster\Dbml\Ast\Table\Column\RefNode(
-        $token->getOffset(), $children[0], $children[1]
+    return new \Butschster\Dbml\Ast\RefNode(
+        $token->getOffset(), $children
     );
 }
 :
-    ::T_TABLE_REF:: ::T_COLON:: RefType() RefRightColumn() ::T_COMMA::?
+    ::T_TABLE_REF:: ::T_COLON:: TableColumnRefColumns() ::T_COMMA::?
 ;
 
-TableShortRef
+
+
+TableColumnRefColumns -> {
+    return new \Butschster\Dbml\Ast\Ref\ColumnsNode(
+        $token->getOffset(), $children
+    );
+}
 :
-    TableRefName()? ::T_COLON:: TableRefColumns()
+    RefType() RefRightTable()
 ;
 
-TableLongRef
-:
-    TableRefName()?
-    ::T_LBRACE:: EOL()
-    TableLongRefColumn()*
-    ::T_RBRACE:: EOL()
-;
-
-#TableLongRefColumn
-:
-    TableRefColumns()
-;
-
-TableRefColumns
-:
-    RefLeftColumn() RefType() RefRightColumn()
-;
-
-#TableRefName
+#RefName -> {
+    return new \Butschster\Dbml\Ast\Ref\NameNode(
+        $token->getOffset(), $children->getValue()
+    );
+}
 :
     <T_WORD>
 ;
 
-#RefType -> \Butschster\Dbml\Ast\Ref\TypeNode
+RefShort -> {
+    return new \Butschster\Dbml\Ast\RefNode(
+        $token->getOffset(), $children
+    );
+}
 :
-    <T_GT>|<T_LT>|<T_MINUS>
+    RefName()? ::T_COLON:: RefColumns()
 ;
 
-#RefLeftColumn -> \Butschster\Dbml\Ast\Ref\ColumnNode
+RefLong -> {
+   return new \Butschster\Dbml\Ast\Ref\GroupNode(
+       $token->getOffset(), $children
+   );
+}
 :
-    RefKey()
+    RefName()?
+    ::T_LBRACE:: EOL()
+    RefColumns()*
+    ::T_RBRACE:: EOL()
 ;
 
-#RefRightColumn -> \Butschster\Dbml\Ast\Ref\ColumnNode
+RefColumns -> {
+    return new \Butschster\Dbml\Ast\Ref\ColumnsNode(
+        $token->getOffset(), $children
+    );
+}
 :
-    RefKey()
+    RefLeftTable() RefType() RefRightTable() RefActions()?
 ;
 
-#RefCompositeTableColumn
+RefType
+:
+    RefTypeManyToOne() | RefTypeOneToMany() | RefTypeOneToOne()
+;
+
+RefActions
+:
+    ::T_LBRACK::
+    (
+        OnUpdateAction() |
+        OnDeleteAction()
+    )*
+    ::T_RBRACK::
+;
+
+OnUpdateAction -> {
+   return new \Butschster\Dbml\Ast\Ref\Action\OnUpdateNode(
+       $token->getOffset(), $children[1]->getValue()
+   );
+}
+:
+    <T_REF_ACTION_UPDATE>
+    ::T_COLON::
+    RefAction()
+;
+
+OnDeleteAction -> {
+   return new \Butschster\Dbml\Ast\Ref\Action\OnDeleteNode(
+       $token->getOffset(), $children[1]->getValue()
+   );
+}
+:
+    <T_REF_ACTION_DELETE>
+    ::T_COLON::
+    RefAction()
+;
+
+RefAction
+:
+    (
+        <T_REF_ACTION_CASCADE> |
+        <T_REF_ACTION_RESTRICT> |
+        <T_REF_ACTION_SET_NULL> |
+        <T_REF_ACTION_SET_DEFAULT> |
+        <T_REF_ACTION_NO_ACTION>
+    )
+    ::T_COMMA::?
+;
+
+
+RefTypeManyToOne -> {
+    return new \Butschster\Dbml\Ast\Ref\Type\ManyToOneNode(
+       $token->getOffset()
+    );
+}
+:
+    <T_GT>
+;
+
+RefTypeOneToOne -> {
+    return new \Butschster\Dbml\Ast\Ref\Type\OneToOneNode(
+       $token->getOffset()
+   );
+}
+:
+    <T_MINUS>
+;
+
+RefTypeOneToMany -> {
+    return new \Butschster\Dbml\Ast\Ref\Type\OneToManyNode(
+       $token->getOffset()
+   );
+}
+:
+    <T_LT>
+;
+
+#RefLeftTable -> {
+    return new \Butschster\Dbml\Ast\Ref\LeftTableNode(
+        $token->getOffset(), $children[0], array_slice($children, 1)
+    );
+}
+:
+    TableName() ::T_DOT:: (TableColumnName() | RefCompositeTableColumn())
+;
+
+#RefRightTable -> {
+   return new \Butschster\Dbml\Ast\Ref\RightTableNode(
+       $token->getOffset(), $children[0], array_slice($children, 1)
+   );
+}
+:
+    TableName() ::T_DOT:: (TableColumnName() | RefCompositeTableColumn())
+;
+
+RefCompositeTableColumn
 :
     ::T_LPAREN:: (TableColumnName() ::T_COMMA::?)* ::T_RPAREN::
-;
-
-RefKey
-:
-    TableName() ::T_DOT::
-    (
-        TableColumnName() |
-        RefCompositeTableColumn()
-    )
 ;
 
 /**
@@ -486,7 +581,11 @@ RefKey
 * --------------------------------------------------------------------------
 * @see https://www.dbml.org/docs/#tablegroup
 */
-#TableGroup -> \Butschster\Dbml\Ast\TableGroupNode
+#TableGroup -> {
+    return new \Butschster\Dbml\Ast\TableGroupNode(
+        $token->getOffset(), $children[0]->getValue(), array_slice($children, 1)
+    );
+}
 :
     ::T_TABLE_GROUP:: TableGroupName() ::T_LBRACE:: EOL()
     (TableName() EOL())*
@@ -504,19 +603,27 @@ RefKey
 * --------------------------------------------------------------------------
 * @see https://www.dbml.org/docs/#enum-definition
 */
-#Enum -> \Butschster\Dbml\Ast\EnumNode
+#Enum -> {
+    return new \Butschster\Dbml\Ast\EnumNode(
+        $token->getOffset(), $children[0]->getValue(), array_slice($children, 1)
+    );
+}
 :
     ::T_ENUM:: EnumName() ::T_LBRACE:: EOL()
     (EnumValue() EOL())*
     ::T_RBRACE:: EOL()
 ;
 
-#EnumName -> \Butschster\Dbml\Ast\Enum\NameNode
+#EnumName
 :
     <T_WORD>
 ;
 
-#EnumValue -> \Butschster\Dbml\Ast\Enum\ValueNode
+#EnumValue -> {
+    return new \Butschster\Dbml\Ast\Enum\ValueNode(
+         $token->getOffset(), $children[0]->getValue(), $children[1] ?? null
+    );
+}
 :
     <T_WORD> EnumNote()?
 ;

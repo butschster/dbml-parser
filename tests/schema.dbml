@@ -28,7 +28,7 @@ Table countries {
 }
 
 // Creating references
-// You can also define relaionship separately
+// You can also define relationship separately
 // > many-to-one; < one-to-many; - one-to-one
 Ref{
   U.country_code > countries.code
