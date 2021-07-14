@@ -6,6 +6,8 @@
 [![Total Downloads](https://poser.pugx.org/butschster/dbml-parser/downloads)](https://packagist.org/packages/butschster/dbml-parser)
 [![License](https://poser.pugx.org/butschster/dbml-parser/license)](https://packagist.org/packages/butschster/dbml-parser)
 
+![DBML-parser](https://user-images.githubusercontent.com/773481/125667174-8b349bc0-fb5f-49a2-a651-1cac06bba151.jpg)
+
 DBML (database markup language) is a simple, readable DSL language designed to define database structures. This page
 outlines the full syntax documentations of DBML.
 
