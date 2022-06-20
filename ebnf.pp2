@@ -22,7 +22,7 @@
 %token  T_TABLE_REF                 (Ref|ref)
 %token  T_TABLE_GROUP               (?<=\b)TableGroup\b
 %token  T_ENUM                      (?<=\b)(Enum|enum)\b
-%token  T_TABLE_SETTING_PK          (?<=\b)(primary\ske|pk)\b
+%token  T_TABLE_SETTING_PK          (?<=\b)(primary\skey|pk)\b
 %token  T_TABLE_SETTING_UNIQUE      (?<=\b)unique\b
 %token  T_TABLE_SETTING_INCREMENT   (?<=\b)increment\b
 %token  T_TABLE_SETTING_DEFAULT     (?<=\b)default\b
