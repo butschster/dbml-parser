@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Butschster\Tests\Ast;
@@ -11,48 +10,24 @@ class TableNodeTest extends TestCase
 {
     private TableNode $node;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->node = $this->parser->parse(
-            <<<DBML
-Table users as U {
-    id int [pk, not null, unique, increment, note: 'hello world'] // auto-increment
-    full_name varchar(150) [not null, unique, default: 1, ref: > profiles.id, ref: > countries.(id, name)]
-    created_at timestamp [not null]
-    country_code int
-    type int
-    note int
-    Note: 'khong hieu duoc'
-
-    indexes {
-        id [name: 'created_at_index', note: 'Date', type: hash, pk]
-        (id, name)
-    }
-}
-DBML
-        )->getTable('users');
-    }
-
-    public function testFieldsShouldBeParsed()
+    function test_fields_should_be_parsed()
     {
         $this->assertCount(6, $this->node->getColumns());
     }
 
-    public function testIndexedShouldBeParsed()
+    function test_indexed_should_be_parsed()
     {
         $this->assertCount(2, $this->node->getIndexes());
     }
 
-    public function testNonExistsColumnShouldThrowAnException()
+    function test_non_exists_column_should_throw_an_exception()
     {
         $this->expectException(ColumnNotFoundException::class);
-        $this->expectErrorMessage('Column [not_exists] not found.');
+        $this->expectErrorMessage("Column [not_exists] not found.");
         $this->node->getColumn('not_exists');
     }
 
-    public function testGetsIdColumn()
+    function test_gets_id_column()
     {
         // id int [pk, unique, increment, note: 'hello world'] // auto-increment
         $column = $this->node->getColumn('id');
@@ -68,7 +43,7 @@ DBML
         $this->assertFalse($column->isNull());
     }
 
-    public function testGetsFullNameColumn()
+    function test_gets_full_name_column()
     {
         // full_name varchar(150) [not null, unique, default: 1, ref: > profiles.id, ref: > countries.(id, name)]
         $column = $this->node->getColumn('full_name');
@@ -98,7 +73,7 @@ DBML
         $this->assertEquals(['id', 'name'], $ref->getRightTable()->getColumns());
     }
 
-    public function testGetsCreatedAtColumn()
+    function test_gets_created_at_column()
     {
         // created_at timestamp
         $column = $this->node->getColumn('created_at');
@@ -115,32 +90,32 @@ DBML
         $this->assertFalse($column->isNull());
     }
 
-    public function testGetsName()
+    function test_gets_name()
     {
         $this->assertEquals('users', $this->node->getName());
     }
 
-    public function testGetsAlias()
+    function test_gets_alias()
     {
         $this->assertEquals('U', $this->node->getAlias());
     }
 
-    public function testGetsNote()
+    function test_gets_note()
     {
         $this->assertEquals('khong hieu duoc', $this->node->getNote());
     }
 
-    public function testGetsColumns()
+    function test_gets_columns()
     {
         $this->assertCount(6, $this->node->getColumns());
     }
 
-    public function testGetsIndexes()
+    function test_gets_indexes()
     {
         $this->assertCount(2, $this->node->getIndexes());
     }
 
-    public function testGetsIdIndex()
+    function test_gets_id_index()
     {
         // id [name: 'created_at_index', note: 'Date', type: hash, pk]
         $index = $this->node->getIndexes()[0];
@@ -155,7 +130,7 @@ DBML
         $this->assertEquals('Date', $index->getNote());
     }
 
-    public function testGetsIdNameIndex()
+    function test_gets_id_name_index()
     {
         // (id, name)
         $index = $this->node->getIndexes()[1];
@@ -169,5 +144,29 @@ DBML
         $this->assertFalse($index->isUnique());
         $this->assertNull($index->getName());
         $this->assertNull($index->getNote());
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->node = $this->parser->parse(<<<DBML
+Table users as U {
+    id int [pk, not null, unique, increment, note: 'hello world'] // auto-increment
+    full_name varchar(150) [not null, unique, default: 1, ref: > profiles.id, ref: > countries.(id, name)]
+    created_at timestamp [not null]
+    country_code int
+    type int
+    note int
+    Note: 'khong hieu duoc'
+
+    indexes {
+        id [name: 'created_at_index', note: 'Date', type: hash, pk]
+        (id, name)
+    }
+}
+DBML
+        )->getTable('users');
+
     }
 }
