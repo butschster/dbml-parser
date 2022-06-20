@@ -12,7 +12,7 @@ return [
             'T_TABLE' => '(?<=\\b)(Table|table)\\b',
             'T_TABLE_ALIAS' => '(?<=\\b)as\\b',
             'T_TABLE_INDEXES' => '(?<=\\b)(Indexes|indexes)\\b',
-            'T_TABLE_REF' => '(Ref|ref)',
+            'T_TABLE_REF' => '(Ref:|ref:)',
             'T_TABLE_GROUP' => '(?<=\\b)TableGroup\\b',
             'T_ENUM' => '(?<=\\b)(Enum|enum)\\b',
             'T_TABLE_SETTING_PK' => '(?<=\\b)(primary\\skey|pk)\\b',
@@ -55,14 +55,16 @@ return [
         'T_COMMENT',
     ],
     'transitions' => [
-        
+
     ],
     'grammar' => [
         'Boolean' => new \Phplrt\Grammar\Alternation([150, 151]),
         'Document' => new \Phplrt\Grammar\Concatenation(['Schema']),
         'Enum' => new \Phplrt\Grammar\Concatenation([131, 'EnumName', 132, 0, 133, 134, 0]),
         'EnumName' => new \Phplrt\Grammar\Lexeme('T_WORD', true),
-        'EnumValue' => new \Phplrt\Grammar\Concatenation([136, 137]),
+        'EnumValue' => new \Phplrt\Grammar\Alternation( ['EnumValueWord', 'EnumValueQuotedString']),
+        'EnumValueWord' => new \Phplrt\Grammar\Concatenation([136, 137]),
+        'EnumValueQuotedString' => new \Phplrt\Grammar\Concatenation([155, 137]),
         'Expression' => new \Phplrt\Grammar\Lexeme('T_EXPRESSION', true),
         'Float' => new \Phplrt\Grammar\Lexeme('T_FLOAT', true),
         'Int' => new \Phplrt\Grammar\Lexeme('T_INT', true),
@@ -83,7 +85,7 @@ return [
         'TableAlias' => new \Phplrt\Grammar\Concatenation([22, 23]),
         'TableColumn' => new \Phplrt\Grammar\Concatenation(['TableColumnName', 'TableColumnType', 25]),
         'TableColumnName' => new \Phplrt\Grammar\Lexeme('T_WORD', true),
-        'TableColumnRef' => new \Phplrt\Grammar\Concatenation([79, 80, 77, 81]),
+        'TableColumnRef' => new \Phplrt\Grammar\Concatenation([79, 77, 81]),
         'TableColumnType' => new \Phplrt\Grammar\Concatenation(['TableColumnTypeName', 26]),
         'TableColumnTypeName' => new \Phplrt\Grammar\Lexeme('T_WORD', true),
         'TableColumnTypeSize' => new \Phplrt\Grammar\Concatenation([27, 'Int', 28]),
@@ -168,7 +170,7 @@ return [
         70 => new \Phplrt\Grammar\Lexeme('T_WORD', true),
         71 => new \Phplrt\Grammar\Lexeme('T_COLON', false),
         72 => new \Phplrt\Grammar\Optional(69),
-        73 => new \Phplrt\Grammar\Concatenation([84, 85, 83]),
+        73 => new \Phplrt\Grammar\Concatenation([84, 83]),
         74 => new \Phplrt\Grammar\Concatenation([86, 87, 0, 88, 89, 0]),
         75 => new \Phplrt\Grammar\Lexeme('T_TABLE_REF', false),
         76 => new \Phplrt\Grammar\Alternation([73, 74]),
@@ -250,6 +252,7 @@ return [
         152 => new \Phplrt\Grammar\Lexeme('T_WORD', true),
         153 => new \Phplrt\Grammar\Lexeme('T_QUOTED_STRING', true),
         154 => new \Phplrt\Grammar\Lexeme('T_EOL', false),
+        155 => new \Phplrt\Grammar\Lexeme('T_QUOTED_STRING', true),
         0 => new \Phplrt\Grammar\Repetition(154, 0, INF)
     ],
     'reducers' => [
@@ -474,9 +477,16 @@ return [
         },
         'EnumValue' => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
+            if ($token->getName() == "T_WORD") {
+                return new \Butschster\Dbml\Ast\Enum\ValueNode(
+                    $token->getOffset(), $children[0]->getValue(), $children[1] ?? null
+                );
+            }
+
+            //is T_QUOTED_STRING
             return new \Butschster\Dbml\Ast\Enum\ValueNode(
-             $token->getOffset(), $children[0]->getValue(), $children[1] ?? null
-        );
+                $token->getOffset(), $children[0][1]->getValue(), $children[1] ?? null
+            );
         },
         'Note' => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
