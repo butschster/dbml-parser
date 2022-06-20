@@ -19,7 +19,8 @@ return [
             'T_TABLE_SETTING_UNIQUE' => '(?<=\\b)unique\\b',
             'T_TABLE_SETTING_INCREMENT' => '(?<=\\b)increment\\b',
             'T_TABLE_SETTING_DEFAULT' => '(?<=\\b)default\\b',
-            'T_TABLE_SETTING_NULL' => '(?<=\\b)null\\b',
+//            'T_TABLE_SETTING_NULL' => '(?<=\\b)null\\b',
+        // = T_NULL
             'T_TABLE_SETTING_NOT_NULL' => '(?<=\\b)not\\snull\\b',
             'T_REF_ACTION_CASCADE' => '(?<=\\b)cascade\\b',
             'T_REF_ACTION_RESTRICT' => '(?<=\\b)restrict\\b',
@@ -138,7 +139,7 @@ return [
         38 => new \Phplrt\Grammar\Lexeme('T_TABLE_SETTING_PK', true),
         39 => new \Phplrt\Grammar\Lexeme('T_TABLE_SETTING_UNIQUE', true),
         40 => new \Phplrt\Grammar\Lexeme('T_TABLE_SETTING_INCREMENT', true),
-        41 => new \Phplrt\Grammar\Lexeme('T_TABLE_SETTING_NULL', true),
+        41 => new \Phplrt\Grammar\Lexeme('T_NULL', true),
         42 => new \Phplrt\Grammar\Lexeme('T_TABLE_SETTING_NOT_NULL', true),
         43 => new \Phplrt\Grammar\Lexeme('T_TABLE_SETTING_DEFAULT', true),
         44 => new \Phplrt\Grammar\Lexeme('T_COMMA', false),
