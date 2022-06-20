@@ -10,33 +10,9 @@ class TableNodeTest extends TestCase
 {
     private TableNode $node;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->node = $this->parser->parse(<<<DBML
-Table users as U {
-    id int [pk, unique, increment, note: 'hello world'] // auto-increment
-    full_name varchar(150) [not null, unique, default: 1, ref: > profiles.id, ref: > countries.(id, name)]
-    created_at timestamp
-    country_code int
-    type int
-    note int
-    Note: 'khong hieu duoc'
-
-    indexes {
-        id [name: 'created_at_index', note: 'Date', type: hash, pk]
-        (id, name)
-    }
-}
-DBML
-        )->getTable('users');
-
-    }
-
     function test_fields_should_be_parsed()
     {
-        $this->assertCount(6, $this->node->getColumns());
+        $this->assertCount(7, $this->node->getColumns());
     }
 
     function test_indexed_should_be_parsed()
@@ -131,7 +107,7 @@ DBML
 
     function test_gets_columns()
     {
-        $this->assertCount(6, $this->node->getColumns());
+        $this->assertCount(7, $this->node->getColumns());
     }
 
     function test_gets_indexes()
@@ -168,5 +144,37 @@ DBML
         $this->assertFalse($index->isUnique());
         $this->assertNull($index->getName());
         $this->assertNull($index->getNote());
+    }
+
+    function test_ref_is_allowed_in_column_name()
+    {
+        $column = $this->node->getColumn('reference_name');
+        $this->assertEquals('reference_name', $column->getName());
+    }
+
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->node = $this->parser->parse(<<<DBML
+Table users as U {
+    id int [pk, not null, unique, increment, note: 'hello world'] // auto-increment
+    full_name varchar(150) [not null, unique, default: 1, ref: > profiles.id, ref: > countries.(id, name)]
+    created_at timestamp [not null]
+    reference_name text
+    country_code int
+    type int
+    note int
+    Note: 'khong hieu duoc'
+
+    indexes {
+        id [name: 'created_at_index', note: 'Date', type: hash, pk]
+        (id, name)
+    }
+}
+DBML
+        )->getTable('users');
+
     }
 }
