@@ -19,8 +19,8 @@ return [
             'T_TABLE_SETTING_UNIQUE' => '(?<=\\b)unique\\b',
             'T_TABLE_SETTING_INCREMENT' => '(?<=\\b)increment\\b',
             'T_TABLE_SETTING_DEFAULT' => '(?<=\\b)default\\b',
-//            'T_TABLE_SETTING_NULL' => '(?<=\\b)null\\b',
-        // = T_NULL
+//          'T_TABLE_SETTING_NULL' => '(?<=\\b)null\\b',
+//          = T_NULL
             'T_TABLE_SETTING_NOT_NULL' => '(?<=\\b)not\\snull\\b',
             'T_REF_ACTION_CASCADE' => '(?<=\\b)cascade\\b',
             'T_REF_ACTION_RESTRICT' => '(?<=\\b)restrict\\b',
@@ -83,6 +83,7 @@ return [
         'SettingNote' => new \Phplrt\Grammar\Concatenation([148, 'String', 149]),
         'String' => new \Phplrt\Grammar\Alternation([152, 153]),
         'Table' => new \Phplrt\Grammar\Concatenation([13, 'TableName', 14, 15, 0, 16, 17, 18, 19, 0]),
+        'TableNoteOrColumn' => new \Phplrt\Grammar\Alternation([10, 'Note', 'SettingNote']),
         'TableAlias' => new \Phplrt\Grammar\Concatenation([22, 23]),
         'TableColumn' => new \Phplrt\Grammar\Concatenation(['TableColumnName', 'TableColumnType', 25]),
         'TableColumnName' => new \Phplrt\Grammar\Lexeme('T_WORD', true),
@@ -114,7 +115,7 @@ return [
         13 => new \Phplrt\Grammar\Lexeme('T_TABLE', false),
         14 => new \Phplrt\Grammar\Optional('TableAlias'),
         15 => new \Phplrt\Grammar\Lexeme('T_LBRACE', false),
-        16 => new \Phplrt\Grammar\Repetition(10, 0, INF),
+        16 => new \Phplrt\Grammar\Repetition('TableNoteOrColumn', 0, INF),
         17 => new \Phplrt\Grammar\Optional(11),
         18 => new \Phplrt\Grammar\Optional(12),
         19 => new \Phplrt\Grammar\Lexeme('T_RBRACE', false),
