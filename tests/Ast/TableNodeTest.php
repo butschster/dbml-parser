@@ -11,6 +11,30 @@ class TableNodeTest extends TestCase
 {
     private TableNode $node;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->node = $this->parser->parse(
+            <<<DBML
+Table users as U {
+    id int [pk, not null, unique, increment, note: 'hello world'] // auto-increment
+    full_name varchar(150) [not null, unique, default: 1, ref: > profiles.id, ref: > countries.(id, name)]
+    created_at timestamp [not null]
+    country_code int
+    type int
+    note int
+    Note: 'khong hieu duoc'
+
+    indexes {
+        id [name: 'created_at_index', note: 'Date', type: hash, pk]
+        (id, name)
+    }
+}
+DBML
+        )->getTable('users');
+    }
+
     public function testFieldsShouldBeParsed()
     {
         $this->assertCount(6, $this->node->getColumns());
@@ -41,7 +65,7 @@ class TableNodeTest extends TestCase
         $this->assertTrue($column->isPrimaryKey());
         $this->assertTrue($column->isUnique());
         $this->assertTrue($column->isIncrement());
-        $this->assertTrue($column->isNull());
+        $this->assertFalse($column->isNull());
     }
 
     public function testGetsFullNameColumn()
@@ -145,29 +169,5 @@ class TableNodeTest extends TestCase
         $this->assertFalse($index->isUnique());
         $this->assertNull($index->getName());
         $this->assertNull($index->getNote());
-    }
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->node = $this->parser->parse(
-            <<<DBML
-Table users as U {
-    id int [pk, unique, increment, note: 'hello world'] // auto-increment
-    full_name varchar(150) [not null, unique, default: 1, ref: > profiles.id, ref: > countries.(id, name)]
-    created_at timestamp [not null]
-    country_code int
-    type int
-    note int
-    Note: 'khong hieu duoc'
-
-    indexes {
-        id [name: 'created_at_index', note: 'Date', type: hash, pk]
-        (id, name)
-    }
-}
-DBML
-        )->getTable('users');
     }
 }
