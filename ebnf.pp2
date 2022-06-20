@@ -633,7 +633,7 @@ RefCompositeTableColumn
                 );
 }
 :
-    <T_WORD>|<T_QUOTED_STRING> EnumNote()?
+    <T_WORD> EnumNote()?|<T_QUOTED_STRING> EnumNote()?
 ;
 
 EnumNote
