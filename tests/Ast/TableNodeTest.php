@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Butschster\Tests\Ast;
@@ -10,48 +11,24 @@ class TableNodeTest extends TestCase
 {
     private TableNode $node;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->node = $this->parser->parse(<<<DBML
-Table users as U {
-    id int [pk, unique, increment, note: 'hello world'] // auto-increment
-    full_name varchar(150) [not null, unique, default: 1, ref: > profiles.id, ref: > countries.(id, name)]
-    created_at timestamp
-    country_code int
-    type int
-    note int
-    Note: 'khong hieu duoc'
-
-    indexes {
-        id [name: 'created_at_index', note: 'Date', type: hash, pk]
-        (id, name)
-    }
-}
-DBML
-        )->getTable('users');
-
-    }
-
-    function test_fields_should_be_parsed()
+    public function testFieldsShouldBeParsed()
     {
         $this->assertCount(6, $this->node->getColumns());
     }
 
-    function test_indexed_should_be_parsed()
+    public function testIndexedShouldBeParsed()
     {
         $this->assertCount(2, $this->node->getIndexes());
     }
 
-    function test_non_exists_column_should_throw_an_exception()
+    public function testNonExistsColumnShouldThrowAnException()
     {
         $this->expectException(ColumnNotFoundException::class);
-        $this->expectErrorMessage("Column [not_exists] not found.");
+        $this->expectErrorMessage('Column [not_exists] not found.');
         $this->node->getColumn('not_exists');
     }
 
-    function test_gets_id_column()
+    public function testGetsIdColumn()
     {
         // id int [pk, unique, increment, note: 'hello world'] // auto-increment
         $column = $this->node->getColumn('id');
@@ -64,10 +41,10 @@ DBML
         $this->assertTrue($column->isPrimaryKey());
         $this->assertTrue($column->isUnique());
         $this->assertTrue($column->isIncrement());
-        $this->assertFalse($column->isNull());
+        $this->assertTrue($column->isNull());
     }
 
-    function test_gets_full_name_column()
+    public function testGetsFullNameColumn()
     {
         // full_name varchar(150) [not null, unique, default: 1, ref: > profiles.id, ref: > countries.(id, name)]
         $column = $this->node->getColumn('full_name');
@@ -97,7 +74,7 @@ DBML
         $this->assertEquals(['id', 'name'], $ref->getRightTable()->getColumns());
     }
 
-    function test_gets_created_at_column()
+    public function testGetsCreatedAtColumn()
     {
         // created_at timestamp
         $column = $this->node->getColumn('created_at');
@@ -114,32 +91,32 @@ DBML
         $this->assertFalse($column->isNull());
     }
 
-    function test_gets_name()
+    public function testGetsName()
     {
         $this->assertEquals('users', $this->node->getName());
     }
 
-    function test_gets_alias()
+    public function testGetsAlias()
     {
         $this->assertEquals('U', $this->node->getAlias());
     }
 
-    function test_gets_note()
+    public function testGetsNote()
     {
         $this->assertEquals('khong hieu duoc', $this->node->getNote());
     }
 
-    function test_gets_columns()
+    public function testGetsColumns()
     {
         $this->assertCount(6, $this->node->getColumns());
     }
 
-    function test_gets_indexes()
+    public function testGetsIndexes()
     {
         $this->assertCount(2, $this->node->getIndexes());
     }
 
-    function test_gets_id_index()
+    public function testGetsIdIndex()
     {
         // id [name: 'created_at_index', note: 'Date', type: hash, pk]
         $index = $this->node->getIndexes()[0];
@@ -154,7 +131,7 @@ DBML
         $this->assertEquals('Date', $index->getNote());
     }
 
-    function test_gets_id_name_index()
+    public function testGetsIdNameIndex()
     {
         // (id, name)
         $index = $this->node->getIndexes()[1];
@@ -168,5 +145,29 @@ DBML
         $this->assertFalse($index->isUnique());
         $this->assertNull($index->getName());
         $this->assertNull($index->getNote());
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->node = $this->parser->parse(
+            <<<DBML
+Table users as U {
+    id int [pk, unique, increment, note: 'hello world'] // auto-increment
+    full_name varchar(150) [not null, unique, default: 1, ref: > profiles.id, ref: > countries.(id, name)]
+    created_at timestamp [not null]
+    country_code int
+    type int
+    note int
+    Note: 'khong hieu duoc'
+
+    indexes {
+        id [name: 'created_at_index', note: 'Date', type: hash, pk]
+        (id, name)
+    }
+}
+DBML
+        )->getTable('users');
     }
 }
