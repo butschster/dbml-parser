@@ -12,7 +12,7 @@ return [
             'T_TABLE' => '(?<=\\b)Table|table\\b',
             'T_TABLE_ALIAS' => '(?<=\\b)as\\b',
             'T_TABLE_INDEXES' => '(?<=\\b)(Indexes|indexes)\\b',
-            'T_TABLE_REF' => '(Ref:|ref:)',
+            'T_TABLE_REF' => '(?<=\\b)(Ref|ref)\\b',
             'T_TABLE_GROUP' => '(?<=\\b)TableGroup\\b',
             'T_ENUM' => '(?<=\\b)(Enum|enum)\\b',
             'T_TABLE_SETTING_PK' => '(?<=\\b)(primary\\skey|pk)\\b',
