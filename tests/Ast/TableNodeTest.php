@@ -146,6 +146,13 @@ class TableNodeTest extends TestCase
         $this->assertNull($index->getNote());
     }
 
+    function test_ref_is_allowed_in_column_name()
+    {
+        $column = $this->node->getColumn('reference_name');
+        $this->assertEquals('reference_name', $column->getName());
+    }
+
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -155,6 +162,7 @@ Table users as U {
     id int [pk, not null, unique, increment, note: 'hello world'] // auto-increment
     full_name varchar(150) [not null, unique, default: 1, ref: > profiles.id, ref: > countries.(id, name)]
     created_at timestamp [not null]
+    reference_name text
     country_code int
     type int
     note int
