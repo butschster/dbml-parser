@@ -19,7 +19,7 @@
 %token  T_TABLE                     (?<=\b)Table\b
 %token  T_TABLE_ALIAS               (?<=\b)as\b
 %token  T_TABLE_INDEXES             (?<=\b)(Indexes|indexes)\b
-%token  T_TABLE_REF                 (Ref|ref)
+%token  T_TABLE_REF                 (?<=\b)(Ref|ref)\b
 %token  T_TABLE_GROUP               (?<=\b)TableGroup\b
 %token  T_ENUM                      (?<=\b)(Enum|enum)\b
 %token  T_TABLE_SETTING_PK          (?<=\b)(primary\skey|pk)\b
