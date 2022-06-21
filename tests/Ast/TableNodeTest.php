@@ -12,7 +12,7 @@ class TableNodeTest extends TestCase
 
     function test_fields_should_be_parsed()
     {
-        $this->assertCount(6, $this->node->getColumns());
+        $this->assertCount(7, $this->node->getColumns());
     }
 
     function test_indexed_should_be_parsed()
