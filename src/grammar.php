@@ -9,7 +9,7 @@ return [
             'T_BOOL_FALSE' => '(?<=\\b)false\\b',
             'T_NULL' => '(?<=\\b)null\\b',
             'T_PROJECT' => '(?<=\\b)Project\\b',
-            'T_TABLE' => '(?<=\\b)Table\\b',
+            'T_TABLE' => '(?<=\\b)Table|table\\b',
             'T_TABLE_ALIAS' => '(?<=\\b)as\\b',
             'T_TABLE_INDEXES' => '(?<=\\b)(Indexes|indexes)\\b',
             'T_TABLE_REF' => '(?<=\\b)(Ref|ref)\\b',

@@ -16,7 +16,7 @@
 
 
 %token  T_PROJECT                   (?<=\b)Project\b
-%token  T_TABLE                     (?<=\b)Table\b
+%token  T_TABLE                     (?<=\b)Table|table\b
 %token  T_TABLE_ALIAS               (?<=\b)as\b
 %token  T_TABLE_INDEXES             (?<=\b)(Indexes|indexes)\b
 %token  T_TABLE_REF                 (?<=\b)(Ref|ref)\b
