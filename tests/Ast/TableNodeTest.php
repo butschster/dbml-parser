@@ -107,7 +107,7 @@ class TableNodeTest extends TestCase
 
     function test_gets_columns()
     {
-        $this->assertCount(6, $this->node->getColumns());
+        $this->assertCount(7, $this->node->getColumns());
     }
 
     function test_gets_indexes()
