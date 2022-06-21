@@ -13,7 +13,7 @@ return [
             'T_TABLE_ALIAS' => '(?<=\\b)as\\b',
             'T_TABLE_INDEXES' => '(?<=\\b)(Indexes|indexes)\\b',
             'T_TABLE_REF' => '(?<=\\b)(Ref|ref)\\b',
-            'T_TABLE_GROUP' => '(?<=\\b(TableGroup|tablegroup)\\b',
+            'T_TABLE_GROUP' => '(?<=\\b)(TableGroup|tablegroup)\\b',
             'T_ENUM' => '(?<=\\b)(Enum|enum)\\b',
             'T_TABLE_SETTING_PK' => '(?<=\\b)(primary\\skey|pk)\\b',
             'T_TABLE_SETTING_UNIQUE' => '(?<=\\b)unique\\b',
