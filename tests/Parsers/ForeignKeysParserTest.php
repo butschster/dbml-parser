@@ -202,7 +202,7 @@ AST
     function test_relationship_short_form_with_name_should_be_parsed()
     {
         $this->assertAst(<<<DBML
-Ref name_optional: table.column < table.column
+Ref name_optional: tabla.column < tabla.column
 DBML
             , <<<AST
 <Schema offset="0">
@@ -212,7 +212,7 @@ DBML
         </RefName>
         <RefLeftTable offset="19">
             <TableName offset="19">
-                <T_WORD offset="19">table</T_WORD>
+                <T_WORD offset="19">tabla</T_WORD>
             </TableName>
             <TableColumnName offset="25">
                 <T_WORD offset="25">column</T_WORD>
@@ -221,7 +221,7 @@ DBML
         <T_LT offset="32"><</T_LT>
         <RefRightTable offset="34">
             <TableName offset="34">
-                <T_WORD offset="34">table</T_WORD>
+                <T_WORD offset="34">tabla</T_WORD>
             </TableName>
             <TableColumnName offset="40">
                 <T_WORD offset="40">column</T_WORD>
@@ -237,7 +237,7 @@ AST
     {
         $this->assertAst(<<<DBML
 Ref {
-    table.column < table.column
+    tabla.column < tabla.column
     table_second.column < table_second.column
 }
 DBML
@@ -246,7 +246,7 @@ DBML
     <Ref offset="0">
         <RefLeftTable offset="10">
             <TableName offset="10">
-                <T_WORD offset="10">table</T_WORD>
+                <T_WORD offset="10">tabla</T_WORD>
             </TableName>
             <TableColumnName offset="16">
                 <T_WORD offset="16">column</T_WORD>
@@ -255,7 +255,7 @@ DBML
         <T_LT offset="23"><</T_LT>
         <RefRightTable offset="25">
             <TableName offset="25">
-                <T_WORD offset="25">table</T_WORD>
+                <T_WORD offset="25">tabla</T_WORD>
             </TableName>
             <TableColumnName offset="31">
                 <T_WORD offset="31">column</T_WORD>
@@ -289,7 +289,7 @@ AST
     {
         $this->assertAst(<<<DBML
 Ref name_optional {
-    table.column < table.column
+    tabla.column < tabla.column
 }
 DBML
             , <<<AST
@@ -300,7 +300,7 @@ DBML
         </RefName>
         <RefLeftTable offset="24">
             <TableName offset="24">
-                <T_WORD offset="24">table</T_WORD>
+                <T_WORD offset="24">tabla</T_WORD>
             </TableName>
             <TableColumnName offset="30">
                 <T_WORD offset="30">column</T_WORD>
@@ -309,7 +309,7 @@ DBML
         <T_LT offset="37"><</T_LT>
         <RefRightTable offset="39">
             <TableName offset="39">
-                <T_WORD offset="39">table</T_WORD>
+                <T_WORD offset="39">tabla</T_WORD>
             </TableName>
             <TableColumnName offset="45">
                 <T_WORD offset="45">column</T_WORD>

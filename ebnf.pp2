@@ -15,18 +15,18 @@
 %token T_NULL                       (?<=\b)null\b
 
 
-%token  T_PROJECT                   (?<=\b)Project\b
-%token  T_TABLE                     (?<=\b)Table\b
+%token  T_PROJECT                   (?<=\b)(Project|project)\b
+%token  T_TABLE                     (?<=\b)(Table|table)\b
 %token  T_TABLE_ALIAS               (?<=\b)as\b
 %token  T_TABLE_INDEXES             (?<=\b)(Indexes|indexes)\b
-%token  T_TABLE_REF                 (Ref|ref)
-%token  T_TABLE_GROUP               (?<=\b)TableGroup\b
+%token  T_TABLE_REF                 (?<=\b)(Ref|ref)\b
+%token  T_TABLE_GROUP               (?<=\b)(TableGroup|tablegroup)\b
 %token  T_ENUM                      (?<=\b)(Enum|enum)\b
-%token  T_TABLE_SETTING_PK          (?<=\b)(primary\ske|pk)\b
+%token  T_TABLE_SETTING_PK          (?<=\b)(primary\skey|pk)\b
 %token  T_TABLE_SETTING_UNIQUE      (?<=\b)unique\b
 %token  T_TABLE_SETTING_INCREMENT   (?<=\b)increment\b
 %token  T_TABLE_SETTING_DEFAULT     (?<=\b)default\b
-%token  T_TABLE_SETTING_NULL        (?<=\b)null\b
+
 %token  T_TABLE_SETTING_NOT_NULL    (?<=\b)not\snull\b
 
 %token  T_REF_ACTION_CASCADE        (?<=\b)cascade\b
@@ -163,7 +163,7 @@
 :
     ::T_TABLE:: TableName() TableAlias()? ::T_LBRACE:: EOL()
     (TableColumn() EOL())*
-    (Note() EOL())?
+    (Note() | SettingNote() EOL())?
     TableIndexes()?
     ::T_RBRACE:: EOL()
 ;
@@ -271,7 +271,7 @@ ColumnSettingNull -> {
   );
 }
 :
-    <T_TABLE_SETTING_NULL>
+    <T_NULL>
 ;
 
 ColumnSettingNotNull -> {
@@ -610,7 +610,7 @@ RefCompositeTableColumn
 }
 :
     ::T_ENUM:: EnumName() ::T_LBRACE:: EOL()
-    (EnumValue() EOL())*
+    (EnumValue()  EOL())*
     ::T_RBRACE:: EOL()
 ;
 
@@ -620,12 +620,19 @@ RefCompositeTableColumn
 ;
 
 #EnumValue -> {
-    return new \Butschster\Dbml\Ast\Enum\ValueNode(
-         $token->getOffset(), $children[0]->getValue(), $children[1] ?? null
-    );
+     if ($token->getName() == "T_WORD") {
+                    return new \Butschster\Dbml\Ast\Enum\ValueNode(
+                        $token->getOffset(), $children[0]->getValue(), $children[1] ?? null
+                    );
+                }
+
+                //is T_QUOTED_STRING
+                return new \Butschster\Dbml\Ast\Enum\ValueNode(
+                    $token->getOffset(), $children[0][1]->getValue(), $children[1] ?? null
+                );
 }
 :
-    <T_WORD> EnumNote()?
+    <T_WORD> EnumNote()?|<T_QUOTED_STRING> EnumNote()?
 ;
 
 EnumNote

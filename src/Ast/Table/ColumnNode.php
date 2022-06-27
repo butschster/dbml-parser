@@ -23,7 +23,7 @@ class ColumnNode
     private bool $primaryKey = false;
     private bool $increment = false;
     private bool $unique = false;
-    private bool $null = false;
+    private bool $null = true;
     /** @var SettingWithValueNode[] */
     private array $settings = [];
     /** @var RefNode[]  */
