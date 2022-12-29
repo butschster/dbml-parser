@@ -8,16 +8,15 @@
 
 ![DBML-parser](https://user-images.githubusercontent.com/773481/125667174-8b349bc0-fb5f-49a2-a651-1cac06bba151.jpg)
 
-DBML (database markup language) is a simple, readable DSL language designed to define database structures. This page
-outlines the full syntax documentations of DBML.
+DBML (Database Markup Language) is a domain-specific language (DSL) designed to define database structures in a simple and readable format.
 
-**See** https://www.dbml.org
+> **Note**
+> 
+> This page has all the info on how it works. Check out https://www.dbml.org for more info.
 
-Work on this parser inspired by service - https://dbdiagram.io/ I like using db diagram service for visualizing database
-structure. It will be great to use db diagram to build database schema and then convert it to Object tree and then
-generate, for example, Laravel models and migrations.
+We were inspired by the cool service at https://dbdiagram.io/ to create this parser. It's super useful for visualizing databases and we thought it'd be great to use it to build schema and then turn it into an object tree for generating things like [CycleORM](https://cycle-orm.dev/) entity schemas, Laravel models, and migrations.
 
-For parsing dbml structure I used a very useful php package - https://phplrt.org.
+To parse DBML, we used a handy PHP package called https://phplrt.org.
 
 ## Features
 
@@ -29,7 +28,7 @@ For parsing dbml structure I used a very useful php package - https://phplrt.org
 
 ## Quick start
 
-From the command line run
+To install the package, run the following command from the root directory of your project:
 
 ```shell
 composer require butschster/dbml-parser
