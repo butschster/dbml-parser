@@ -16,135 +16,145 @@ class FullSchemaParserTest extends TestCase
                 <T_WORD offset="8">test</T_WORD>
             </String>
         </ProjectName>
-        <ProjectSetting offset="18">
-            <ProjectSettingKey offset="18">
-                <T_WORD offset="18">database_type</T_WORD>
+        <ProjectSetting offset="17">
+            <ProjectSettingKey offset="17">
+                <T_WORD offset="17">database_type</T_WORD>
             </ProjectSettingKey>
-            <String offset="33">
-                <T_QUOTED_STRING offset="33">'PostgreSQL'</T_QUOTED_STRING>
+            <String offset="32">
+                <T_QUOTED_STRING offset="32">'PostgreSQL'</T_QUOTED_STRING>
             </String>
         </ProjectSetting>
-        <Note offset="49">
-            <String offset="55">
-                <T_QUOTED_STRING offset="55">'Description of the project'</T_QUOTED_STRING>
+        <Note offset="47">
+            <String offset="53">
+                <T_QUOTED_STRING offset="53">'Description of the project'</T_QUOTED_STRING>
             </String>
         </Note>
     </Project>
-    <Table offset="160">
-        <TableName offset="166">
-            <T_WORD offset="166">users</T_WORD>
+    <Table offset="151">
+        <TableName offset="157">
+            <T_WORD offset="157">users</T_WORD>
         </TableName>
-        <TableAlias offset="172">
-            <T_WORD offset="175">U</T_WORD>
+        <TableAlias offset="163">
+            <T_WORD offset="166">U</T_WORD>
         </TableAlias>
-        <TableColumn offset="182">
-            <TableColumnName offset="182">
-                <T_WORD offset="182">id</T_WORD>
+        <TableColumn offset="172">
+            <TableColumnName offset="172">
+                <T_WORD offset="172">id</T_WORD>
             </TableColumnName>
-            <TableColumnType offset="185">
-                <TableColumnTypeName offset="185">
-                    <T_WORD offset="185">int</T_WORD>
+            <TableColumnType offset="175">
+                <TableColumnTypeName offset="175">
+                    <T_WORD offset="175">int</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
-            <T_TABLE_SETTING_PK offset="190">pk</T_TABLE_SETTING_PK>
-            <T_TABLE_SETTING_UNIQUE offset="194">unique</T_TABLE_SETTING_UNIQUE>
-            <T_TABLE_SETTING_INCREMENT offset="202">increment</T_TABLE_SETTING_INCREMENT>
+            <T_TABLE_SETTING_PK offset="180">pk</T_TABLE_SETTING_PK>
+            <T_TABLE_SETTING_UNIQUE offset="184">unique</T_TABLE_SETTING_UNIQUE>
+            <T_TABLE_SETTING_INCREMENT offset="192">increment</T_TABLE_SETTING_INCREMENT>
         </TableColumn>
-        <TableColumn offset="234">
-            <TableColumnName offset="234">
-                <T_WORD offset="234">full_name</T_WORD>
+        <TableColumn offset="223">
+            <TableColumnName offset="223">
+                <T_WORD offset="223">full_name</T_WORD>
             </TableColumnName>
-            <TableColumnType offset="244">
-                <TableColumnTypeName offset="244">
-                    <T_WORD offset="244">varchar</T_WORD>
+            <TableColumnType offset="233">
+                <TableColumnTypeName offset="233">
+                    <T_WORD offset="233">varchar</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
-            <T_TABLE_SETTING_NOT_NULL offset="253">not null</T_TABLE_SETTING_NOT_NULL>
-            <T_TABLE_SETTING_UNIQUE offset="263">unique</T_TABLE_SETTING_UNIQUE>
-            <T_TABLE_SETTING_DEFAULT offset="271">default</T_TABLE_SETTING_DEFAULT>
-            <String offset="280">
-                <T_WORD offset="280">1</T_WORD>
+            <T_TABLE_SETTING_NOT_NULL offset="242">not null</T_TABLE_SETTING_NOT_NULL>
+            <T_TABLE_SETTING_UNIQUE offset="252">unique</T_TABLE_SETTING_UNIQUE>
+            <T_TABLE_SETTING_DEFAULT offset="260">default</T_TABLE_SETTING_DEFAULT>
+            <String offset="269">
+                <T_WORD offset="269">1</T_WORD>
             </String>
         </TableColumn>
-        <TableColumn offset="286">
-            <TableColumnName offset="286">
-                <T_WORD offset="286">created_at</T_WORD>
+        <TableColumn offset="274">
+            <TableColumnName offset="274">
+                <T_WORD offset="274">created_at</T_WORD>
             </TableColumnName>
-            <TableColumnType offset="297">
-                <TableColumnTypeName offset="297">
-                    <T_WORD offset="297">timestamp</T_WORD>
+            <TableColumnType offset="285">
+                <TableColumnTypeName offset="285">
+                    <T_WORD offset="285">timestamp</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
         </TableColumn>
-        <TableColumn offset="310">
-            <TableColumnName offset="310">
-                <T_WORD offset="310">country_code</T_WORD>
+        <TableColumn offset="297">
+            <TableColumnName offset="297">
+                <T_WORD offset="297">country_code</T_WORD>
             </TableColumnName>
-            <TableColumnType offset="323">
-                <TableColumnTypeName offset="323">
-                    <T_WORD offset="323">int</T_WORD>
+            <TableColumnType offset="310">
+                <TableColumnTypeName offset="310">
+                    <T_WORD offset="310">int</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
         </TableColumn>
-        <TableColumn offset="330">
-            <TableColumnName offset="330">
-                <T_WORD offset="330">type</T_WORD>
+        <TableColumn offset="316">
+            <TableColumnName offset="316">
+                <T_WORD offset="316">type</T_WORD>
             </TableColumnName>
-            <TableColumnType offset="335">
-                <TableColumnTypeName offset="335">
-                    <T_WORD offset="335">int</T_WORD>
+            <TableColumnType offset="321">
+                <TableColumnTypeName offset="321">
+                    <T_WORD offset="321">int</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
         </TableColumn>
-        <TableColumn offset="342">
-            <TableColumnName offset="342">
-                <T_WORD offset="342">note</T_WORD>
+        <TableColumn offset="327">
+            <TableColumnName offset="327">
+                <T_WORD offset="327">note</T_WORD>
             </TableColumnName>
-            <TableColumnType offset="347">
-                <TableColumnTypeName offset="347">
-                    <T_WORD offset="347">int</T_WORD>
+            <TableColumnType offset="332">
+                <TableColumnTypeName offset="332">
+                    <T_WORD offset="332">int</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
         </TableColumn>
-        <Note offset="354">
-            <String offset="360">
-                <T_QUOTED_STRING offset="360">'khong hieu duoc'</T_QUOTED_STRING>
+        <Note offset="338">
+            <String offset="344">
+                <T_QUOTED_STRING offset="344">'khong hieu duoc'</T_QUOTED_STRING>
             </String>
         </Note>
     </Table>
-    <Table offset="384">
-        <TableName offset="390">
-            <T_WORD offset="390">merchants</T_WORD>
+    <Table offset="365">
+        <TableName offset="371">
+            <T_WORD offset="371">merchants</T_WORD>
         </TableName>
-        <TableColumn offset="405">
-            <TableColumnName offset="405">
-                <T_WORD offset="405">id</T_WORD>
+        <TableColumn offset="385">
+            <TableColumnName offset="385">
+                <T_WORD offset="385">id</T_WORD>
             </TableColumnName>
-            <TableColumnType offset="408">
-                <TableColumnTypeName offset="408">
-                    <T_WORD offset="408">int</T_WORD>
+            <TableColumnType offset="388">
+                <TableColumnTypeName offset="388">
+                    <T_WORD offset="388">int</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
         </TableColumn>
     </Table>
-    <Table offset="418">
-        <TableName offset="424">
-            <T_WORD offset="424">countries</T_WORD>
+    <Table offset="395">
+        <TableName offset="401">
+            <T_WORD offset="401">countries</T_WORD>
         </TableName>
-        <TableColumn offset="439">
-            <TableColumnName offset="439">
-                <T_WORD offset="439">code</T_WORD>
+        <TableColumn offset="415">
+            <TableColumnName offset="415">
+                <T_WORD offset="415">code</T_WORD>
             </TableColumnName>
-            <TableColumnType offset="444">
-                <TableColumnTypeName offset="444">
-                    <T_WORD offset="444">int</T_WORD>
+            <TableColumnType offset="420">
+                <TableColumnTypeName offset="420">
+                    <T_WORD offset="420">int</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
-            <T_TABLE_SETTING_PK offset="449">pk</T_TABLE_SETTING_PK>
+            <T_TABLE_SETTING_PK offset="425">pk</T_TABLE_SETTING_PK>
         </TableColumn>
-        <TableColumn offset="456">
-            <TableColumnName offset="456">
-                <T_WORD offset="456">name</T_WORD>
+        <TableColumn offset="431">
+            <TableColumnName offset="431">
+                <T_WORD offset="431">name</T_WORD>
+            </TableColumnName>
+            <TableColumnType offset="436">
+                <TableColumnTypeName offset="436">
+                    <T_WORD offset="436">varchar</T_WORD>
+                </TableColumnTypeName>
+            </TableColumnType>
+        </TableColumn>
+        <TableColumn offset="446">
+            <TableColumnName offset="446">
+                <T_WORD offset="446">continent_name</T_WORD>
             </TableColumnName>
             <TableColumnType offset="461">
                 <TableColumnTypeName offset="461">
@@ -152,344 +162,334 @@ class FullSchemaParserTest extends TestCase
                 </TableColumnTypeName>
             </TableColumnType>
         </TableColumn>
-        <TableColumn offset="472">
-            <TableColumnName offset="472">
-                <T_WORD offset="472">continent_name</T_WORD>
-            </TableColumnName>
-            <TableColumnType offset="487">
-                <TableColumnTypeName offset="487">
-                    <T_WORD offset="487">varchar</T_WORD>
-                </TableColumnTypeName>
-            </TableColumnType>
-        </TableColumn>
     </Table>
-    <Ref offset="620">
-        <RefLeftTable offset="628">
-            <TableName offset="628">
-                <T_WORD offset="628">U</T_WORD>
+    <Ref offset="588">
+        <RefLeftTable offset="595">
+            <TableName offset="595">
+                <T_WORD offset="595">U</T_WORD>
             </TableName>
-            <TableColumnName offset="630">
-                <T_WORD offset="630">country_code</T_WORD>
+            <TableColumnName offset="597">
+                <T_WORD offset="597">country_code</T_WORD>
             </TableColumnName>
         </RefLeftTable>
-        <T_GT offset="643">></T_GT>
-        <RefRightTable offset="645">
-            <TableName offset="645">
-                <T_WORD offset="645">countries</T_WORD>
+        <T_GT offset="610">></T_GT>
+        <RefRightTable offset="612">
+            <TableName offset="612">
+                <T_WORD offset="612">countries</T_WORD>
             </TableName>
-            <TableColumnName offset="655">
-                <T_WORD offset="655">code</T_WORD>
+            <TableColumnName offset="622">
+                <T_WORD offset="622">code</T_WORD>
             </TableColumnName>
         </RefRightTable>
-        <RefLeftTable offset="663">
-            <TableName offset="663">
-                <T_WORD offset="663">merchants</T_WORD>
+        <RefLeftTable offset="629">
+            <TableName offset="629">
+                <T_WORD offset="629">merchants</T_WORD>
             </TableName>
-            <TableColumnName offset="673">
-                <T_WORD offset="673">country_code</T_WORD>
+            <TableColumnName offset="639">
+                <T_WORD offset="639">country_code</T_WORD>
             </TableColumnName>
         </RefLeftTable>
-        <T_GT offset="686">></T_GT>
-        <RefRightTable offset="688">
-            <TableName offset="688">
-                <T_WORD offset="688">countries</T_WORD>
+        <T_GT offset="652">></T_GT>
+        <RefRightTable offset="654">
+            <TableName offset="654">
+                <T_WORD offset="654">countries</T_WORD>
             </TableName>
-            <TableColumnName offset="698">
-                <T_WORD offset="698">code</T_WORD>
+            <TableColumnName offset="664">
+                <T_WORD offset="664">code</T_WORD>
             </TableColumnName>
         </RefRightTable>
     </Ref>
-    <Table offset="814">
-        <TableName offset="820">
-            <T_WORD offset="820">order_items</T_WORD>
+    <Table offset="772">
+        <TableName offset="778">
+            <T_WORD offset="778">order_items</T_WORD>
         </TableName>
-        <TableColumn offset="837">
-            <TableColumnName offset="837">
-                <T_WORD offset="837">order_id</T_WORD>
+        <TableColumn offset="794">
+            <TableColumnName offset="794">
+                <T_WORD offset="794">order_id</T_WORD>
             </TableColumnName>
-            <TableColumnType offset="846">
-                <TableColumnTypeName offset="846">
-                    <T_WORD offset="846">int</T_WORD>
+            <TableColumnType offset="803">
+                <TableColumnTypeName offset="803">
+                    <T_WORD offset="803">int</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
-            <TableColumnRef offset="851">
-                <T_GT offset="856">></T_GT>
-                <RefRightTable offset="858">
-                    <TableName offset="858">
-                        <T_WORD offset="858">orders</T_WORD>
+            <TableColumnRef offset="808">
+                <T_GT offset="813">></T_GT>
+                <RefRightTable offset="815">
+                    <TableName offset="815">
+                        <T_WORD offset="815">orders</T_WORD>
                     </TableName>
-                    <TableColumnName offset="865">
-                        <T_WORD offset="865">id</T_WORD>
+                    <TableColumnName offset="822">
+                        <T_WORD offset="822">id</T_WORD>
                     </TableColumnName>
                 </RefRightTable>
             </TableColumnRef>
         </TableColumn>
-        <TableColumn offset="872">
-            <TableColumnName offset="872">
-                <T_WORD offset="872">product_id</T_WORD>
+        <TableColumn offset="828">
+            <TableColumnName offset="828">
+                <T_WORD offset="828">product_id</T_WORD>
             </TableColumnName>
-            <TableColumnType offset="883">
-                <TableColumnTypeName offset="883">
-                    <T_WORD offset="883">int</T_WORD>
+            <TableColumnType offset="839">
+                <TableColumnTypeName offset="839">
+                    <T_WORD offset="839">int</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
         </TableColumn>
-        <TableColumn offset="890">
-            <TableColumnName offset="890">
-                <T_WORD offset="890">quantity</T_WORD>
+        <TableColumn offset="845">
+            <TableColumnName offset="845">
+                <T_WORD offset="845">quantity</T_WORD>
             </TableColumnName>
-            <TableColumnType offset="899">
-                <TableColumnTypeName offset="899">
-                    <T_WORD offset="899">int</T_WORD>
+            <TableColumnType offset="854">
+                <TableColumnTypeName offset="854">
+                    <T_WORD offset="854">int</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
-            <T_TABLE_SETTING_DEFAULT offset="904">default</T_TABLE_SETTING_DEFAULT>
-            <String offset="913">
-                <T_WORD offset="913">1</T_WORD>
+            <T_TABLE_SETTING_DEFAULT offset="859">default</T_TABLE_SETTING_DEFAULT>
+            <String offset="868">
+                <T_WORD offset="868">1</T_WORD>
             </String>
         </TableColumn>
     </Table>
-    <Ref offset="939">
-        <RefLeftTable offset="944">
-            <TableName offset="944">
-                <T_WORD offset="944">order_items</T_WORD>
+    <Ref offset="891">
+        <RefLeftTable offset="896">
+            <TableName offset="896">
+                <T_WORD offset="896">order_items</T_WORD>
             </TableName>
-            <TableColumnName offset="956">
-                <T_WORD offset="956">product_id</T_WORD>
+            <TableColumnName offset="908">
+                <T_WORD offset="908">product_id</T_WORD>
             </TableColumnName>
         </RefLeftTable>
-        <T_GT offset="967">></T_GT>
-        <RefRightTable offset="969">
-            <TableName offset="969">
-                <T_WORD offset="969">products</T_WORD>
+        <T_GT offset="919">></T_GT>
+        <RefRightTable offset="921">
+            <TableName offset="921">
+                <T_WORD offset="921">products</T_WORD>
             </TableName>
-            <TableColumnName offset="978">
-                <T_WORD offset="978">id</T_WORD>
+            <TableColumnName offset="930">
+                <T_WORD offset="930">id</T_WORD>
             </TableColumnName>
         </RefRightTable>
     </Ref>
-    <Table offset="984">
-        <TableName offset="990">
-            <T_WORD offset="990">orders</T_WORD>
+    <Table offset="934">
+        <TableName offset="940">
+            <T_WORD offset="940">orders</T_WORD>
         </TableName>
-        <TableColumn offset="1002">
-            <TableColumnName offset="1002">
-                <T_WORD offset="1002">id</T_WORD>
+        <TableColumn offset="951">
+            <TableColumnName offset="951">
+                <T_WORD offset="951">id</T_WORD>
             </TableColumnName>
-            <TableColumnType offset="1005">
-                <TableColumnTypeName offset="1005">
-                    <T_WORD offset="1005">int</T_WORD>
+            <TableColumnType offset="954">
+                <TableColumnTypeName offset="954">
+                    <T_WORD offset="954">int</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
-            <T_TABLE_SETTING_PK offset="1010">pk</T_TABLE_SETTING_PK>
+            <T_TABLE_SETTING_PK offset="959">pk</T_TABLE_SETTING_PK>
         </TableColumn>
-        <TableColumn offset="1032">
-            <TableColumnName offset="1032">
-                <T_WORD offset="1032">user_id</T_WORD>
+        <TableColumn offset="980">
+            <TableColumnName offset="980">
+                <T_WORD offset="980">user_id</T_WORD>
             </TableColumnName>
-            <TableColumnType offset="1040">
-                <TableColumnTypeName offset="1040">
-                    <T_WORD offset="1040">int</T_WORD>
+            <TableColumnType offset="988">
+                <TableColumnTypeName offset="988">
+                    <T_WORD offset="988">int</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
-            <T_TABLE_SETTING_NOT_NULL offset="1045">not null</T_TABLE_SETTING_NOT_NULL>
-            <T_TABLE_SETTING_UNIQUE offset="1055">unique</T_TABLE_SETTING_UNIQUE>
+            <T_TABLE_SETTING_NOT_NULL offset="993">not null</T_TABLE_SETTING_NOT_NULL>
+            <T_TABLE_SETTING_UNIQUE offset="1003">unique</T_TABLE_SETTING_UNIQUE>
         </TableColumn>
-        <TableColumn offset="1066">
-            <TableColumnName offset="1066">
-                <T_WORD offset="1066">status</T_WORD>
+        <TableColumn offset="1013">
+            <TableColumnName offset="1013">
+                <T_WORD offset="1013">status</T_WORD>
             </TableColumnName>
-            <TableColumnType offset="1073">
-                <TableColumnTypeName offset="1073">
-                    <T_WORD offset="1073">varchar</T_WORD>
+            <TableColumnType offset="1020">
+                <TableColumnTypeName offset="1020">
+                    <T_WORD offset="1020">varchar</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
         </TableColumn>
-        <TableColumn offset="1084">
-            <TableColumnName offset="1084">
-                <T_WORD offset="1084">created_at</T_WORD>
+        <TableColumn offset="1030">
+            <TableColumnName offset="1030">
+                <T_WORD offset="1030">created_at</T_WORD>
             </TableColumnName>
-            <TableColumnType offset="1095">
-                <TableColumnTypeName offset="1095">
-                    <T_WORD offset="1095">varchar</T_WORD>
+            <TableColumnType offset="1041">
+                <TableColumnTypeName offset="1041">
+                    <T_WORD offset="1041">varchar</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
-            <SettingNote offset="1104">
-                <String offset="1110">
-                    <T_QUOTED_STRING offset="1110">'''When order created'''</T_QUOTED_STRING>
+            <SettingNote offset="1050">
+                <String offset="1056">
+                    <T_QUOTED_STRING offset="1056">'''When order created'''</T_QUOTED_STRING>
                 </String>
             </SettingNote>
         </TableColumn>
     </Table>
-    <Table offset="1161">
-        <TableName offset="1167">
-            <T_WORD offset="1167">int</T_WORD>
+    <Table offset="1104">
+        <TableName offset="1110">
+            <T_WORD offset="1110">int</T_WORD>
         </TableName>
-        <TableColumn offset="1176">
-            <TableColumnName offset="1176">
-                <T_WORD offset="1176">id</T_WORD>
+        <TableColumn offset="1118">
+            <TableColumnName offset="1118">
+                <T_WORD offset="1118">id</T_WORD>
             </TableColumnName>
-            <TableColumnType offset="1179">
-                <TableColumnTypeName offset="1179">
-                    <T_WORD offset="1179">int</T_WORD>
+            <TableColumnType offset="1121">
+                <TableColumnTypeName offset="1121">
+                    <T_WORD offset="1121">int</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
         </TableColumn>
     </Table>
-    <Enum offset="1321">
-        <EnumName offset="1326">
-            <T_WORD offset="1326">products_status</T_WORD>
+    <Enum offset="1254">
+        <EnumName offset="1259">
+            <T_WORD offset="1259">products_status</T_WORD>
         </EnumName>
-        <EnumValue offset="1347">
-            <T_WORD offset="1347">out_of_stock</T_WORD>
+        <EnumValue offset="1279">
+            <T_WORD offset="1279">out_of_stock</T_WORD>
         </EnumValue>
-        <EnumValue offset="1363">
-            <T_WORD offset="1363">in_stock</T_WORD>
+        <EnumValue offset="1294">
+            <T_WORD offset="1294">in_stock</T_WORD>
         </EnumValue>
-        <EnumValue offset="1375">
-            <T_WORD offset="1375">running_low</T_WORD>
-            <SettingNote offset="1388">
-                <String offset="1394">
-                    <T_QUOTED_STRING offset="1394">'less than 20'</T_QUOTED_STRING>
+        <EnumValue offset="1305">
+            <T_WORD offset="1305">running_low</T_WORD>
+            <SettingNote offset="1318">
+                <String offset="1324">
+                    <T_QUOTED_STRING offset="1324">'less than 20'</T_QUOTED_STRING>
                 </String>
             </SettingNote>
         </EnumValue>
     </Enum>
-    <Table offset="1494">
-        <TableName offset="1500">
-            <T_WORD offset="1500">products</T_WORD>
+    <Table offset="1420">
+        <TableName offset="1426">
+            <T_WORD offset="1426">products</T_WORD>
         </TableName>
-        <TableColumn offset="1514">
-            <TableColumnName offset="1514">
-                <T_WORD offset="1514">id</T_WORD>
+        <TableColumn offset="1439">
+            <TableColumnName offset="1439">
+                <T_WORD offset="1439">id</T_WORD>
             </TableColumnName>
-            <TableColumnType offset="1517">
-                <TableColumnTypeName offset="1517">
-                    <T_WORD offset="1517">int</T_WORD>
+            <TableColumnType offset="1442">
+                <TableColumnTypeName offset="1442">
+                    <T_WORD offset="1442">int</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
-            <T_TABLE_SETTING_PK offset="1522">pk</T_TABLE_SETTING_PK>
+            <T_TABLE_SETTING_PK offset="1447">pk</T_TABLE_SETTING_PK>
         </TableColumn>
-        <TableColumn offset="1529">
-            <TableColumnName offset="1529">
-                <T_WORD offset="1529">name</T_WORD>
+        <TableColumn offset="1453">
+            <TableColumnName offset="1453">
+                <T_WORD offset="1453">name</T_WORD>
             </TableColumnName>
-            <TableColumnType offset="1534">
-                <TableColumnTypeName offset="1534">
-                    <T_WORD offset="1534">varchar</T_WORD>
-                </TableColumnTypeName>
-            </TableColumnType>
-        </TableColumn>
-        <TableColumn offset="1545">
-            <TableColumnName offset="1545">
-                <T_WORD offset="1545">merchant_id</T_WORD>
-            </TableColumnName>
-            <TableColumnType offset="1557">
-                <TableColumnTypeName offset="1557">
-                    <T_WORD offset="1557">int</T_WORD>
-                </TableColumnTypeName>
-            </TableColumnType>
-            <T_TABLE_SETTING_NOT_NULL offset="1562">not null</T_TABLE_SETTING_NOT_NULL>
-        </TableColumn>
-        <TableColumn offset="1575">
-            <TableColumnName offset="1575">
-                <T_WORD offset="1575">price</T_WORD>
-            </TableColumnName>
-            <TableColumnType offset="1581">
-                <TableColumnTypeName offset="1581">
-                    <T_WORD offset="1581">int</T_WORD>
+            <TableColumnType offset="1458">
+                <TableColumnTypeName offset="1458">
+                    <T_WORD offset="1458">varchar</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
         </TableColumn>
-        <TableColumn offset="1588">
-            <TableColumnName offset="1588">
-                <T_WORD offset="1588">status</T_WORD>
+        <TableColumn offset="1468">
+            <TableColumnName offset="1468">
+                <T_WORD offset="1468">merchant_id</T_WORD>
             </TableColumnName>
-            <TableColumnType offset="1595">
-                <TableColumnTypeName offset="1595">
-                    <T_WORD offset="1595">products_status</T_WORD>
+            <TableColumnType offset="1480">
+                <TableColumnTypeName offset="1480">
+                    <T_WORD offset="1480">int</T_WORD>
+                </TableColumnTypeName>
+            </TableColumnType>
+            <T_TABLE_SETTING_NOT_NULL offset="1485">not null</T_TABLE_SETTING_NOT_NULL>
+        </TableColumn>
+        <TableColumn offset="1497">
+            <TableColumnName offset="1497">
+                <T_WORD offset="1497">price</T_WORD>
+            </TableColumnName>
+            <TableColumnType offset="1503">
+                <TableColumnTypeName offset="1503">
+                    <T_WORD offset="1503">int</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
         </TableColumn>
-        <TableColumn offset="1614">
-            <TableColumnName offset="1614">
-                <T_WORD offset="1614">created_at</T_WORD>
+        <TableColumn offset="1509">
+            <TableColumnName offset="1509">
+                <T_WORD offset="1509">status</T_WORD>
             </TableColumnName>
-            <TableColumnType offset="1625">
-                <TableColumnTypeName offset="1625">
-                    <T_WORD offset="1625">datetime</T_WORD>
+            <TableColumnType offset="1516">
+                <TableColumnTypeName offset="1516">
+                    <T_WORD offset="1516">products_status</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
-            <T_TABLE_SETTING_DEFAULT offset="1635">default</T_TABLE_SETTING_DEFAULT>
-            <Expression offset="1644">
-                <T_EXPRESSION offset="1644">`now()`</T_EXPRESSION>
+        </TableColumn>
+        <TableColumn offset="1534">
+            <TableColumnName offset="1534">
+                <T_WORD offset="1534">created_at</T_WORD>
+            </TableColumnName>
+            <TableColumnType offset="1545">
+                <TableColumnTypeName offset="1545">
+                    <T_WORD offset="1545">datetime</T_WORD>
+                </TableColumnTypeName>
+            </TableColumnType>
+            <T_TABLE_SETTING_DEFAULT offset="1555">default</T_TABLE_SETTING_DEFAULT>
+            <Expression offset="1564">
+                <T_EXPRESSION offset="1564">`now()`</T_EXPRESSION>
             </Expression>
         </TableColumn>
-        <TableIndex offset="1673">
-            <TableIndexCompositeField offset="1673">
-                <String offset="1674">
-                    <T_WORD offset="1674">merchant_id</T_WORD>
+        <TableIndex offset="1590">
+            <TableIndexCompositeField offset="1590">
+                <String offset="1591">
+                    <T_WORD offset="1591">merchant_id</T_WORD>
                 </String>
-                <String offset="1687">
-                    <T_WORD offset="1687">status</T_WORD>
+                <String offset="1604">
+                    <T_WORD offset="1604">status</T_WORD>
                 </String>
             </TableIndexCompositeField>
-            <TableIndexSettings offset="1695">
-                <TableIndexSettingWithValue offset="1696">
-                    <T_WORD offset="1696">name</T_WORD>
-                    <String offset="1701">
-                        <T_QUOTED_STRING offset="1701">'product_status'</T_QUOTED_STRING>
+            <TableIndexSettings offset="1612">
+                <TableIndexSettingWithValue offset="1613">
+                    <T_WORD offset="1613">name</T_WORD>
+                    <String offset="1618">
+                        <T_QUOTED_STRING offset="1618">'product_status'</T_QUOTED_STRING>
                     </String>
                 </TableIndexSettingWithValue>
-                <TableIndexSettingWithValue offset="1719">
-                    <T_WORD offset="1719">type</T_WORD>
-                    <String offset="1725">
-                        <T_WORD offset="1725">hash</T_WORD>
+                <TableIndexSettingWithValue offset="1636">
+                    <T_WORD offset="1636">type</T_WORD>
+                    <String offset="1642">
+                        <T_WORD offset="1642">hash</T_WORD>
                     </String>
                 </TableIndexSettingWithValue>
             </TableIndexSettings>
         </TableIndex>
-        <TableIndex offset="1736">
-            <TableIndexSingleField offset="1736">
-                <String offset="1736">
-                    <T_WORD offset="1736">id</T_WORD>
+        <TableIndex offset="1652">
+            <TableIndexSingleField offset="1652">
+                <String offset="1652">
+                    <T_WORD offset="1652">id</T_WORD>
                 </String>
             </TableIndexSingleField>
-            <TableIndexSettings offset="1739">
-                <TableIndexSetting offset="1740">
-                    <T_TABLE_SETTING_UNIQUE offset="1740">unique</T_TABLE_SETTING_UNIQUE>
+            <TableIndexSettings offset="1655">
+                <TableIndexSetting offset="1656">
+                    <T_TABLE_SETTING_UNIQUE offset="1656">unique</T_TABLE_SETTING_UNIQUE>
                 </TableIndexSetting>
             </TableIndexSettings>
         </TableIndex>
     </Table>
-    <Ref offset="1759">
-        <RefLeftTable offset="1764">
-            <TableName offset="1764">
-                <T_WORD offset="1764">products</T_WORD>
+    <Ref offset="1671">
+        <RefLeftTable offset="1676">
+            <TableName offset="1676">
+                <T_WORD offset="1676">products</T_WORD>
             </TableName>
-            <TableColumnName offset="1773">
-                <T_WORD offset="1773">merchant_id</T_WORD>
+            <TableColumnName offset="1685">
+                <T_WORD offset="1685">merchant_id</T_WORD>
             </TableColumnName>
         </RefLeftTable>
-        <T_GT offset="1785">></T_GT>
-        <RefRightTable offset="1787">
-            <TableName offset="1787">
-                <T_WORD offset="1787">merchants</T_WORD>
+        <T_GT offset="1697">></T_GT>
+        <RefRightTable offset="1699">
+            <TableName offset="1699">
+                <T_WORD offset="1699">merchants</T_WORD>
             </TableName>
-            <TableColumnName offset="1797">
-                <T_WORD offset="1797">id</T_WORD>
+            <TableColumnName offset="1709">
+                <T_WORD offset="1709">id</T_WORD>
             </TableColumnName>
         </RefRightTable>
     </Ref>
-    <TableGroup offset="1818">
-        <TableGroupName offset="1829">
-            <T_WORD offset="1829">hello_world</T_WORD>
+    <TableGroup offset="1728">
+        <TableGroupName offset="1739">
+            <T_WORD offset="1739">hello_world</T_WORD>
         </TableGroupName>
-        <TableName offset="1848">
-            <T_WORD offset="1848">just_test</T_WORD>
+        <TableName offset="1757">
+            <T_WORD offset="1757">just_test</T_WORD>
         </TableName>
-        <TableName offset="1863">
-            <T_WORD offset="1863">just_a_test</T_WORD>
+        <TableName offset="1771">
+            <T_WORD offset="1771">just_a_test</T_WORD>
         </TableName>
     </TableGroup>
 </Schema>

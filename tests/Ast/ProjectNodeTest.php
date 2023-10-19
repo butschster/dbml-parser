@@ -52,7 +52,7 @@ DBML
 
         $this->assertEquals('database_type', $setting->getKey());
         $this->assertEquals('PostgreSQL', $setting->getValue());
-        $this->assertEquals(26, $setting->getOffset());
+        $this->assertEquals(25, $setting->getOffset());
     }
 
     function test_parse_project_without_note()
