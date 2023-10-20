@@ -19,18 +19,20 @@ return [
             'T_TABLE_SETTING_UNIQUE' => '(?<=\\b)unique\\b',
             'T_TABLE_SETTING_INCREMENT' => '(?<=\\b)increment\\b',
             'T_TABLE_SETTING_DEFAULT' => '(?<=\\b)default\\b',
+            'T_TABLE_COLUMN_SIZE' => '\\([0-9\\,]+\\)',
             'T_TABLE_SETTING_NOT_NULL' => '(?<=\\b)not\\snull\\b',
             'T_REF_ACTION_CASCADE' => '(?<=\\b)cascade\\b',
             'T_REF_ACTION_RESTRICT' => '(?<=\\b)restrict\\b',
             'T_REF_ACTION_SET_NULL' => '(?<=\\b)set\\snull\\b',
             'T_REF_ACTION_SET_DEFAULT' => '(?<=\\b)set\\default\\b',
             'T_REF_ACTION_NO_ACTION' => '(?<=\\b)no\\saction\\b',
+            'T_REF_ACTION_DESTROY' => '(?<=\\b)destroy\\b',
             'T_REF_ACTION_DELETE' => '(?<=\\b)delete\\b',
             'T_REF_ACTION_UPDATE' => '(?<=\\b)update\\b',
             'T_SETTING_NOTE' => 'note:',
             'T_NOTE' => '(?<=\\b)Note\\b',
             'T_FLOAT' => '[0-9]+\\.[0-9]+',
-            'T_INT' => '[0-9]+',
+            'T_INT' => '^[0-9]+$',
             'T_QUOTED_STRING' => '(\'{3}|["\']{1})([^\'"][\\s\\S]*?)\\1',
             'T_EXPRESSION' => '(`{1})([\\s\\S]+?)\\1',
             'T_WORD' => '[a-zA-Z0-9_]+',
@@ -54,47 +56,9 @@ return [
         'T_COMMENT',
     ],
     'transitions' => [
-
+        
     ],
     'grammar' => [
-        'Boolean' => new \Phplrt\Parser\Grammar\Alternation([155, 156]),
-        'Document' => new \Phplrt\Parser\Grammar\Concatenation(['Schema']),
-        'Enum' => new \Phplrt\Parser\Grammar\Concatenation([132, 'EnumName', 133, 0, 134, 135, 0]),
-        'EnumName' => new \Phplrt\Parser\Grammar\Lexeme('T_WORD', true),
-        'EnumValue' => new \Phplrt\Parser\Grammar\Alternation([139, 142]),
-        'Expression' => new \Phplrt\Parser\Grammar\Lexeme('T_EXPRESSION', true),
-        'Float' => new \Phplrt\Parser\Grammar\Lexeme('T_FLOAT', true),
-        'Int' => new \Phplrt\Parser\Grammar\Lexeme('T_INT', true),
-        'Note' => new \Phplrt\Parser\Grammar\Concatenation([150, 151]),
-        'Null' => new \Phplrt\Parser\Grammar\Lexeme('T_NULL', true),
-        'Project' => new \Phplrt\Parser\Grammar\Concatenation([5, 'ProjectName', 6, 0, 7, 8, 0]),
-        'ProjectName' => new \Phplrt\Parser\Grammar\Concatenation(['String']),
-        'ProjectSetting' => new \Phplrt\Parser\Grammar\Concatenation(['ProjectSettingKey', 9, 'String', 0]),
-        'ProjectSettingKey' => new \Phplrt\Parser\Grammar\Lexeme('T_WORD', true),
-        'Ref' => new \Phplrt\Parser\Grammar\Concatenation([76, 77]),
-        'RefLeftTable' => new \Phplrt\Parser\Grammar\Concatenation(['TableName', 116, 117]),
-        'RefName' => new \Phplrt\Parser\Grammar\Lexeme('T_WORD', true),
-        'RefRightTable' => new \Phplrt\Parser\Grammar\Concatenation(['TableName', 118, 119]),
-        'Schema' => new \Phplrt\Parser\Grammar\Repetition(2, 0, INF),
-        'SettingNote' => new \Phplrt\Parser\Grammar\Concatenation([153, 'String', 154]),
-        'String' => new \Phplrt\Parser\Grammar\Alternation([157, 158]),
-        'Table' => new \Phplrt\Parser\Grammar\Concatenation([14, 'TableName', 15, 16, 0, 17, 18, 19, 20, 0]),
-        'TableAlias' => new \Phplrt\Parser\Grammar\Concatenation([23, 24]),
-        'TableColumn' => new \Phplrt\Parser\Grammar\Concatenation(['TableColumnName', 'TableColumnType', 26]),
-        'TableColumnName' => new \Phplrt\Parser\Grammar\Lexeme('T_WORD', true),
-        'TableColumnRef' => new \Phplrt\Parser\Grammar\Concatenation([80, 81, 78, 82]),
-        'TableColumnType' => new \Phplrt\Parser\Grammar\Concatenation(['TableColumnTypeName', 27]),
-        'TableColumnTypeName' => new \Phplrt\Parser\Grammar\Lexeme('T_WORD', true),
-        'TableColumnTypeSize' => new \Phplrt\Parser\Grammar\Concatenation([28, 'Int', 29]),
-        'TableGroup' => new \Phplrt\Parser\Grammar\Concatenation([127, 'TableGroupName', 128, 0, 129, 130, 0]),
-        'TableGroupName' => new \Phplrt\Parser\Grammar\Lexeme('T_WORD', true),
-        'TableIndex' => new \Phplrt\Parser\Grammar\Concatenation([54, 55]),
-        'TableIndexCompositeField' => new \Phplrt\Parser\Grammar\Concatenation([60, 61, 62]),
-        'TableIndexSetting' => new \Phplrt\Parser\Grammar\Concatenation([67, 69]),
-        'TableIndexSettingWithValue' => new \Phplrt\Parser\Grammar\Concatenation([71, 72, 'String', 73]),
-        'TableIndexSettings' => new \Phplrt\Parser\Grammar\Concatenation([64, 65, 66]),
-        'TableIndexSingleField' => new \Phplrt\Parser\Grammar\Alternation(['String', 'Expression']),
-        'TableName' => new \Phplrt\Parser\Grammar\Alternation([21, 22]),
         1 => new \Phplrt\Parser\Grammar\Concatenation(['Ref', 0]),
         2 => new \Phplrt\Parser\Grammar\Alternation(['Project', 'Table', 'TableGroup', 'Enum', 1]),
         3 => new \Phplrt\Parser\Grammar\Concatenation(['Note', 0]),
@@ -107,7 +71,7 @@ return [
         10 => new \Phplrt\Parser\Grammar\Concatenation(['TableColumn', 0]),
         11 => new \Phplrt\Parser\Grammar\Concatenation(['SettingNote', 0]),
         12 => new \Phplrt\Parser\Grammar\Alternation(['Note', 11]),
-        13 => new \Phplrt\Parser\Grammar\Concatenation([50, 51, 0, 52, 53]),
+        13 => new \Phplrt\Parser\Grammar\Concatenation([48, 49, 0, 50, 51]),
         14 => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE', false),
         15 => new \Phplrt\Parser\Grammar\Optional('TableAlias'),
         16 => new \Phplrt\Parser\Grammar\Lexeme('T_LBRACE', false),
@@ -119,87 +83,87 @@ return [
         22 => new \Phplrt\Parser\Grammar\Lexeme('T_INT', true),
         23 => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE_ALIAS', false),
         24 => new \Phplrt\Parser\Grammar\Lexeme('T_WORD', true),
-        25 => new \Phplrt\Parser\Grammar\Concatenation([33, 34, 35]),
+        25 => new \Phplrt\Parser\Grammar\Concatenation([31, 32, 33]),
         26 => new \Phplrt\Parser\Grammar\Optional(25),
         27 => new \Phplrt\Parser\Grammar\Optional('TableColumnTypeSize'),
-        28 => new \Phplrt\Parser\Grammar\Lexeme('T_LPAREN', false),
-        29 => new \Phplrt\Parser\Grammar\Lexeme('T_RPAREN', false),
-        30 => new \Phplrt\Parser\Grammar\Concatenation([44, 46, 47, 48]),
-        31 => new \Phplrt\Parser\Grammar\Concatenation([36, 38]),
-        32 => new \Phplrt\Parser\Grammar\Alternation(['SettingNote', 'TableColumnRef', 30, 31]),
-        33 => new \Phplrt\Parser\Grammar\Lexeme('T_LBRACK', false),
-        34 => new \Phplrt\Parser\Grammar\Repetition(32, 0, INF),
-        35 => new \Phplrt\Parser\Grammar\Lexeme('T_RBRACK', false),
-        36 => new \Phplrt\Parser\Grammar\Alternation([39, 40, 41, 42, 43]),
-        37 => new \Phplrt\Parser\Grammar\Lexeme('T_COMMA', false),
-        38 => new \Phplrt\Parser\Grammar\Optional(37),
-        39 => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE_SETTING_PK', true),
-        40 => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE_SETTING_UNIQUE', true),
-        41 => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE_SETTING_INCREMENT', true),
-        42 => new \Phplrt\Parser\Grammar\Lexeme('T_NULL', true),
-        43 => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE_SETTING_NOT_NULL', true),
-        44 => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE_SETTING_DEFAULT', true),
-        45 => new \Phplrt\Parser\Grammar\Lexeme('T_COMMA', false),
-        46 => new \Phplrt\Parser\Grammar\Lexeme('T_COLON', false),
-        47 => new \Phplrt\Parser\Grammar\Alternation(['Expression', 'Float', 'Int', 'Boolean', 'Null', 'String']),
-        48 => new \Phplrt\Parser\Grammar\Optional(45),
-        49 => new \Phplrt\Parser\Grammar\Concatenation(['TableIndex', 0]),
-        50 => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE_INDEXES', false),
-        51 => new \Phplrt\Parser\Grammar\Lexeme('T_LBRACE', false),
-        52 => new \Phplrt\Parser\Grammar\Repetition(49, 0, INF),
-        53 => new \Phplrt\Parser\Grammar\Lexeme('T_RBRACE', false),
-        54 => new \Phplrt\Parser\Grammar\Alternation(['TableIndexCompositeField', 'TableIndexSingleField']),
-        55 => new \Phplrt\Parser\Grammar\Optional('TableIndexSettings'),
-        56 => new \Phplrt\Parser\Grammar\Lexeme('T_COMMA', false),
-        57 => new \Phplrt\Parser\Grammar\Alternation(['String', 'Expression']),
-        58 => new \Phplrt\Parser\Grammar\Optional(56),
-        59 => new \Phplrt\Parser\Grammar\Concatenation([57, 58]),
-        60 => new \Phplrt\Parser\Grammar\Lexeme('T_LPAREN', false),
-        61 => new \Phplrt\Parser\Grammar\Repetition(59, 0, INF),
-        62 => new \Phplrt\Parser\Grammar\Lexeme('T_RPAREN', false),
-        63 => new \Phplrt\Parser\Grammar\Alternation(['SettingNote', 'TableIndexSettingWithValue', 'TableIndexSetting']),
-        64 => new \Phplrt\Parser\Grammar\Lexeme('T_LBRACK', false),
-        65 => new \Phplrt\Parser\Grammar\Repetition(63, 0, INF),
-        66 => new \Phplrt\Parser\Grammar\Lexeme('T_RBRACK', false),
-        67 => new \Phplrt\Parser\Grammar\Alternation([39, 40]),
+        28 => new \Phplrt\Parser\Grammar\Concatenation([42, 44, 45, 46]),
+        29 => new \Phplrt\Parser\Grammar\Concatenation([34, 36]),
+        30 => new \Phplrt\Parser\Grammar\Alternation(['SettingNote', 'TableColumnRef', 28, 29]),
+        31 => new \Phplrt\Parser\Grammar\Lexeme('T_LBRACK', false),
+        32 => new \Phplrt\Parser\Grammar\Repetition(30, 0, INF),
+        33 => new \Phplrt\Parser\Grammar\Lexeme('T_RBRACK', false),
+        34 => new \Phplrt\Parser\Grammar\Alternation([37, 38, 39, 40, 41]),
+        35 => new \Phplrt\Parser\Grammar\Lexeme('T_COMMA', false),
+        36 => new \Phplrt\Parser\Grammar\Optional(35),
+        37 => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE_SETTING_PK', true),
+        38 => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE_SETTING_UNIQUE', true),
+        39 => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE_SETTING_INCREMENT', true),
+        40 => new \Phplrt\Parser\Grammar\Lexeme('T_NULL', true),
+        41 => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE_SETTING_NOT_NULL', true),
+        42 => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE_SETTING_DEFAULT', true),
+        43 => new \Phplrt\Parser\Grammar\Lexeme('T_COMMA', false),
+        44 => new \Phplrt\Parser\Grammar\Lexeme('T_COLON', false),
+        45 => new \Phplrt\Parser\Grammar\Alternation(['Expression', 'Float', 'Int', 'Boolean', 'Null', 'String']),
+        46 => new \Phplrt\Parser\Grammar\Optional(43),
+        47 => new \Phplrt\Parser\Grammar\Concatenation(['TableIndex', 0]),
+        48 => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE_INDEXES', false),
+        49 => new \Phplrt\Parser\Grammar\Lexeme('T_LBRACE', false),
+        50 => new \Phplrt\Parser\Grammar\Repetition(47, 0, INF),
+        51 => new \Phplrt\Parser\Grammar\Lexeme('T_RBRACE', false),
+        52 => new \Phplrt\Parser\Grammar\Alternation(['TableIndexCompositeField', 'TableIndexSingleField']),
+        53 => new \Phplrt\Parser\Grammar\Optional('TableIndexSettings'),
+        54 => new \Phplrt\Parser\Grammar\Lexeme('T_COMMA', false),
+        55 => new \Phplrt\Parser\Grammar\Alternation(['String', 'Expression']),
+        56 => new \Phplrt\Parser\Grammar\Optional(54),
+        57 => new \Phplrt\Parser\Grammar\Concatenation([55, 56]),
+        58 => new \Phplrt\Parser\Grammar\Lexeme('T_LPAREN', false),
+        59 => new \Phplrt\Parser\Grammar\Repetition(57, 0, INF),
+        60 => new \Phplrt\Parser\Grammar\Lexeme('T_RPAREN', false),
+        61 => new \Phplrt\Parser\Grammar\Alternation(['SettingNote', 'TableIndexSettingWithValue', 'TableIndexSetting']),
+        62 => new \Phplrt\Parser\Grammar\Lexeme('T_LBRACK', false),
+        63 => new \Phplrt\Parser\Grammar\Repetition(61, 0, INF),
+        64 => new \Phplrt\Parser\Grammar\Lexeme('T_RBRACK', false),
+        65 => new \Phplrt\Parser\Grammar\Alternation([37, 38]),
+        66 => new \Phplrt\Parser\Grammar\Lexeme('T_COMMA', false),
+        67 => new \Phplrt\Parser\Grammar\Optional(66),
         68 => new \Phplrt\Parser\Grammar\Lexeme('T_COMMA', false),
-        69 => new \Phplrt\Parser\Grammar\Optional(68),
-        70 => new \Phplrt\Parser\Grammar\Lexeme('T_COMMA', false),
-        71 => new \Phplrt\Parser\Grammar\Lexeme('T_WORD', true),
-        72 => new \Phplrt\Parser\Grammar\Lexeme('T_COLON', false),
-        73 => new \Phplrt\Parser\Grammar\Optional(70),
-        74 => new \Phplrt\Parser\Grammar\Concatenation([85, 86, 84]),
-        75 => new \Phplrt\Parser\Grammar\Concatenation([87, 88, 0, 89, 90, 0]),
-        76 => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE_REF', false),
-        77 => new \Phplrt\Parser\Grammar\Alternation([74, 75]),
-        78 => new \Phplrt\Parser\Grammar\Concatenation([83, 'RefRightTable']),
-        79 => new \Phplrt\Parser\Grammar\Lexeme('T_COMMA', false),
-        80 => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE_REF', false),
-        81 => new \Phplrt\Parser\Grammar\Lexeme('T_COLON', false),
-        82 => new \Phplrt\Parser\Grammar\Optional(79),
-        83 => new \Phplrt\Parser\Grammar\Alternation([93, 94, 95]),
-        84 => new \Phplrt\Parser\Grammar\Concatenation(['RefLeftTable', 83, 'RefRightTable', 92]),
+        69 => new \Phplrt\Parser\Grammar\Lexeme('T_WORD', true),
+        70 => new \Phplrt\Parser\Grammar\Lexeme('T_COLON', false),
+        71 => new \Phplrt\Parser\Grammar\Optional(68),
+        72 => new \Phplrt\Parser\Grammar\Concatenation([83, 84, 82]),
+        73 => new \Phplrt\Parser\Grammar\Concatenation([85, 86, 0, 87, 88, 0]),
+        74 => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE_REF', false),
+        75 => new \Phplrt\Parser\Grammar\Alternation([72, 73]),
+        76 => new \Phplrt\Parser\Grammar\Concatenation([81, 'RefRightTable']),
+        77 => new \Phplrt\Parser\Grammar\Lexeme('T_COMMA', false),
+        78 => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE_REF', false),
+        79 => new \Phplrt\Parser\Grammar\Lexeme('T_COLON', false),
+        80 => new \Phplrt\Parser\Grammar\Optional(77),
+        81 => new \Phplrt\Parser\Grammar\Alternation([91, 92, 93]),
+        82 => new \Phplrt\Parser\Grammar\Concatenation(['RefLeftTable', 81, 'RefRightTable', 90]),
+        83 => new \Phplrt\Parser\Grammar\Optional('RefName'),
+        84 => new \Phplrt\Parser\Grammar\Lexeme('T_COLON', false),
         85 => new \Phplrt\Parser\Grammar\Optional('RefName'),
-        86 => new \Phplrt\Parser\Grammar\Lexeme('T_COLON', false),
-        87 => new \Phplrt\Parser\Grammar\Optional('RefName'),
-        88 => new \Phplrt\Parser\Grammar\Lexeme('T_LBRACE', false),
-        89 => new \Phplrt\Parser\Grammar\Repetition(84, 0, INF),
-        90 => new \Phplrt\Parser\Grammar\Lexeme('T_RBRACE', false),
-        91 => new \Phplrt\Parser\Grammar\Concatenation([99, 100, 101]),
-        92 => new \Phplrt\Parser\Grammar\Optional(91),
-        93 => new \Phplrt\Parser\Grammar\Lexeme('T_GT', true),
-        94 => new \Phplrt\Parser\Grammar\Lexeme('T_LT', true),
-        95 => new \Phplrt\Parser\Grammar\Lexeme('T_MINUS', true),
-        96 => new \Phplrt\Parser\Grammar\Concatenation([103, 104, 102]),
-        97 => new \Phplrt\Parser\Grammar\Concatenation([105, 106, 102]),
-        98 => new \Phplrt\Parser\Grammar\Alternation([96, 97]),
-        99 => new \Phplrt\Parser\Grammar\Lexeme('T_LBRACK', false),
-        100 => new \Phplrt\Parser\Grammar\Repetition(98, 0, INF),
-        101 => new \Phplrt\Parser\Grammar\Lexeme('T_RBRACK', false),
-        102 => new \Phplrt\Parser\Grammar\Concatenation([113, 114]),
-        103 => new \Phplrt\Parser\Grammar\Lexeme('T_REF_ACTION_UPDATE', true),
-        104 => new \Phplrt\Parser\Grammar\Lexeme('T_COLON', false),
-        105 => new \Phplrt\Parser\Grammar\Lexeme('T_REF_ACTION_DELETE', true),
+        86 => new \Phplrt\Parser\Grammar\Lexeme('T_LBRACE', false),
+        87 => new \Phplrt\Parser\Grammar\Repetition(82, 0, INF),
+        88 => new \Phplrt\Parser\Grammar\Lexeme('T_RBRACE', false),
+        89 => new \Phplrt\Parser\Grammar\Concatenation([97, 98, 99]),
+        90 => new \Phplrt\Parser\Grammar\Optional(89),
+        91 => new \Phplrt\Parser\Grammar\Lexeme('T_GT', true),
+        92 => new \Phplrt\Parser\Grammar\Lexeme('T_LT', true),
+        93 => new \Phplrt\Parser\Grammar\Lexeme('T_MINUS', true),
+        94 => new \Phplrt\Parser\Grammar\Concatenation([101, 102, 100]),
+        95 => new \Phplrt\Parser\Grammar\Concatenation([105, 106, 100]),
+        96 => new \Phplrt\Parser\Grammar\Alternation([94, 95]),
+        97 => new \Phplrt\Parser\Grammar\Lexeme('T_LBRACK', false),
+        98 => new \Phplrt\Parser\Grammar\Repetition(96, 0, INF),
+        99 => new \Phplrt\Parser\Grammar\Lexeme('T_RBRACK', false),
+        100 => new \Phplrt\Parser\Grammar\Concatenation([113, 114]),
+        101 => new \Phplrt\Parser\Grammar\Lexeme('T_REF_ACTION_UPDATE', true),
+        102 => new \Phplrt\Parser\Grammar\Lexeme('T_COLON', false),
+        103 => new \Phplrt\Parser\Grammar\Lexeme('T_REF_ACTION_DELETE', true),
+        104 => new \Phplrt\Parser\Grammar\Lexeme('T_REF_ACTION_DESTROY', true),
+        105 => new \Phplrt\Parser\Grammar\Alternation([103, 104]),
         106 => new \Phplrt\Parser\Grammar\Lexeme('T_COLON', false),
         107 => new \Phplrt\Parser\Grammar\Lexeme('T_REF_ACTION_CASCADE', true),
         108 => new \Phplrt\Parser\Grammar\Lexeme('T_REF_ACTION_RESTRICT', true),
@@ -254,6 +218,44 @@ return [
         157 => new \Phplrt\Parser\Grammar\Lexeme('T_WORD', true),
         158 => new \Phplrt\Parser\Grammar\Lexeme('T_QUOTED_STRING', true),
         159 => new \Phplrt\Parser\Grammar\Lexeme('T_EOL', false),
+        'Boolean' => new \Phplrt\Parser\Grammar\Alternation([155, 156]),
+        'Document' => new \Phplrt\Parser\Grammar\Concatenation(['Schema']),
+        'Enum' => new \Phplrt\Parser\Grammar\Concatenation([132, 'EnumName', 133, 0, 134, 135, 0]),
+        'EnumName' => new \Phplrt\Parser\Grammar\Lexeme('T_WORD', true),
+        'EnumValue' => new \Phplrt\Parser\Grammar\Alternation([139, 142]),
+        'Expression' => new \Phplrt\Parser\Grammar\Lexeme('T_EXPRESSION', true),
+        'Float' => new \Phplrt\Parser\Grammar\Lexeme('T_FLOAT', true),
+        'Int' => new \Phplrt\Parser\Grammar\Lexeme('T_INT', true),
+        'Note' => new \Phplrt\Parser\Grammar\Concatenation([150, 151]),
+        'Null' => new \Phplrt\Parser\Grammar\Lexeme('T_NULL', true),
+        'Project' => new \Phplrt\Parser\Grammar\Concatenation([5, 'ProjectName', 6, 0, 7, 8, 0]),
+        'ProjectName' => new \Phplrt\Parser\Grammar\Concatenation(['String']),
+        'ProjectSetting' => new \Phplrt\Parser\Grammar\Concatenation(['ProjectSettingKey', 9, 'String', 0]),
+        'ProjectSettingKey' => new \Phplrt\Parser\Grammar\Lexeme('T_WORD', true),
+        'Ref' => new \Phplrt\Parser\Grammar\Concatenation([74, 75]),
+        'RefLeftTable' => new \Phplrt\Parser\Grammar\Concatenation(['TableName', 116, 117]),
+        'RefName' => new \Phplrt\Parser\Grammar\Lexeme('T_WORD', true),
+        'RefRightTable' => new \Phplrt\Parser\Grammar\Concatenation(['TableName', 118, 119]),
+        'Schema' => new \Phplrt\Parser\Grammar\Repetition(2, 0, INF),
+        'SettingNote' => new \Phplrt\Parser\Grammar\Concatenation([153, 'String', 154]),
+        'String' => new \Phplrt\Parser\Grammar\Alternation([157, 158]),
+        'Table' => new \Phplrt\Parser\Grammar\Concatenation([14, 'TableName', 15, 16, 0, 17, 18, 19, 20, 0]),
+        'TableAlias' => new \Phplrt\Parser\Grammar\Concatenation([23, 24]),
+        'TableColumn' => new \Phplrt\Parser\Grammar\Concatenation(['TableColumnName', 'TableColumnType', 26]),
+        'TableColumnName' => new \Phplrt\Parser\Grammar\Lexeme('T_WORD', true),
+        'TableColumnRef' => new \Phplrt\Parser\Grammar\Concatenation([78, 79, 76, 80]),
+        'TableColumnType' => new \Phplrt\Parser\Grammar\Concatenation(['TableColumnTypeName', 27]),
+        'TableColumnTypeName' => new \Phplrt\Parser\Grammar\Lexeme('T_WORD', true),
+        'TableColumnTypeSize' => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE_COLUMN_SIZE', true),
+        'TableGroup' => new \Phplrt\Parser\Grammar\Concatenation([127, 'TableGroupName', 128, 0, 129, 130, 0]),
+        'TableGroupName' => new \Phplrt\Parser\Grammar\Lexeme('T_WORD', true),
+        'TableIndex' => new \Phplrt\Parser\Grammar\Concatenation([52, 53]),
+        'TableIndexCompositeField' => new \Phplrt\Parser\Grammar\Concatenation([58, 59, 60]),
+        'TableIndexSetting' => new \Phplrt\Parser\Grammar\Concatenation([65, 67]),
+        'TableIndexSettingWithValue' => new \Phplrt\Parser\Grammar\Concatenation([69, 70, 'String', 71]),
+        'TableIndexSettings' => new \Phplrt\Parser\Grammar\Concatenation([62, 63, 64]),
+        'TableIndexSingleField' => new \Phplrt\Parser\Grammar\Alternation(['String', 'Expression']),
+        'TableName' => new \Phplrt\Parser\Grammar\Alternation([21, 22]),
         0 => new \Phplrt\Parser\Grammar\Repetition(159, 0, INF)
     ],
     'reducers' => [
@@ -263,256 +265,262 @@ return [
         'Project' => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
             return new \Butschster\Dbml\Ast\ProjectNode(
-                $token->getOffset(), $children
-            );
+            $token->getOffset(), $children
+        );
         },
         'ProjectName' => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
             return new \Butschster\Dbml\Ast\Project\NameNode(
-                $token->getOffset(), \end($children)
-            );
+            $token->getOffset(), \end($children)
+        );
         },
         'ProjectSetting' => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
             return new \Butschster\Dbml\Ast\Project\SettingNode(
-                $token->getOffset(), \current($children), \end($children)
-            );
+            $token->getOffset(), \current($children), \end($children)
+        );
         },
         'ProjectSettingKey' => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
             return new \Butschster\Dbml\Ast\Project\SettingKeyNode(
-                $token->getOffset(), $children->getValue()
-            );
+            $token->getOffset(), $children->getValue()
+        );
         },
         'Table' => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
             return new \Butschster\Dbml\Ast\TableNode(
-                $token->getOffset(), $children[0]->getValue(), $children
-            );
+            $token->getOffset(), $children[0]->getValue(), $children
+        );
         },
         'TableName' => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
             return new \Butschster\Dbml\Ast\Table\NameNode(
-                $token->getOffset(), $children->getValue()
-            );
+            $token->getOffset(), $children->getValue()
+        );
         },
         'TableAlias' => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
             return new \Butschster\Dbml\Ast\Table\AliasNode(
-                $token->getOffset(), $children[0]->getValue()
-            );
+           $token->getOffset(), $children[0]->getValue()
+       );
         },
         'TableColumn' => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
             return new \Butschster\Dbml\Ast\Table\ColumnNode(
-                $token->getOffset(), $children[0], $children[1], array_slice($children, 2)
-            );
+            $token->getOffset(), $children[0], $children[1], array_slice($children, 2)
+        );
         },
         'TableColumnName' => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
             return new \Butschster\Dbml\Ast\Table\Column\NameNode(
-                $token->getOffset(), $children->getValue()
-            );
+            $token->getOffset(), $children->getValue()
+        );
         },
         'TableColumnType' => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
             return new \Butschster\Dbml\Ast\Table\Column\TypeNode(
-                $token->getOffset(), $children[0], $children[1] ?? null
-            );
+            $token->getOffset(), $children[0], $children[1] ?? null
+        );
         },
         'TableColumnTypeName' => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
             return new \Butschster\Dbml\Ast\Table\NameNode(
-                $token->getOffset(), $children->getValue()
-            );
+            $token->getOffset(), $children->getValue()
+        );
         },
-        42 => function (\Phplrt\Parser\Context $ctx, $children) {
+        'TableColumnTypeSize' => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\Table\Column\Setting\NullNode(
-                $token->getOffset()
-            );
-        },
-        43 => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\Table\Column\Setting\NotNullNode(
-                $token->getOffset()
-            );
-        },
-        41 => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\Table\Column\Setting\IncrementNode(
-                $token->getOffset()
-            );
-        },
-        39 => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\Table\Column\Setting\PrimaryKeyNode(
-                $token->getOffset()
-            );
+            return new \Butschster\Dbml\Ast\Table\Column\SizeNode(
+            $token->getOffset(), $children->getValue()
+        );
         },
         40 => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\Table\Column\Setting\UniqueNode(
-                $token->getOffset()
-            );
+            return new \Butschster\Dbml\Ast\Table\Column\Setting\NullNode(
+          $token->getOffset()
+      );
         },
-        30 => function (\Phplrt\Parser\Context $ctx, $children) {
+        41 => function (\Phplrt\Parser\Context $ctx, $children) {
+            $token = $ctx->getToken();
+            return new \Butschster\Dbml\Ast\Table\Column\Setting\NotNullNode(
+          $token->getOffset()
+      );
+        },
+        39 => function (\Phplrt\Parser\Context $ctx, $children) {
+            $token = $ctx->getToken();
+            return new \Butschster\Dbml\Ast\Table\Column\Setting\IncrementNode(
+          $token->getOffset()
+      );
+        },
+        37 => function (\Phplrt\Parser\Context $ctx, $children) {
+            $token = $ctx->getToken();
+            return new \Butschster\Dbml\Ast\Table\Column\Setting\PrimaryKeyNode(
+          $token->getOffset()
+      );
+        },
+        38 => function (\Phplrt\Parser\Context $ctx, $children) {
+            $token = $ctx->getToken();
+            return new \Butschster\Dbml\Ast\Table\Column\Setting\UniqueNode(
+          $token->getOffset()
+      );
+        },
+        28 => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
             return new \Butschster\Dbml\Ast\Table\Column\SettingWithValueNode(
-                $token->getOffset(), $children[0]->getValue(), $children[1]
-            );
+            $token->getOffset(), $children[0]->getValue(), $children[1]
+        );
         },
         'TableIndex' => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
             return new \Butschster\Dbml\Ast\Table\IndexNode(
-                $token->getOffset(), $children[0], array_slice($children, 1)
-            );
+            $token->getOffset(), $children[0], array_slice($children, 1)
+        );
         },
         'TableIndexSingleField' => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
             return new \Butschster\Dbml\Ast\Table\Index\FieldsNode(
-                $token->getOffset(), [$children]
-            );
+          $token->getOffset(), [$children]
+        );
         },
         'TableIndexCompositeField' => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
             return new \Butschster\Dbml\Ast\Table\Index\FieldsNode(
-                $token->getOffset(), $children
-            );
+           $token->getOffset(), $children
+        );
         },
         'TableIndexSettingWithValue' => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
             return new \Butschster\Dbml\Ast\Table\Column\SettingWithValueNode(
-                $token->getOffset(), $children[0]->getValue(), $children[1]
-            );
+            $token->getOffset(), $children[0]->getValue(), $children[1]
+        );
         },
         'TableColumnRef' => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
             return new \Butschster\Dbml\Ast\RefNode(
-                $token->getOffset(), $children
-            );
+            $token->getOffset(), $children
+        );
         },
-        78 => function (\Phplrt\Parser\Context $ctx, $children) {
+        76 => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
             return new \Butschster\Dbml\Ast\Ref\ColumnsNode(
-                $token->getOffset(), $children
-            );
+            $token->getOffset(), $children
+        );
         },
         'RefName' => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
             return new \Butschster\Dbml\Ast\Ref\NameNode(
-                $token->getOffset(), $children->getValue()
-            );
+            $token->getOffset(), $children->getValue()
+        );
         },
-        74 => function (\Phplrt\Parser\Context $ctx, $children) {
+        72 => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
             return new \Butschster\Dbml\Ast\RefNode(
-                $token->getOffset(), $children
-            );
+            $token->getOffset(), $children
+        );
         },
-        75 => function (\Phplrt\Parser\Context $ctx, $children) {
+        73 => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
             return new \Butschster\Dbml\Ast\Ref\GroupNode(
-                $token->getOffset(), $children
-            );
+           $token->getOffset(), $children
+       );
         },
-        84 => function (\Phplrt\Parser\Context $ctx, $children) {
+        82 => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
             return new \Butschster\Dbml\Ast\Ref\ColumnsNode(
-                $token->getOffset(), $children
-            );
-        },
-        96 => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\Ref\Action\OnUpdateNode(
-                $token->getOffset(), $children[1]->getValue()
-            );
-        },
-        97 => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\Ref\Action\OnDeleteNode(
-                $token->getOffset(), $children[1]->getValue()
-            );
-        },
-        93 => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\Ref\Type\ManyToOneNode(
-                $token->getOffset()
-            );
-        },
-        95 => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\Ref\Type\OneToOneNode(
-                $token->getOffset()
-            );
+            $token->getOffset(), $children
+        );
         },
         94 => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
+            return new \Butschster\Dbml\Ast\Ref\Action\OnUpdateNode(
+           $token->getOffset(), $children[1]->getValue()
+       );
+        },
+        95 => function (\Phplrt\Parser\Context $ctx, $children) {
+            $token = $ctx->getToken();
+            return new \Butschster\Dbml\Ast\Ref\Action\OnDeleteNode(
+           $token->getOffset(), $children[1]->getValue()
+       );
+        },
+        91 => function (\Phplrt\Parser\Context $ctx, $children) {
+            $token = $ctx->getToken();
+            return new \Butschster\Dbml\Ast\Ref\Type\ManyToOneNode(
+           $token->getOffset()
+        );
+        },
+        93 => function (\Phplrt\Parser\Context $ctx, $children) {
+            $token = $ctx->getToken();
+            return new \Butschster\Dbml\Ast\Ref\Type\OneToOneNode(
+           $token->getOffset()
+       );
+        },
+        92 => function (\Phplrt\Parser\Context $ctx, $children) {
+            $token = $ctx->getToken();
             return new \Butschster\Dbml\Ast\Ref\Type\OneToManyNode(
-                $token->getOffset()
-            );
+           $token->getOffset()
+       );
         },
         'RefLeftTable' => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
             return new \Butschster\Dbml\Ast\Ref\LeftTableNode(
-                $token->getOffset(), $children[0], array_slice($children, 1)
-            );
+            $token->getOffset(), $children[0], array_slice($children, 1)
+        );
         },
         'RefRightTable' => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
             return new \Butschster\Dbml\Ast\Ref\RightTableNode(
-                $token->getOffset(), $children[0], array_slice($children, 1)
-            );
+           $token->getOffset(), $children[0], array_slice($children, 1)
+       );
         },
         'TableGroup' => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
             return new \Butschster\Dbml\Ast\TableGroupNode(
-                $token->getOffset(), $children[0]->getValue(), array_slice($children, 1)
-            );
+            $token->getOffset(), $children[0]->getValue(), array_slice($children, 1)
+        );
         },
         'Enum' => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
             return new \Butschster\Dbml\Ast\EnumNode(
-                $token->getOffset(), $children[0]->getValue(), array_slice($children, 1)
-            );
+            $token->getOffset(), $children[0]->getValue(), array_slice($children, 1)
+        );
         },
         'EnumValue' => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
             if ($token->getName() == "T_WORD") {
-                return new \Butschster\Dbml\Ast\Enum\ValueNode(
-                    $token->getOffset(), $children[0]->getValue(), $children[1] ?? null
-                );
-            }
-
-            //is T_QUOTED_STRING
-            return new \Butschster\Dbml\Ast\Enum\ValueNode(
-                $token->getOffset(), $children[0][1]->getValue(), $children[1] ?? null
-            );
+                        return new \Butschster\Dbml\Ast\Enum\ValueNode(
+                            $token->getOffset(), $children[0]->getValue(), $children[1] ?? null
+                        );
+                    }
+    
+                    //is T_QUOTED_STRING
+                    return new \Butschster\Dbml\Ast\Enum\ValueNode(
+                        $token->getOffset(), $children[0][1]->getValue(), $children[1] ?? null
+                    );
         },
         'Note' => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
             return new \Butschster\Dbml\Ast\NoteNode(
-                $token->getOffset(), \end($children)
-            );
+            $token->getOffset(), \end($children)
+        );
         },
         'SettingNote' => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
             return new \Butschster\Dbml\Ast\NoteNode(
-                $token->getOffset(), \end($children)
-            );
+            $token->getOffset(), \end($children)
+        );
         },
         'Expression' => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
             return new \Butschster\Dbml\Ast\Values\ExpressionNode(
-                $token->getOffset(), $children->getValue()
-            );
+           $token->getOffset(), $children->getValue()
+       );
         },
         'Boolean' => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
             return new \Butschster\Dbml\Ast\Values\BooleanNode(
-                $token->getOffset(),
-                $children->getName() === 'T_BOOL_TRUE'
-            );
+            $token->getOffset(),
+            $children->getName() === 'T_BOOL_TRUE'
+        );
         },
         'Null' => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
@@ -521,21 +529,21 @@ return [
         'Float' => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
             return new \Butschster\Dbml\Ast\Values\FloatNode(
-                $token->getOffset(), $children->getValue()
-            );
+            $token->getOffset(), $children->getValue()
+        );
         },
         'Int' => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
             return new \Butschster\Dbml\Ast\Values\IntNode(
-                $token->getOffset(), $children->getValue()
-            );
+           $token->getOffset(), $children->getValue()
+       );
         },
         'String' => function (\Phplrt\Parser\Context $ctx, $children) {
             $token = $ctx->getToken();
             return new \Butschster\Dbml\Ast\Values\StringNode(
-                $token->getOffset(),
-                $children
-            );
+            $token->getOffset(),
+            $children
+        );
         }
     ]
 ];

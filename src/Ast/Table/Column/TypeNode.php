@@ -4,17 +4,17 @@ declare(strict_types=1);
 namespace Butschster\Dbml\Ast\Table\Column;
 
 use Butschster\Dbml\Ast\Table\NameNode;
-use Butschster\Dbml\Ast\Values\IntNode;
 
 class TypeNode
 {
     private string $name;
-    private ?int $size = null;
+    private ?array $size = null;
 
     public function __construct(
-        private int $offset, NameNode $type, ?IntNode $size = null
-    )
-    {
+        private int $offset,
+        NameNode $type,
+        ?SizeNode $size = null,
+    ) {
         $this->name = $type->getValue();
         $this->size = $size ? $size->getValue() : null;
     }
@@ -37,6 +37,14 @@ class TypeNode
      */
     public function getSize(): ?int
     {
-        return $this->size;
+        return $this->size[0] ?? null;
+    }
+
+    /**
+     * Get max size as array
+     */
+    public function getSizeArray(): array
+    {
+        return $this->size ?? [];
     }
 }

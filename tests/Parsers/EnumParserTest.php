@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Butschster\Tests\Parsers;
@@ -10,7 +11,8 @@ class EnumParserTest extends TestCase
      */
     function test_enum_should_be_parsed(string $name)
     {
-        $this->assertAst(<<<DBML
+        $this->assertAst(
+            <<<DBML
 {$name} job_status {
     created [note: 'Waiting to be processed']
     running
@@ -18,7 +20,8 @@ class EnumParserTest extends TestCase
     failure
 }
 DBML
-            , <<<AST
+            ,
+            <<<AST
 <Schema offset="0">
     <Enum offset="0">
         <EnumName offset="5">
@@ -43,7 +46,7 @@ DBML
         </EnumValue>
     </Enum>
 </Schema>
-AST
+AST,
         );
     }
 
@@ -51,7 +54,7 @@ AST
     {
         return [
             ['enum'],
-            ['Enum']
+            ['Enum'],
         ];
     }
 }

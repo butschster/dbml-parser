@@ -28,9 +28,7 @@ DBML
                     <T_WORD offset="30">varchar</T_WORD>
                 </TableColumnTypeName>
                 <TableColumnTypeSize offset="37">
-                    <Int offset="38">
-                        <T_INT offset="38">255</T_INT>
-                    </Int>
+                    <T_TABLE_COLUMN_SIZE offset="37">(255)</T_TABLE_COLUMN_SIZE>
                 </TableColumnTypeSize>
             </TableColumnType>
             <T_TABLE_SETTING_UNIQUE offset="44">unique</T_TABLE_SETTING_UNIQUE>
@@ -53,9 +51,9 @@ DBML
             <T_TABLE_SETTING_PK offset="111">pk</T_TABLE_SETTING_PK>
             <T_TABLE_SETTING_UNIQUE offset="115">unique</T_TABLE_SETTING_UNIQUE>
             <T_TABLE_SETTING_DEFAULT offset="123">default</T_TABLE_SETTING_DEFAULT>
-            <Int offset="132">
-                <T_INT offset="132">123</T_INT>
-            </Int>
+            <String offset="132">
+                <T_WORD offset="132">123</T_WORD>
+            </String>
             <SettingNote offset="137">
                 <String offset="143">
                     <T_QUOTED_STRING offset="143">'Number'</T_QUOTED_STRING>
@@ -156,9 +154,9 @@ DBML
                 </TableColumnTypeName>
             </TableColumnType>
             <T_TABLE_SETTING_DEFAULT offset="34">default</T_TABLE_SETTING_DEFAULT>
-            <Int offset="43">
-                <T_INT offset="43">1</T_INT>
-            </Int>
+            <String offset="43">
+                <T_WORD offset="43">1</T_WORD>
+            </String>
         </TableColumn>
     </Table>
 </Schema>
@@ -342,7 +340,7 @@ DBML
 <Schema offset="0">
     <Table offset="0">
         <TableName offset="6">
-            <T_INT offset="6">1</T_INT>
+            <T_WORD offset="6">1</T_WORD>
         </TableName>
         <TableColumn offset="12">
             <TableColumnName offset="12">
@@ -353,6 +351,79 @@ DBML
                     <T_WORD offset="15">int</T_WORD>
                 </TableColumnTypeName>
             </TableColumnType>
+        </TableColumn>
+    </Table>
+</Schema>
+AST
+        );
+    }
+
+    function test_column_name_with_int()
+    {
+        $this->assertAst(<<<DBML
+Table 1 {
+  2fa_enabled tinyint(1) [not null, default: 0]
+}
+DBML
+            , <<<AST
+<Schema offset="0">
+    <Table offset="0">
+        <TableName offset="6">
+            <T_WORD offset="6">1</T_WORD>
+        </TableName>
+        <TableColumn offset="12">
+            <TableColumnName offset="12">
+                <T_WORD offset="12">2fa_enabled</T_WORD>
+            </TableColumnName>
+            <TableColumnType offset="24">
+                <TableColumnTypeName offset="24">
+                    <T_WORD offset="24">tinyint</T_WORD>
+                </TableColumnTypeName>
+                <TableColumnTypeSize offset="31">
+                    <T_TABLE_COLUMN_SIZE offset="31">(1)</T_TABLE_COLUMN_SIZE>
+                </TableColumnTypeSize>
+            </TableColumnType>
+            <T_TABLE_SETTING_NOT_NULL offset="36">not null</T_TABLE_SETTING_NOT_NULL>
+            <T_TABLE_SETTING_DEFAULT offset="46">default</T_TABLE_SETTING_DEFAULT>
+            <String offset="55">
+                <T_WORD offset="55">0</T_WORD>
+            </String>
+        </TableColumn>
+    </Table>
+</Schema>
+AST
+        );
+    }
+
+    function test_column_name_with_decimal()
+    {
+        $this->assertAst(<<<DBML
+Table account {
+  balance decimal(8,2) [default: 0.00]
+}
+DBML
+            , <<<AST
+<Schema offset="0">
+    <Table offset="0">
+        <TableName offset="6">
+            <T_WORD offset="6">account</T_WORD>
+        </TableName>
+        <TableColumn offset="18">
+            <TableColumnName offset="18">
+                <T_WORD offset="18">balance</T_WORD>
+            </TableColumnName>
+            <TableColumnType offset="26">
+                <TableColumnTypeName offset="26">
+                    <T_WORD offset="26">decimal</T_WORD>
+                </TableColumnTypeName>
+                <TableColumnTypeSize offset="33">
+                    <T_TABLE_COLUMN_SIZE offset="33">(8,2)</T_TABLE_COLUMN_SIZE>
+                </TableColumnTypeSize>
+            </TableColumnType>
+            <T_TABLE_SETTING_DEFAULT offset="40">default</T_TABLE_SETTING_DEFAULT>
+            <Float offset="49">
+                <T_FLOAT offset="49">0.00</T_FLOAT>
+            </Float>
         </TableColumn>
     </Table>
 </Schema>

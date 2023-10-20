@@ -62,9 +62,9 @@ class FullSchemaParserTest extends TestCase
             <T_TABLE_SETTING_NOT_NULL offset="242">not null</T_TABLE_SETTING_NOT_NULL>
             <T_TABLE_SETTING_UNIQUE offset="252">unique</T_TABLE_SETTING_UNIQUE>
             <T_TABLE_SETTING_DEFAULT offset="260">default</T_TABLE_SETTING_DEFAULT>
-            <Int offset="269">
-                <T_INT offset="269">1</T_INT>
-            </Int>
+            <String offset="269">
+                <T_WORD offset="269">1</T_WORD>
+            </String>
         </TableColumn>
         <TableColumn offset="274">
             <TableColumnName offset="274">
@@ -244,9 +244,9 @@ class FullSchemaParserTest extends TestCase
                 </TableColumnTypeName>
             </TableColumnType>
             <T_TABLE_SETTING_DEFAULT offset="859">default</T_TABLE_SETTING_DEFAULT>
-            <Int offset="868">
-                <T_INT offset="868">1</T_INT>
-            </Int>
+            <String offset="868">
+                <T_WORD offset="868">1</T_WORD>
+            </String>
         </TableColumn>
     </Table>
     <Ref offset="891">

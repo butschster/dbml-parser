@@ -56,7 +56,6 @@ AST
         );
     }
 
-
     function test_column_relation_with_composite_key_should_be_parsed()
     {
         $this->assertAst(<<<DBML
@@ -324,7 +323,7 @@ AST
     function test_relationship_with_settings()
     {
         $this->assertAst(<<<DBML
-Ref: products.merchant_id > merchants.id [delete: cascade, update: no action]
+Ref: products.merchant_id > merchants.id [delete: cascade, update: no action, destroy: cascade]
 DBML
             , <<<AST
 <Schema offset="0">
@@ -350,6 +349,8 @@ DBML
         <T_REF_ACTION_CASCADE offset="50">cascade</T_REF_ACTION_CASCADE>
         <T_REF_ACTION_UPDATE offset="59">update</T_REF_ACTION_UPDATE>
         <T_REF_ACTION_NO_ACTION offset="67">no action</T_REF_ACTION_NO_ACTION>
+        <T_REF_ACTION_DESTROY offset="78">destroy</T_REF_ACTION_DESTROY>
+        <T_REF_ACTION_CASCADE offset="87">cascade</T_REF_ACTION_CASCADE>
     </Ref>
 </Schema>
 AST

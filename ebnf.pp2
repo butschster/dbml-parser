@@ -27,6 +27,8 @@
 %token  T_TABLE_SETTING_INCREMENT   (?<=\b)increment\b
 %token  T_TABLE_SETTING_DEFAULT     (?<=\b)default\b
 
+%token  T_TABLE_COLUMN_SIZE         \([0-9\,]+\)
+
 %token  T_TABLE_SETTING_NOT_NULL    (?<=\b)not\snull\b
 
 %token  T_REF_ACTION_CASCADE        (?<=\b)cascade\b
@@ -35,6 +37,7 @@
 %token  T_REF_ACTION_SET_DEFAULT    (?<=\b)set\default\b
 %token  T_REF_ACTION_NO_ACTION      (?<=\b)no\saction\b
 
+%token  T_REF_ACTION_DESTROY        (?<=\b)destroy\b
 %token  T_REF_ACTION_DELETE         (?<=\b)delete\b
 %token  T_REF_ACTION_UPDATE         (?<=\b)update\b
 
@@ -47,7 +50,7 @@
  * --------------------------------------------------------------------------
  */
 %token  T_FLOAT                 [0-9]+\.[0-9]+                      // 123.123
-%token  T_INT                   [0-9]+                              // 123
+%token  T_INT                   ^[0-9]+$                            // 123
 
 /**
  * --------------------------------------------------------------------------
@@ -229,9 +232,13 @@
     <T_WORD>
 ;
 
-#TableColumnTypeSize
+#TableColumnTypeSize -> {
+    return new \Butschster\Dbml\Ast\Table\Column\SizeNode(
+        $token->getOffset(), $children->getValue()
+    );
+}
 :
-    ::T_LPAREN:: Int() ::T_RPAREN::
+    <T_TABLE_COLUMN_SIZE>
 ;
 
 TableColumnSettings
@@ -507,7 +514,10 @@ OnDeleteAction -> {
    );
 }
 :
-    <T_REF_ACTION_DELETE>
+    (
+        <T_REF_ACTION_DELETE> |
+        <T_REF_ACTION_DESTROY>
+    )
     ::T_COLON::
     RefAction()
 ;
