@@ -24,7 +24,7 @@ class TableNodeTest extends TestCase
     public function test_non_exists_column_should_throw_an_exception(): void
     {
         $this->expectException(ColumnNotFoundException::class);
-        $this->expectErrorMessage("Column [not_exists] not found.");
+        $this->expectExceptionMessage("Column [not_exists] not found.");
         $this->node->getColumn('not_exists');
     }
 

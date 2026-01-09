@@ -26,7 +26,7 @@ class SchemaNodeTest extends TestCase
     public function test_gets_not_exists_table_should_throw_an_exception(): void
     {
         $this->expectException(TableNotFoundException::class);
-        $this->expectErrorMessage('Table [test] not found.');
+        $this->expectExceptionMessage('Table [test] not found.');
         $this->node->getTable('test');
     }
 
@@ -53,7 +53,7 @@ class SchemaNodeTest extends TestCase
     public function test_gets_not_exists_table_group_should_throw_an_exception(): void
     {
         $this->expectException(TableGroupNotFoundException::class);
-        $this->expectErrorMessage('Table group [test] not found.');
+        $this->expectExceptionMessage('Table group [test] not found.');
         $this->node->getTableGroup('test');
     }
 
@@ -75,7 +75,7 @@ class SchemaNodeTest extends TestCase
     public function test_gets_not_exists_enums_should_throw_an_exception(): void
     {
         $this->expectException(EnumNotFoundException::class);
-        $this->expectErrorMessage('Enum [test] not found.');
+        $this->expectExceptionMessage('Enum [test] not found.');
         $this->node->getEnum('test');
     }
 

@@ -29,7 +29,7 @@ class ProjectNodeTest extends TestCase
     public function test_non_exists_setting_should_throw_an_exception(): void
     {
         $this->expectException(ProjectSettingNotFoundException::class);
-        $this->expectErrorMessage('Project setting [test] not found.');
+        $this->expectExceptionMessage('Project setting [test] not found.');
 
         $this->node->getSetting('test');
     }

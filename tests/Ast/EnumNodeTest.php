@@ -38,7 +38,7 @@ class EnumNodeTest extends TestCase
     public function test_gets_non_exists_value_should_throw_an_exception(): void
     {
         $this->expectException(EnumValueNotFoundException::class);
-        $this->expectErrorMessage('Enum value [test] not found.');
+        $this->expectExceptionMessage('Enum value [test] not found.');
 
         $this->node->getValue('test');
     }
