@@ -358,6 +358,24 @@ AST
         );
     }
 
+    function test_table_name_with_quotes_should_be_parsed()
+    {
+        $this->assertAst(<<<DBML
+Table "account" {
+}
+DBML
+            , <<<AST
+<Schema offset="0">
+    <Table offset="0">
+        <TableName offset="6">
+            <T_QUOTED_STRING offset="6">"account"</T_QUOTED_STRING>
+        </TableName>
+    </Table>
+</Schema>
+AST
+                );
+    }
+
     function test_column_name_with_int()
     {
         $this->assertAst(<<<DBML
@@ -393,6 +411,35 @@ DBML
 </Schema>
 AST
         );
+    }
+
+    function test_column_name_with_quotes()
+    {
+        $this->assertAst(<<<DBML
+Table 1 {
+    "column" int
+}
+DBML
+            , <<<AST
+<Schema offset="0">
+    <Table offset="0">
+        <TableName offset="6">
+            <T_WORD offset="6">1</T_WORD>
+        </TableName>
+        <TableColumn offset="14">
+            <TableColumnName offset="14">
+                <T_QUOTED_STRING offset="14">"column"</T_QUOTED_STRING>
+            </TableColumnName>
+            <TableColumnType offset="23">
+                <TableColumnTypeName offset="23">
+                    <T_WORD offset="23">int</T_WORD>
+                </TableColumnTypeName>
+            </TableColumnType>
+        </TableColumn>
+    </Table>
+</Schema>
+AST
+                );
     }
 
     function test_column_name_with_decimal()

@@ -1,4 +1,20 @@
 <?php
+
+declare(strict_types=1);
+
+/**
+ * @var array{
+ *     initial: array-key,
+ *     tokens: array{
+ *         default: array<non-empty-string, non-empty-string>,
+ *         ...
+ *     },
+ *     skip: list<non-empty-string>,
+ *     grammar: array<array-key, \Phplrt\Parser\Grammar\RuleInterface>,
+ *     reducers: array<array-key, callable(\Phplrt\Parser\Context, mixed):mixed>,
+ *     transitions?: array<array-key, mixed>
+ * }
+ */
 return [
     'initial' => 'Document',
     'tokens' => [
@@ -55,10 +71,9 @@ return [
         'T_WHITESPACE',
         'T_COMMENT',
     ],
-    'transitions' => [
-        
-    ],
+    'transitions' => [],
     'grammar' => [
+        0 => new \Phplrt\Parser\Grammar\Repetition(162, 0, INF),
         1 => new \Phplrt\Parser\Grammar\Concatenation(['Ref', 0]),
         2 => new \Phplrt\Parser\Grammar\Alternation(['Project', 'Table', 'TableGroup', 'Enum', 1]),
         3 => new \Phplrt\Parser\Grammar\Concatenation(['Note', 0]),
@@ -71,7 +86,7 @@ return [
         10 => new \Phplrt\Parser\Grammar\Concatenation(['TableColumn', 0]),
         11 => new \Phplrt\Parser\Grammar\Concatenation(['SettingNote', 0]),
         12 => new \Phplrt\Parser\Grammar\Alternation(['Note', 11]),
-        13 => new \Phplrt\Parser\Grammar\Concatenation([48, 49, 0, 50, 51]),
+        13 => new \Phplrt\Parser\Grammar\Concatenation([51, 52, 0, 53, 54]),
         14 => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE', false),
         15 => new \Phplrt\Parser\Grammar\Optional('TableAlias'),
         16 => new \Phplrt\Parser\Grammar\Lexeme('T_LBRACE', false),
@@ -80,470 +95,564 @@ return [
         19 => new \Phplrt\Parser\Grammar\Optional(13),
         20 => new \Phplrt\Parser\Grammar\Lexeme('T_RBRACE', false),
         21 => new \Phplrt\Parser\Grammar\Lexeme('T_WORD', true),
-        22 => new \Phplrt\Parser\Grammar\Lexeme('T_INT', true),
-        23 => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE_ALIAS', false),
-        24 => new \Phplrt\Parser\Grammar\Lexeme('T_WORD', true),
-        25 => new \Phplrt\Parser\Grammar\Concatenation([31, 32, 33]),
-        26 => new \Phplrt\Parser\Grammar\Optional(25),
-        27 => new \Phplrt\Parser\Grammar\Optional('TableColumnTypeSize'),
-        28 => new \Phplrt\Parser\Grammar\Concatenation([42, 44, 45, 46]),
-        29 => new \Phplrt\Parser\Grammar\Concatenation([34, 36]),
-        30 => new \Phplrt\Parser\Grammar\Alternation(['SettingNote', 'TableColumnRef', 28, 29]),
-        31 => new \Phplrt\Parser\Grammar\Lexeme('T_LBRACK', false),
-        32 => new \Phplrt\Parser\Grammar\Repetition(30, 0, INF),
-        33 => new \Phplrt\Parser\Grammar\Lexeme('T_RBRACK', false),
-        34 => new \Phplrt\Parser\Grammar\Alternation([37, 38, 39, 40, 41]),
-        35 => new \Phplrt\Parser\Grammar\Lexeme('T_COMMA', false),
-        36 => new \Phplrt\Parser\Grammar\Optional(35),
-        37 => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE_SETTING_PK', true),
-        38 => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE_SETTING_UNIQUE', true),
-        39 => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE_SETTING_INCREMENT', true),
-        40 => new \Phplrt\Parser\Grammar\Lexeme('T_NULL', true),
-        41 => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE_SETTING_NOT_NULL', true),
-        42 => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE_SETTING_DEFAULT', true),
-        43 => new \Phplrt\Parser\Grammar\Lexeme('T_COMMA', false),
-        44 => new \Phplrt\Parser\Grammar\Lexeme('T_COLON', false),
-        45 => new \Phplrt\Parser\Grammar\Alternation(['Expression', 'Float', 'Int', 'Boolean', 'Null', 'String']),
-        46 => new \Phplrt\Parser\Grammar\Optional(43),
-        47 => new \Phplrt\Parser\Grammar\Concatenation(['TableIndex', 0]),
-        48 => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE_INDEXES', false),
-        49 => new \Phplrt\Parser\Grammar\Lexeme('T_LBRACE', false),
-        50 => new \Phplrt\Parser\Grammar\Repetition(47, 0, INF),
-        51 => new \Phplrt\Parser\Grammar\Lexeme('T_RBRACE', false),
-        52 => new \Phplrt\Parser\Grammar\Alternation(['TableIndexCompositeField', 'TableIndexSingleField']),
-        53 => new \Phplrt\Parser\Grammar\Optional('TableIndexSettings'),
-        54 => new \Phplrt\Parser\Grammar\Lexeme('T_COMMA', false),
-        55 => new \Phplrt\Parser\Grammar\Alternation(['String', 'Expression']),
-        56 => new \Phplrt\Parser\Grammar\Optional(54),
-        57 => new \Phplrt\Parser\Grammar\Concatenation([55, 56]),
-        58 => new \Phplrt\Parser\Grammar\Lexeme('T_LPAREN', false),
-        59 => new \Phplrt\Parser\Grammar\Repetition(57, 0, INF),
-        60 => new \Phplrt\Parser\Grammar\Lexeme('T_RPAREN', false),
-        61 => new \Phplrt\Parser\Grammar\Alternation(['SettingNote', 'TableIndexSettingWithValue', 'TableIndexSetting']),
-        62 => new \Phplrt\Parser\Grammar\Lexeme('T_LBRACK', false),
-        63 => new \Phplrt\Parser\Grammar\Repetition(61, 0, INF),
-        64 => new \Phplrt\Parser\Grammar\Lexeme('T_RBRACK', false),
-        65 => new \Phplrt\Parser\Grammar\Alternation([37, 38]),
-        66 => new \Phplrt\Parser\Grammar\Lexeme('T_COMMA', false),
-        67 => new \Phplrt\Parser\Grammar\Optional(66),
-        68 => new \Phplrt\Parser\Grammar\Lexeme('T_COMMA', false),
-        69 => new \Phplrt\Parser\Grammar\Lexeme('T_WORD', true),
-        70 => new \Phplrt\Parser\Grammar\Lexeme('T_COLON', false),
-        71 => new \Phplrt\Parser\Grammar\Optional(68),
-        72 => new \Phplrt\Parser\Grammar\Concatenation([83, 84, 82]),
-        73 => new \Phplrt\Parser\Grammar\Concatenation([85, 86, 0, 87, 88, 0]),
-        74 => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE_REF', false),
-        75 => new \Phplrt\Parser\Grammar\Alternation([72, 73]),
-        76 => new \Phplrt\Parser\Grammar\Concatenation([81, 'RefRightTable']),
-        77 => new \Phplrt\Parser\Grammar\Lexeme('T_COMMA', false),
-        78 => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE_REF', false),
-        79 => new \Phplrt\Parser\Grammar\Lexeme('T_COLON', false),
-        80 => new \Phplrt\Parser\Grammar\Optional(77),
-        81 => new \Phplrt\Parser\Grammar\Alternation([91, 92, 93]),
-        82 => new \Phplrt\Parser\Grammar\Concatenation(['RefLeftTable', 81, 'RefRightTable', 90]),
-        83 => new \Phplrt\Parser\Grammar\Optional('RefName'),
-        84 => new \Phplrt\Parser\Grammar\Lexeme('T_COLON', false),
-        85 => new \Phplrt\Parser\Grammar\Optional('RefName'),
-        86 => new \Phplrt\Parser\Grammar\Lexeme('T_LBRACE', false),
-        87 => new \Phplrt\Parser\Grammar\Repetition(82, 0, INF),
-        88 => new \Phplrt\Parser\Grammar\Lexeme('T_RBRACE', false),
-        89 => new \Phplrt\Parser\Grammar\Concatenation([97, 98, 99]),
-        90 => new \Phplrt\Parser\Grammar\Optional(89),
-        91 => new \Phplrt\Parser\Grammar\Lexeme('T_GT', true),
-        92 => new \Phplrt\Parser\Grammar\Lexeme('T_LT', true),
-        93 => new \Phplrt\Parser\Grammar\Lexeme('T_MINUS', true),
-        94 => new \Phplrt\Parser\Grammar\Concatenation([101, 102, 100]),
-        95 => new \Phplrt\Parser\Grammar\Concatenation([105, 106, 100]),
-        96 => new \Phplrt\Parser\Grammar\Alternation([94, 95]),
-        97 => new \Phplrt\Parser\Grammar\Lexeme('T_LBRACK', false),
-        98 => new \Phplrt\Parser\Grammar\Repetition(96, 0, INF),
-        99 => new \Phplrt\Parser\Grammar\Lexeme('T_RBRACK', false),
-        100 => new \Phplrt\Parser\Grammar\Concatenation([113, 114]),
-        101 => new \Phplrt\Parser\Grammar\Lexeme('T_REF_ACTION_UPDATE', true),
-        102 => new \Phplrt\Parser\Grammar\Lexeme('T_COLON', false),
-        103 => new \Phplrt\Parser\Grammar\Lexeme('T_REF_ACTION_DELETE', true),
-        104 => new \Phplrt\Parser\Grammar\Lexeme('T_REF_ACTION_DESTROY', true),
-        105 => new \Phplrt\Parser\Grammar\Alternation([103, 104]),
-        106 => new \Phplrt\Parser\Grammar\Lexeme('T_COLON', false),
-        107 => new \Phplrt\Parser\Grammar\Lexeme('T_REF_ACTION_CASCADE', true),
-        108 => new \Phplrt\Parser\Grammar\Lexeme('T_REF_ACTION_RESTRICT', true),
-        109 => new \Phplrt\Parser\Grammar\Lexeme('T_REF_ACTION_SET_NULL', true),
-        110 => new \Phplrt\Parser\Grammar\Lexeme('T_REF_ACTION_SET_DEFAULT', true),
-        111 => new \Phplrt\Parser\Grammar\Lexeme('T_REF_ACTION_NO_ACTION', true),
-        112 => new \Phplrt\Parser\Grammar\Lexeme('T_COMMA', false),
-        113 => new \Phplrt\Parser\Grammar\Alternation([107, 108, 109, 110, 111]),
-        114 => new \Phplrt\Parser\Grammar\Optional(112),
-        115 => new \Phplrt\Parser\Grammar\Concatenation([123, 124, 125]),
-        116 => new \Phplrt\Parser\Grammar\Lexeme('T_DOT', false),
-        117 => new \Phplrt\Parser\Grammar\Alternation(['TableColumnName', 115]),
-        118 => new \Phplrt\Parser\Grammar\Lexeme('T_DOT', false),
-        119 => new \Phplrt\Parser\Grammar\Alternation(['TableColumnName', 115]),
-        120 => new \Phplrt\Parser\Grammar\Lexeme('T_COMMA', false),
-        121 => new \Phplrt\Parser\Grammar\Optional(120),
-        122 => new \Phplrt\Parser\Grammar\Concatenation(['TableColumnName', 121]),
-        123 => new \Phplrt\Parser\Grammar\Lexeme('T_LPAREN', false),
-        124 => new \Phplrt\Parser\Grammar\Repetition(122, 0, INF),
-        125 => new \Phplrt\Parser\Grammar\Lexeme('T_RPAREN', false),
-        126 => new \Phplrt\Parser\Grammar\Concatenation(['TableName', 0]),
-        127 => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE_GROUP', false),
-        128 => new \Phplrt\Parser\Grammar\Lexeme('T_LBRACE', false),
-        129 => new \Phplrt\Parser\Grammar\Repetition(126, 0, INF),
-        130 => new \Phplrt\Parser\Grammar\Lexeme('T_RBRACE', false),
-        131 => new \Phplrt\Parser\Grammar\Concatenation(['EnumValue', 0]),
-        132 => new \Phplrt\Parser\Grammar\Lexeme('T_ENUM', false),
-        133 => new \Phplrt\Parser\Grammar\Lexeme('T_LBRACE', false),
-        134 => new \Phplrt\Parser\Grammar\Repetition(131, 0, INF),
-        135 => new \Phplrt\Parser\Grammar\Lexeme('T_RBRACE', false),
-        136 => new \Phplrt\Parser\Grammar\Concatenation([143, 'SettingNote', 144]),
-        137 => new \Phplrt\Parser\Grammar\Lexeme('T_WORD', true),
-        138 => new \Phplrt\Parser\Grammar\Optional(136),
-        139 => new \Phplrt\Parser\Grammar\Concatenation([137, 138]),
-        140 => new \Phplrt\Parser\Grammar\Lexeme('T_QUOTED_STRING', true),
-        141 => new \Phplrt\Parser\Grammar\Optional(136),
+        22 => new \Phplrt\Parser\Grammar\Lexeme('T_QUOTED_STRING', true),
+        23 => new \Phplrt\Parser\Grammar\Lexeme('T_INT', true),
+        24 => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE_ALIAS', false),
+        25 => new \Phplrt\Parser\Grammar\Lexeme('T_WORD', true),
+        26 => new \Phplrt\Parser\Grammar\Concatenation([34, 35, 36]),
+        27 => new \Phplrt\Parser\Grammar\Optional(26),
+        28 => new \Phplrt\Parser\Grammar\Lexeme('T_WORD', true),
+        29 => new \Phplrt\Parser\Grammar\Lexeme('T_QUOTED_STRING', true),
+        30 => new \Phplrt\Parser\Grammar\Optional('TableColumnTypeSize'),
+        31 => new \Phplrt\Parser\Grammar\Concatenation([45, 47, 48, 49]),
+        32 => new \Phplrt\Parser\Grammar\Concatenation([37, 39]),
+        33 => new \Phplrt\Parser\Grammar\Alternation(['SettingNote', 'TableColumnRef', 31, 32]),
+        34 => new \Phplrt\Parser\Grammar\Lexeme('T_LBRACK', false),
+        35 => new \Phplrt\Parser\Grammar\Repetition(33, 0, INF),
+        36 => new \Phplrt\Parser\Grammar\Lexeme('T_RBRACK', false),
+        37 => new \Phplrt\Parser\Grammar\Alternation([40, 41, 42, 43, 44]),
+        38 => new \Phplrt\Parser\Grammar\Lexeme('T_COMMA', false),
+        39 => new \Phplrt\Parser\Grammar\Optional(38),
+        40 => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE_SETTING_PK', true),
+        41 => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE_SETTING_UNIQUE', true),
+        42 => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE_SETTING_INCREMENT', true),
+        43 => new \Phplrt\Parser\Grammar\Lexeme('T_NULL', true),
+        44 => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE_SETTING_NOT_NULL', true),
+        45 => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE_SETTING_DEFAULT', true),
+        46 => new \Phplrt\Parser\Grammar\Lexeme('T_COMMA', false),
+        47 => new \Phplrt\Parser\Grammar\Lexeme('T_COLON', false),
+        48 => new \Phplrt\Parser\Grammar\Alternation(['Expression', 'Float', 'Int', 'Boolean', 'Null', 'String']),
+        49 => new \Phplrt\Parser\Grammar\Optional(46),
+        50 => new \Phplrt\Parser\Grammar\Concatenation(['TableIndex', 0]),
+        51 => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE_INDEXES', false),
+        52 => new \Phplrt\Parser\Grammar\Lexeme('T_LBRACE', false),
+        53 => new \Phplrt\Parser\Grammar\Repetition(50, 0, INF),
+        54 => new \Phplrt\Parser\Grammar\Lexeme('T_RBRACE', false),
+        55 => new \Phplrt\Parser\Grammar\Alternation(['TableIndexCompositeField', 'TableIndexSingleField']),
+        56 => new \Phplrt\Parser\Grammar\Optional('TableIndexSettings'),
+        57 => new \Phplrt\Parser\Grammar\Lexeme('T_COMMA', false),
+        58 => new \Phplrt\Parser\Grammar\Alternation(['String', 'Expression']),
+        59 => new \Phplrt\Parser\Grammar\Optional(57),
+        60 => new \Phplrt\Parser\Grammar\Concatenation([58, 59]),
+        61 => new \Phplrt\Parser\Grammar\Lexeme('T_LPAREN', false),
+        62 => new \Phplrt\Parser\Grammar\Repetition(60, 0, INF),
+        63 => new \Phplrt\Parser\Grammar\Lexeme('T_RPAREN', false),
+        64 => new \Phplrt\Parser\Grammar\Alternation(['SettingNote', 'TableIndexSettingWithValue', 'TableIndexSetting']),
+        65 => new \Phplrt\Parser\Grammar\Lexeme('T_LBRACK', false),
+        66 => new \Phplrt\Parser\Grammar\Repetition(64, 0, INF),
+        67 => new \Phplrt\Parser\Grammar\Lexeme('T_RBRACK', false),
+        68 => new \Phplrt\Parser\Grammar\Alternation([40, 41]),
+        69 => new \Phplrt\Parser\Grammar\Lexeme('T_COMMA', false),
+        70 => new \Phplrt\Parser\Grammar\Optional(69),
+        71 => new \Phplrt\Parser\Grammar\Lexeme('T_COMMA', false),
+        72 => new \Phplrt\Parser\Grammar\Lexeme('T_WORD', true),
+        73 => new \Phplrt\Parser\Grammar\Lexeme('T_COLON', false),
+        74 => new \Phplrt\Parser\Grammar\Optional(71),
+        75 => new \Phplrt\Parser\Grammar\Concatenation([86, 87, 85]),
+        76 => new \Phplrt\Parser\Grammar\Concatenation([88, 89, 0, 90, 91, 0]),
+        77 => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE_REF', false),
+        78 => new \Phplrt\Parser\Grammar\Alternation([75, 76]),
+        79 => new \Phplrt\Parser\Grammar\Concatenation([84, 'RefRightTable']),
+        80 => new \Phplrt\Parser\Grammar\Lexeme('T_COMMA', false),
+        81 => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE_REF', false),
+        82 => new \Phplrt\Parser\Grammar\Lexeme('T_COLON', false),
+        83 => new \Phplrt\Parser\Grammar\Optional(80),
+        84 => new \Phplrt\Parser\Grammar\Alternation([94, 95, 96]),
+        85 => new \Phplrt\Parser\Grammar\Concatenation(['RefLeftTable', 84, 'RefRightTable', 93]),
+        86 => new \Phplrt\Parser\Grammar\Optional('RefName'),
+        87 => new \Phplrt\Parser\Grammar\Lexeme('T_COLON', false),
+        88 => new \Phplrt\Parser\Grammar\Optional('RefName'),
+        89 => new \Phplrt\Parser\Grammar\Lexeme('T_LBRACE', false),
+        90 => new \Phplrt\Parser\Grammar\Repetition(85, 0, INF),
+        91 => new \Phplrt\Parser\Grammar\Lexeme('T_RBRACE', false),
+        92 => new \Phplrt\Parser\Grammar\Concatenation([100, 101, 102]),
+        93 => new \Phplrt\Parser\Grammar\Optional(92),
+        94 => new \Phplrt\Parser\Grammar\Lexeme('T_GT', true),
+        95 => new \Phplrt\Parser\Grammar\Lexeme('T_LT', true),
+        96 => new \Phplrt\Parser\Grammar\Lexeme('T_MINUS', true),
+        97 => new \Phplrt\Parser\Grammar\Concatenation([104, 105, 103]),
+        98 => new \Phplrt\Parser\Grammar\Concatenation([108, 109, 103]),
+        99 => new \Phplrt\Parser\Grammar\Alternation([97, 98]),
+        100 => new \Phplrt\Parser\Grammar\Lexeme('T_LBRACK', false),
+        101 => new \Phplrt\Parser\Grammar\Repetition(99, 0, INF),
+        102 => new \Phplrt\Parser\Grammar\Lexeme('T_RBRACK', false),
+        103 => new \Phplrt\Parser\Grammar\Concatenation([116, 117]),
+        104 => new \Phplrt\Parser\Grammar\Lexeme('T_REF_ACTION_UPDATE', true),
+        105 => new \Phplrt\Parser\Grammar\Lexeme('T_COLON', false),
+        106 => new \Phplrt\Parser\Grammar\Lexeme('T_REF_ACTION_DELETE', true),
+        107 => new \Phplrt\Parser\Grammar\Lexeme('T_REF_ACTION_DESTROY', true),
+        108 => new \Phplrt\Parser\Grammar\Alternation([106, 107]),
+        109 => new \Phplrt\Parser\Grammar\Lexeme('T_COLON', false),
+        110 => new \Phplrt\Parser\Grammar\Lexeme('T_REF_ACTION_CASCADE', true),
+        111 => new \Phplrt\Parser\Grammar\Lexeme('T_REF_ACTION_RESTRICT', true),
+        112 => new \Phplrt\Parser\Grammar\Lexeme('T_REF_ACTION_SET_NULL', true),
+        113 => new \Phplrt\Parser\Grammar\Lexeme('T_REF_ACTION_SET_DEFAULT', true),
+        114 => new \Phplrt\Parser\Grammar\Lexeme('T_REF_ACTION_NO_ACTION', true),
+        115 => new \Phplrt\Parser\Grammar\Lexeme('T_COMMA', false),
+        116 => new \Phplrt\Parser\Grammar\Alternation([110, 111, 112, 113, 114]),
+        117 => new \Phplrt\Parser\Grammar\Optional(115),
+        118 => new \Phplrt\Parser\Grammar\Concatenation([126, 127, 128]),
+        119 => new \Phplrt\Parser\Grammar\Lexeme('T_DOT', false),
+        120 => new \Phplrt\Parser\Grammar\Alternation(['TableColumnName', 118]),
+        121 => new \Phplrt\Parser\Grammar\Lexeme('T_DOT', false),
+        122 => new \Phplrt\Parser\Grammar\Alternation(['TableColumnName', 118]),
+        123 => new \Phplrt\Parser\Grammar\Lexeme('T_COMMA', false),
+        124 => new \Phplrt\Parser\Grammar\Optional(123),
+        125 => new \Phplrt\Parser\Grammar\Concatenation(['TableColumnName', 124]),
+        126 => new \Phplrt\Parser\Grammar\Lexeme('T_LPAREN', false),
+        127 => new \Phplrt\Parser\Grammar\Repetition(125, 0, INF),
+        128 => new \Phplrt\Parser\Grammar\Lexeme('T_RPAREN', false),
+        129 => new \Phplrt\Parser\Grammar\Concatenation(['TableName', 0]),
+        130 => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE_GROUP', false),
+        131 => new \Phplrt\Parser\Grammar\Lexeme('T_LBRACE', false),
+        132 => new \Phplrt\Parser\Grammar\Repetition(129, 0, INF),
+        133 => new \Phplrt\Parser\Grammar\Lexeme('T_RBRACE', false),
+        134 => new \Phplrt\Parser\Grammar\Concatenation(['EnumValue', 0]),
+        135 => new \Phplrt\Parser\Grammar\Lexeme('T_ENUM', false),
+        136 => new \Phplrt\Parser\Grammar\Lexeme('T_LBRACE', false),
+        137 => new \Phplrt\Parser\Grammar\Repetition(134, 0, INF),
+        138 => new \Phplrt\Parser\Grammar\Lexeme('T_RBRACE', false),
+        139 => new \Phplrt\Parser\Grammar\Concatenation([146, 'SettingNote', 147]),
+        140 => new \Phplrt\Parser\Grammar\Lexeme('T_WORD', true),
+        141 => new \Phplrt\Parser\Grammar\Optional(139),
         142 => new \Phplrt\Parser\Grammar\Concatenation([140, 141]),
-        143 => new \Phplrt\Parser\Grammar\Lexeme('T_LBRACK', false),
-        144 => new \Phplrt\Parser\Grammar\Lexeme('T_RBRACK', false),
-        145 => new \Phplrt\Parser\Grammar\Lexeme('T_COLON', false),
-        146 => new \Phplrt\Parser\Grammar\Concatenation([145, 'String']),
-        147 => new \Phplrt\Parser\Grammar\Lexeme('T_LBRACE', false),
-        148 => new \Phplrt\Parser\Grammar\Lexeme('T_RBRACE', false),
-        149 => new \Phplrt\Parser\Grammar\Concatenation([147, 0, 'String', 148, 0]),
-        150 => new \Phplrt\Parser\Grammar\Lexeme('T_NOTE', false),
-        151 => new \Phplrt\Parser\Grammar\Alternation([146, 149]),
-        152 => new \Phplrt\Parser\Grammar\Lexeme('T_COMMA', false),
-        153 => new \Phplrt\Parser\Grammar\Lexeme('T_SETTING_NOTE', false),
-        154 => new \Phplrt\Parser\Grammar\Optional(152),
-        155 => new \Phplrt\Parser\Grammar\Lexeme('T_BOOL_TRUE', true),
-        156 => new \Phplrt\Parser\Grammar\Lexeme('T_BOOL_FALSE', true),
-        157 => new \Phplrt\Parser\Grammar\Lexeme('T_WORD', true),
-        158 => new \Phplrt\Parser\Grammar\Lexeme('T_QUOTED_STRING', true),
-        159 => new \Phplrt\Parser\Grammar\Lexeme('T_EOL', false),
-        'Boolean' => new \Phplrt\Parser\Grammar\Alternation([155, 156]),
+        143 => new \Phplrt\Parser\Grammar\Lexeme('T_QUOTED_STRING', true),
+        144 => new \Phplrt\Parser\Grammar\Optional(139),
+        145 => new \Phplrt\Parser\Grammar\Concatenation([143, 144]),
+        146 => new \Phplrt\Parser\Grammar\Lexeme('T_LBRACK', false),
+        147 => new \Phplrt\Parser\Grammar\Lexeme('T_RBRACK', false),
+        148 => new \Phplrt\Parser\Grammar\Lexeme('T_COLON', false),
+        149 => new \Phplrt\Parser\Grammar\Concatenation([148, 'String']),
+        150 => new \Phplrt\Parser\Grammar\Lexeme('T_LBRACE', false),
+        151 => new \Phplrt\Parser\Grammar\Lexeme('T_RBRACE', false),
+        152 => new \Phplrt\Parser\Grammar\Concatenation([150, 0, 'String', 151, 0]),
+        153 => new \Phplrt\Parser\Grammar\Lexeme('T_NOTE', false),
+        154 => new \Phplrt\Parser\Grammar\Alternation([149, 152]),
+        155 => new \Phplrt\Parser\Grammar\Lexeme('T_COMMA', false),
+        156 => new \Phplrt\Parser\Grammar\Lexeme('T_SETTING_NOTE', false),
+        157 => new \Phplrt\Parser\Grammar\Optional(155),
+        158 => new \Phplrt\Parser\Grammar\Lexeme('T_BOOL_TRUE', true),
+        159 => new \Phplrt\Parser\Grammar\Lexeme('T_BOOL_FALSE', true),
+        160 => new \Phplrt\Parser\Grammar\Lexeme('T_WORD', true),
+        161 => new \Phplrt\Parser\Grammar\Lexeme('T_QUOTED_STRING', true),
+        162 => new \Phplrt\Parser\Grammar\Lexeme('T_EOL', false),
+        'Boolean' => new \Phplrt\Parser\Grammar\Alternation([158, 159]),
         'Document' => new \Phplrt\Parser\Grammar\Concatenation(['Schema']),
-        'Enum' => new \Phplrt\Parser\Grammar\Concatenation([132, 'EnumName', 133, 0, 134, 135, 0]),
+        'Enum' => new \Phplrt\Parser\Grammar\Concatenation([135, 'EnumName', 136, 0, 137, 138, 0]),
         'EnumName' => new \Phplrt\Parser\Grammar\Lexeme('T_WORD', true),
-        'EnumValue' => new \Phplrt\Parser\Grammar\Alternation([139, 142]),
+        'EnumValue' => new \Phplrt\Parser\Grammar\Alternation([142, 145]),
         'Expression' => new \Phplrt\Parser\Grammar\Lexeme('T_EXPRESSION', true),
         'Float' => new \Phplrt\Parser\Grammar\Lexeme('T_FLOAT', true),
         'Int' => new \Phplrt\Parser\Grammar\Lexeme('T_INT', true),
-        'Note' => new \Phplrt\Parser\Grammar\Concatenation([150, 151]),
+        'Note' => new \Phplrt\Parser\Grammar\Concatenation([153, 154]),
         'Null' => new \Phplrt\Parser\Grammar\Lexeme('T_NULL', true),
         'Project' => new \Phplrt\Parser\Grammar\Concatenation([5, 'ProjectName', 6, 0, 7, 8, 0]),
         'ProjectName' => new \Phplrt\Parser\Grammar\Concatenation(['String']),
         'ProjectSetting' => new \Phplrt\Parser\Grammar\Concatenation(['ProjectSettingKey', 9, 'String', 0]),
         'ProjectSettingKey' => new \Phplrt\Parser\Grammar\Lexeme('T_WORD', true),
-        'Ref' => new \Phplrt\Parser\Grammar\Concatenation([74, 75]),
-        'RefLeftTable' => new \Phplrt\Parser\Grammar\Concatenation(['TableName', 116, 117]),
+        'Ref' => new \Phplrt\Parser\Grammar\Concatenation([77, 78]),
+        'RefLeftTable' => new \Phplrt\Parser\Grammar\Concatenation(['TableName', 119, 120]),
         'RefName' => new \Phplrt\Parser\Grammar\Lexeme('T_WORD', true),
-        'RefRightTable' => new \Phplrt\Parser\Grammar\Concatenation(['TableName', 118, 119]),
+        'RefRightTable' => new \Phplrt\Parser\Grammar\Concatenation(['TableName', 121, 122]),
         'Schema' => new \Phplrt\Parser\Grammar\Repetition(2, 0, INF),
-        'SettingNote' => new \Phplrt\Parser\Grammar\Concatenation([153, 'String', 154]),
-        'String' => new \Phplrt\Parser\Grammar\Alternation([157, 158]),
+        'SettingNote' => new \Phplrt\Parser\Grammar\Concatenation([156, 'String', 157]),
+        'String' => new \Phplrt\Parser\Grammar\Alternation([160, 161]),
         'Table' => new \Phplrt\Parser\Grammar\Concatenation([14, 'TableName', 15, 16, 0, 17, 18, 19, 20, 0]),
-        'TableAlias' => new \Phplrt\Parser\Grammar\Concatenation([23, 24]),
-        'TableColumn' => new \Phplrt\Parser\Grammar\Concatenation(['TableColumnName', 'TableColumnType', 26]),
-        'TableColumnName' => new \Phplrt\Parser\Grammar\Lexeme('T_WORD', true),
-        'TableColumnRef' => new \Phplrt\Parser\Grammar\Concatenation([78, 79, 76, 80]),
-        'TableColumnType' => new \Phplrt\Parser\Grammar\Concatenation(['TableColumnTypeName', 27]),
+        'TableAlias' => new \Phplrt\Parser\Grammar\Concatenation([24, 25]),
+        'TableColumn' => new \Phplrt\Parser\Grammar\Concatenation(['TableColumnName', 'TableColumnType', 27]),
+        'TableColumnName' => new \Phplrt\Parser\Grammar\Alternation([28, 29]),
+        'TableColumnRef' => new \Phplrt\Parser\Grammar\Concatenation([81, 82, 79, 83]),
+        'TableColumnType' => new \Phplrt\Parser\Grammar\Concatenation(['TableColumnTypeName', 30]),
         'TableColumnTypeName' => new \Phplrt\Parser\Grammar\Lexeme('T_WORD', true),
         'TableColumnTypeSize' => new \Phplrt\Parser\Grammar\Lexeme('T_TABLE_COLUMN_SIZE', true),
-        'TableGroup' => new \Phplrt\Parser\Grammar\Concatenation([127, 'TableGroupName', 128, 0, 129, 130, 0]),
+        'TableGroup' => new \Phplrt\Parser\Grammar\Concatenation([130, 'TableGroupName', 131, 0, 132, 133, 0]),
         'TableGroupName' => new \Phplrt\Parser\Grammar\Lexeme('T_WORD', true),
-        'TableIndex' => new \Phplrt\Parser\Grammar\Concatenation([52, 53]),
-        'TableIndexCompositeField' => new \Phplrt\Parser\Grammar\Concatenation([58, 59, 60]),
-        'TableIndexSetting' => new \Phplrt\Parser\Grammar\Concatenation([65, 67]),
-        'TableIndexSettingWithValue' => new \Phplrt\Parser\Grammar\Concatenation([69, 70, 'String', 71]),
-        'TableIndexSettings' => new \Phplrt\Parser\Grammar\Concatenation([62, 63, 64]),
+        'TableIndex' => new \Phplrt\Parser\Grammar\Concatenation([55, 56]),
+        'TableIndexCompositeField' => new \Phplrt\Parser\Grammar\Concatenation([61, 62, 63]),
+        'TableIndexSetting' => new \Phplrt\Parser\Grammar\Concatenation([68, 70]),
+        'TableIndexSettingWithValue' => new \Phplrt\Parser\Grammar\Concatenation([72, 73, 'String', 74]),
+        'TableIndexSettings' => new \Phplrt\Parser\Grammar\Concatenation([65, 66, 67]),
         'TableIndexSingleField' => new \Phplrt\Parser\Grammar\Alternation(['String', 'Expression']),
-        'TableName' => new \Phplrt\Parser\Grammar\Alternation([21, 22]),
-        0 => new \Phplrt\Parser\Grammar\Repetition(159, 0, INF)
+        'TableName' => new \Phplrt\Parser\Grammar\Alternation([21, 22, 23]),
     ],
     'reducers' => [
-        'Schema' => function (\Phplrt\Parser\Context $ctx, $children) {
-            return new \Butschster\Dbml\Ast\SchemaNode($children);
+        31 => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
+            return new \Butschster\Dbml\Ast\Table\Column\SettingWithValueNode(
+                $token->getOffset(), $children[0]->getValue(), $children[1]
+            );
         },
-        'Project' => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\ProjectNode(
-            $token->getOffset(), $children
-        );
-        },
-        'ProjectName' => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\Project\NameNode(
-            $token->getOffset(), \end($children)
-        );
-        },
-        'ProjectSetting' => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\Project\SettingNode(
-            $token->getOffset(), \current($children), \end($children)
-        );
-        },
-        'ProjectSettingKey' => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\Project\SettingKeyNode(
-            $token->getOffset(), $children->getValue()
-        );
-        },
-        'Table' => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\TableNode(
-            $token->getOffset(), $children[0]->getValue(), $children
-        );
-        },
-        'TableName' => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\Table\NameNode(
-            $token->getOffset(), $children->getValue()
-        );
-        },
-        'TableAlias' => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\Table\AliasNode(
-           $token->getOffset(), $children[0]->getValue()
-       );
-        },
-        'TableColumn' => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\Table\ColumnNode(
-            $token->getOffset(), $children[0], $children[1], array_slice($children, 2)
-        );
-        },
-        'TableColumnName' => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\Table\Column\NameNode(
-            $token->getOffset(), $children->getValue()
-        );
-        },
-        'TableColumnType' => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\Table\Column\TypeNode(
-            $token->getOffset(), $children[0], $children[1] ?? null
-        );
-        },
-        'TableColumnTypeName' => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\Table\NameNode(
-            $token->getOffset(), $children->getValue()
-        );
-        },
-        'TableColumnTypeSize' => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\Table\Column\SizeNode(
-            $token->getOffset(), $children->getValue()
-        );
-        },
-        40 => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\Table\Column\Setting\NullNode(
-          $token->getOffset()
-      );
-        },
-        41 => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\Table\Column\Setting\NotNullNode(
-          $token->getOffset()
-      );
-        },
-        39 => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\Table\Column\Setting\IncrementNode(
-          $token->getOffset()
-      );
-        },
-        37 => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
+        40 => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
             return new \Butschster\Dbml\Ast\Table\Column\Setting\PrimaryKeyNode(
-          $token->getOffset()
-      );
+              $token->getOffset()
+          );
         },
-        38 => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
+        41 => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
             return new \Butschster\Dbml\Ast\Table\Column\Setting\UniqueNode(
-          $token->getOffset()
-      );
+              $token->getOffset()
+          );
         },
-        28 => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\Table\Column\SettingWithValueNode(
-            $token->getOffset(), $children[0]->getValue(), $children[1]
-        );
+        42 => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
+            return new \Butschster\Dbml\Ast\Table\Column\Setting\IncrementNode(
+              $token->getOffset()
+          );
         },
-        'TableIndex' => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\Table\IndexNode(
-            $token->getOffset(), $children[0], array_slice($children, 1)
-        );
+        43 => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
+            return new \Butschster\Dbml\Ast\Table\Column\Setting\NullNode(
+              $token->getOffset()
+          );
         },
-        'TableIndexSingleField' => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\Table\Index\FieldsNode(
-          $token->getOffset(), [$children]
-        );
+        44 => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
+            return new \Butschster\Dbml\Ast\Table\Column\Setting\NotNullNode(
+              $token->getOffset()
+          );
         },
-        'TableIndexCompositeField' => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\Table\Index\FieldsNode(
-           $token->getOffset(), $children
-        );
-        },
-        'TableIndexSettingWithValue' => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\Table\Column\SettingWithValueNode(
-            $token->getOffset(), $children[0]->getValue(), $children[1]
-        );
-        },
-        'TableColumnRef' => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
+        75 => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
             return new \Butschster\Dbml\Ast\RefNode(
-            $token->getOffset(), $children
-        );
+                $token->getOffset(), $children
+            );
         },
-        76 => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\Ref\ColumnsNode(
-            $token->getOffset(), $children
-        );
-        },
-        'RefName' => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\Ref\NameNode(
-            $token->getOffset(), $children->getValue()
-        );
-        },
-        72 => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\RefNode(
-            $token->getOffset(), $children
-        );
-        },
-        73 => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
+        76 => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
             return new \Butschster\Dbml\Ast\Ref\GroupNode(
-           $token->getOffset(), $children
-       );
+               $token->getOffset(), $children
+           );
         },
-        82 => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
+        79 => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
             return new \Butschster\Dbml\Ast\Ref\ColumnsNode(
-            $token->getOffset(), $children
-        );
+                $token->getOffset(), $children
+            );
         },
-        94 => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\Ref\Action\OnUpdateNode(
-           $token->getOffset(), $children[1]->getValue()
-       );
+        85 => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
+            return new \Butschster\Dbml\Ast\Ref\ColumnsNode(
+                $token->getOffset(), $children
+            );
         },
-        95 => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\Ref\Action\OnDeleteNode(
-           $token->getOffset(), $children[1]->getValue()
-       );
-        },
-        91 => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
+        94 => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
             return new \Butschster\Dbml\Ast\Ref\Type\ManyToOneNode(
-           $token->getOffset()
-        );
+               $token->getOffset()
+            );
         },
-        93 => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\Ref\Type\OneToOneNode(
-           $token->getOffset()
-       );
-        },
-        92 => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
+        95 => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
             return new \Butschster\Dbml\Ast\Ref\Type\OneToManyNode(
-           $token->getOffset()
-       );
+               $token->getOffset()
+           );
         },
-        'RefLeftTable' => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\Ref\LeftTableNode(
-            $token->getOffset(), $children[0], array_slice($children, 1)
-        );
+        96 => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
+            return new \Butschster\Dbml\Ast\Ref\Type\OneToOneNode(
+               $token->getOffset()
+           );
         },
-        'RefRightTable' => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\Ref\RightTableNode(
-           $token->getOffset(), $children[0], array_slice($children, 1)
-       );
+        97 => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
+            return new \Butschster\Dbml\Ast\Ref\Action\OnUpdateNode(
+               $token->getOffset(), $children[1]->getValue()
+           );
         },
-        'TableGroup' => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\TableGroupNode(
-            $token->getOffset(), $children[0]->getValue(), array_slice($children, 1)
-        );
+        98 => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
+            return new \Butschster\Dbml\Ast\Ref\Action\OnDeleteNode(
+               $token->getOffset(), $children[1]->getValue()
+           );
         },
-        'Enum' => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\EnumNode(
-            $token->getOffset(), $children[0]->getValue(), array_slice($children, 1)
-        );
-        },
-        'EnumValue' => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            if ($token->getName() == "T_WORD") {
-                        return new \Butschster\Dbml\Ast\Enum\ValueNode(
-                            $token->getOffset(), $children[0]->getValue(), $children[1] ?? null
-                        );
-                    }
-    
-                    //is T_QUOTED_STRING
-                    return new \Butschster\Dbml\Ast\Enum\ValueNode(
-                        $token->getOffset(), $children[0][1]->getValue(), $children[1] ?? null
-                    );
-        },
-        'Note' => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\NoteNode(
-            $token->getOffset(), \end($children)
-        );
-        },
-        'SettingNote' => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\NoteNode(
-            $token->getOffset(), \end($children)
-        );
-        },
-        'Expression' => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\Values\ExpressionNode(
-           $token->getOffset(), $children->getValue()
-       );
-        },
-        'Boolean' => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
+        'Boolean' => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
             return new \Butschster\Dbml\Ast\Values\BooleanNode(
-            $token->getOffset(),
-            $children->getName() === 'T_BOOL_TRUE'
-        );
+                $token->getOffset(),
+                $children->getName() === 'T_BOOL_TRUE'
+            );
         },
-        'Null' => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
+        'Enum' => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
+            return new \Butschster\Dbml\Ast\EnumNode(
+                $token->getOffset(), $children[0]->getValue(), array_slice($children, 1)
+            );
+        },
+        'EnumValue' => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
+            if ($token->getName() == "T_WORD") {
+                            return new \Butschster\Dbml\Ast\Enum\ValueNode(
+                                $token->getOffset(), $children[0]->getValue(), $children[1] ?? null
+                            );
+                        }
+
+                        //is T_QUOTED_STRING
+                        return new \Butschster\Dbml\Ast\Enum\ValueNode(
+                            $token->getOffset(), $children[0][1]->getValue(), $children[1] ?? null
+                        );
+        },
+        'Expression' => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
+            return new \Butschster\Dbml\Ast\Values\ExpressionNode(
+               $token->getOffset(), $children->getValue()
+           );
+        },
+        'Float' => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
+            return new \Butschster\Dbml\Ast\Values\FloatNode(
+                $token->getOffset(), $children->getValue()
+            );
+        },
+        'Int' => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
+            return new \Butschster\Dbml\Ast\Values\IntNode(
+               $token->getOffset(), $children->getValue()
+           );
+        },
+        'Note' => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
+            return new \Butschster\Dbml\Ast\NoteNode(
+                $token->getOffset(), \end($children)
+            );
+        },
+        'Null' => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
             return new \Butschster\Dbml\Ast\Values\NullNode($token->getOffset());
         },
-        'Float' => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\Values\FloatNode(
-            $token->getOffset(), $children->getValue()
-        );
+        'Project' => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
+            return new \Butschster\Dbml\Ast\ProjectNode(
+                $token->getOffset(), $children
+            );
         },
-        'Int' => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
-            return new \Butschster\Dbml\Ast\Values\IntNode(
-           $token->getOffset(), $children->getValue()
-       );
+        'ProjectName' => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
+            return new \Butschster\Dbml\Ast\Project\NameNode(
+                $token->getOffset(), \end($children)
+            );
         },
-        'String' => function (\Phplrt\Parser\Context $ctx, $children) {
-            $token = $ctx->getToken();
+        'ProjectSetting' => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
+            return new \Butschster\Dbml\Ast\Project\SettingNode(
+                $token->getOffset(), \current($children), \end($children)
+            );
+        },
+        'ProjectSettingKey' => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
+            return new \Butschster\Dbml\Ast\Project\SettingKeyNode(
+                $token->getOffset(), $children->getValue()
+            );
+        },
+        'RefLeftTable' => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
+            return new \Butschster\Dbml\Ast\Ref\LeftTableNode(
+                $token->getOffset(), $children[0], array_slice($children, 1)
+            );
+        },
+        'RefName' => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
+            return new \Butschster\Dbml\Ast\Ref\NameNode(
+                $token->getOffset(), $children->getValue()
+            );
+        },
+        'RefRightTable' => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
+            return new \Butschster\Dbml\Ast\Ref\RightTableNode(
+               $token->getOffset(), $children[0], array_slice($children, 1)
+           );
+        },
+        'Schema' => static function (\Phplrt\Parser\Context $ctx, $children) {
+            return new \Butschster\Dbml\Ast\SchemaNode($children);
+        },
+        'SettingNote' => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
+            return new \Butschster\Dbml\Ast\NoteNode(
+                $token->getOffset(), \end($children)
+            );
+        },
+        'String' => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
             return new \Butschster\Dbml\Ast\Values\StringNode(
-            $token->getOffset(),
-            $children
-        );
-        }
-    ]
+                $token->getOffset(),
+                $children
+            );
+        },
+        'Table' => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
+            return new \Butschster\Dbml\Ast\TableNode(
+                $token->getOffset(), $children[0]->getValue(), $children
+            );
+        },
+        'TableAlias' => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
+            return new \Butschster\Dbml\Ast\Table\AliasNode(
+               $token->getOffset(), $children[0]->getValue()
+           );
+        },
+        'TableColumn' => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
+            return new \Butschster\Dbml\Ast\Table\ColumnNode(
+                $token->getOffset(), $children[0], $children[1], array_slice($children, 2)
+            );
+        },
+        'TableColumnName' => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
+            return new \Butschster\Dbml\Ast\Table\Column\NameNode(
+                $token->getOffset(), \trim($children->getValue(), '"\'')
+            );
+        },
+        'TableColumnRef' => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
+            return new \Butschster\Dbml\Ast\RefNode(
+                $token->getOffset(), $children
+            );
+        },
+        'TableColumnType' => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
+            return new \Butschster\Dbml\Ast\Table\Column\TypeNode(
+                $token->getOffset(), $children[0], $children[1] ?? null
+            );
+        },
+        'TableColumnTypeName' => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
+            return new \Butschster\Dbml\Ast\Table\NameNode(
+                $token->getOffset(), $children->getValue()
+            );
+        },
+        'TableColumnTypeSize' => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
+            return new \Butschster\Dbml\Ast\Table\Column\SizeNode(
+                $token->getOffset(), $children->getValue()
+            );
+        },
+        'TableGroup' => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
+            return new \Butschster\Dbml\Ast\TableGroupNode(
+                $token->getOffset(), $children[0]->getValue(), array_slice($children, 1)
+            );
+        },
+        'TableIndex' => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
+            return new \Butschster\Dbml\Ast\Table\IndexNode(
+                $token->getOffset(), $children[0], array_slice($children, 1)
+            );
+        },
+        'TableIndexCompositeField' => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
+            return new \Butschster\Dbml\Ast\Table\Index\FieldsNode(
+               $token->getOffset(), $children
+            );
+        },
+        'TableIndexSettingWithValue' => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
+            return new \Butschster\Dbml\Ast\Table\Column\SettingWithValueNode(
+                $token->getOffset(), $children[0]->getValue(), $children[1]
+            );
+        },
+        'TableIndexSingleField' => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
+            return new \Butschster\Dbml\Ast\Table\Index\FieldsNode(
+              $token->getOffset(), [$children]
+            );
+        },
+        'TableName' => static function (\Phplrt\Parser\Context $ctx, $children) {
+            // The "$token" variable is an auto-generated
+            $token = $ctx->lastProcessedToken;
+
+            return new \Butschster\Dbml\Ast\Table\NameNode(
+                $token->getOffset(), \trim($children->getValue(), '"\'')
+            );
+        },
+    ],
 ];
