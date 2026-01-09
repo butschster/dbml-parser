@@ -173,11 +173,11 @@
 
 #TableName -> {
     return new \Butschster\Dbml\Ast\Table\NameNode(
-        $token->getOffset(), $children->getValue()
+        $token->getOffset(), \trim($children->getValue(), '"\'')
     );
 }
 :
-    <T_WORD> | <T_INT>
+    <T_WORD> | <T_QUOTED_STRING> | <T_INT>
 ;
 
 #TableAlias -> {
@@ -207,11 +207,11 @@
 
 #TableColumnName -> {
     return new \Butschster\Dbml\Ast\Table\Column\NameNode(
-        $token->getOffset(), $children->getValue()
+        $token->getOffset(), \trim($children->getValue(), '"\'')
     );
 }
 :
-    <T_WORD>
+    <T_WORD> | <T_QUOTED_STRING>
 ;
 
 #TableColumnType -> {
