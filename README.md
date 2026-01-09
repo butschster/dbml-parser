@@ -8,7 +8,9 @@
 
 ![DBML-parser](https://user-images.githubusercontent.com/773481/125667174-8b349bc0-fb5f-49a2-a651-1cac06bba151.jpg)
 
-A production-ready PHP 8.0+ parser for [DBML (Database Markup Language)](https://www.dbml.org/), transforming human-readable database schemas into structured PHP objects. Generate migrations, ORM entities, documentation, or visualization tools from a single DBML source.
+A production-ready PHP 8.3+ parser for [DBML (Database Markup Language)](https://www.dbml.org/), transforming
+human-readable database schemas into structured PHP objects. Generate migrations, ORM entities, documentation, or
+visualization tools from a single DBML source.
 
 ## Table of Contents
 
@@ -17,14 +19,14 @@ A production-ready PHP 8.0+ parser for [DBML (Database Markup Language)](https:/
 - [Quick Start](#quick-start)
 - [Core Concepts](#core-concepts)
 - [Complete API Reference](#complete-api-reference)
-  - [Schema Operations](#schema-operations)
-  - [Project Definition](#project-definition)
-  - [Table Operations](#table-operations)
-  - [Column Properties](#column-properties)
-  - [Index Configuration](#index-configuration)
-  - [Enum Management](#enum-management)
-  - [Table Groups](#table-groups)
-  - [Relationships (Refs)](#relationships-refs)
+    - [Schema Operations](#schema-operations)
+    - [Project Definition](#project-definition)
+    - [Table Operations](#table-operations)
+    - [Column Properties](#column-properties)
+    - [Index Configuration](#index-configuration)
+    - [Enum Management](#enum-management)
+    - [Table Groups](#table-groups)
+    - [Relationships (Refs)](#relationships-refs)
 - [Advanced Usage](#advanced-usage)
 - [Use Cases](#use-cases)
 - [Error Handling](#error-handling)
@@ -41,12 +43,14 @@ DBML (Database Markup Language) is a simple, readable DSL for defining database 
 - **Share Database Specs**: Communicate database structure with teams using human-readable syntax
 - **Build Schema Tools**: Create custom tools for schema validation, transformation, or analysis
 
-This library was inspired by [dbdiagram.io](https://dbdiagram.io/) and built using the powerful [phplrt](https://phplrt.org) parser toolkit.
+This library was inspired by [dbdiagram.io](https://dbdiagram.io/) and built using the
+powerful [phplrt](https://phplrt.org) parser toolkit.
 
 ## Installation
 
 **Requirements:**
-- PHP 8.0 or higher
+
+- PHP 8.3 or higher
 - Composer
 
 Install via Composer:
@@ -107,16 +111,16 @@ foreach ($schema->getTables() as $table) {
 
 The parser transforms DBML into an Abstract Syntax Tree (AST) with these key node types:
 
-| Node Type | Purpose | Example |
-|-----------|---------|---------|
-| `SchemaNode` | Root container for entire schema | Top-level access to all components |
-| `ProjectNode` | Project metadata and settings | Database type, version, notes |
-| `TableNode` | Table definition with columns | `Table users { ... }` |
-| `ColumnNode` | Column with type and constraints | `id int [pk, not null]` |
-| `IndexNode` | Single or composite index | `Indexes { (col1, col2) [unique] }` |
-| `EnumNode` | Enum type definition | `Enum status { active, inactive }` |
-| `RefNode` | Foreign key relationship | `Ref: orders.user_id > users.id` |
-| `TableGroupNode` | Logical grouping of tables | `TableGroup core { users, roles }` |
+| Node Type        | Purpose                          | Example                             |
+|------------------|----------------------------------|-------------------------------------|
+| `SchemaNode`     | Root container for entire schema | Top-level access to all components  |
+| `ProjectNode`    | Project metadata and settings    | Database type, version, notes       |
+| `TableNode`      | Table definition with columns    | `Table users { ... }`               |
+| `ColumnNode`     | Column with type and constraints | `id int [pk, not null]`             |
+| `IndexNode`      | Single or composite index        | `Indexes { (col1, col2) [unique] }` |
+| `EnumNode`       | Enum type definition             | `Enum status { active, inactive }`  |
+| `RefNode`        | Foreign key relationship         | `Ref: orders.user_id > users.id`    |
+| `TableGroupNode` | Logical grouping of tables       | `TableGroup core { users, roles }`  |
 
 ## Complete API Reference
 
@@ -430,7 +434,7 @@ foreach ($table->getColumns() as $column) {
     $pk = $column->isPrimaryKey() ? '[PK]' : '';
     
     echo "  {$column->getName()} {$type}";
-    if ($size) echo "({$size})";
+    if ($size) {echo "({$size})";}
     echo " {$nullable} {$pk}\n";
 }
 
@@ -439,7 +443,7 @@ foreach ($table->getIndexes() as $index) {
     $indexType = $index->isPrimaryKey() ? 'PRIMARY' : ($index->isUnique() ? 'UNIQUE' : 'INDEX');
     $cols = implode(', ', array_map(fn($c) => $c->getValue(), $index->getColumns()));
     echo "  {$indexType} ({$cols})";
-    if ($name = $index->getName()) echo " [{$name}]";
+    if ($name = $index->getName()) {echo " [{$name}]";}
     echo "\n";
 }
 ```
@@ -634,10 +638,10 @@ echo "\n";
 
 // Constraints
 $constraints = [];
-if ($column->isPrimaryKey()) $constraints[] = 'PRIMARY KEY';
-if ($column->isIncrement()) $constraints[] = 'AUTO_INCREMENT';
-if ($column->isUnique()) $constraints[] = 'UNIQUE';
-if (!$column->isNull()) $constraints[] = 'NOT NULL';
+if ($column->isPrimaryKey()) {$constraints[] = 'PRIMARY KEY';}
+if ($column->isIncrement()) {$constraints[] = 'AUTO_INCREMENT';}
+if ($column->isUnique()) {$constraints[] = 'UNIQUE';}
+if (!$column->isNull()) {$constraints[] = 'NOT NULL';}
 
 if (!empty($constraints)) {
     echo "Constraints: " . implode(', ', $constraints) . "\n";
@@ -1172,13 +1176,13 @@ try {
 
 **Action Types:**
 
-| Action | Description |
-|--------|-------------|
-| `cascade` | Automatically update/delete related rows |
-| `restrict` | Prevent action if related rows exist |
-| `set null` | Set foreign key to NULL |
-| `set default` | Set foreign key to default value |
-| `no action` | No automatic action (similar to restrict) |
+| Action        | Description                               |
+|---------------|-------------------------------------------|
+| `cascade`     | Automatically update/delete related rows  |
+| `restrict`    | Prevent action if related rows exist      |
+| `set null`    | Set foreign key to NULL                   |
+| `set default` | Set foreign key to default value          |
+| `no action`   | No automatic action (similar to restrict) |
 
 **Action Node Types:**
 
@@ -1354,10 +1358,10 @@ function generateMarkdownDocs(SchemaNode $schema): string
             }
             
             $constraints = [];
-            if ($column->isPrimaryKey()) $constraints[] = 'PK';
-            if ($column->isUnique()) $constraints[] = 'UNIQUE';
-            if (!$column->isNull()) $constraints[] = 'NOT NULL';
-            if ($column->isIncrement()) $constraints[] = 'AUTO_INCREMENT';
+            if ($column->isPrimaryKey()) {$constraints[] = 'PK';}
+            if ($column->isUnique()) {$constraints[] = 'UNIQUE';}
+            if (!$column->isNull()) {$constraints[] = 'NOT NULL';}
+            if ($column->isIncrement()) {$constraints[] = 'AUTO_INCREMENT';}
             
             $md .= "| {$column->getName()} | {$type} | " . implode(', ', $constraints) . " |\n";
         }
@@ -1528,9 +1532,9 @@ function generateLaravelMigration(TableNode $table): string
         
         $line .= ")";
         
-        if ($column->isUnique()) $line .= "->unique()";
-        if (!$column->isNull()) $line .= "->nullable(false)";
-        if ($column->isIncrement()) $line .= "->autoIncrement()";
+        if ($column->isUnique()) {$line .= "->unique()";}
+        if (!$column->isNull()) {$line .= "->nullable(false)";}
+        if ($column->isIncrement()) {$line .= "->autoIncrement()";}
         if ($default = $column->getDefault()) {
             $line .= "->default(" . var_export($default->getValue(), true) . ")";
         }
@@ -1711,7 +1715,7 @@ function generateDotGraph(SchemaNode $schema): string
         $columns = [];
         foreach ($table->getColumns() as $column) {
             $col = $column->getName();
-            if ($column->isPrimaryKey()) $col .= " (PK)";
+            if ($column->isPrimaryKey()) {$col .= " (PK)";}
             $columns[] = $col;
         }
         $label .= implode("\\n", $columns) . "}";
@@ -1834,6 +1838,7 @@ This package is open-sourced software licensed under the [MIT license](LICENSE).
 ---
 
 **Support this project:**
+
 - ⭐ Star this repository
 - 🐛 Report bugs and suggest features via [GitHub Issues](https://github.com/butschster/dbml-parser/issues)
 - 💖 [Support on Patreon](https://patreon.com/butschster)
