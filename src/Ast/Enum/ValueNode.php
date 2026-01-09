@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Butschster\Dbml\Ast\Enum;
@@ -10,9 +11,10 @@ class ValueNode
     private ?string $note = null;
 
     public function __construct(
-        private int $offset, private string $value, ?NoteNode $note = null
-    )
-    {
+        private int $offset,
+        private string $value,
+        ?NoteNode $note = null,
+    ) {
         if ($note) {
             $this->note = $note->getDescription();
         }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Butschster\Tests\Ast\Values;
@@ -10,8 +11,9 @@ class IntNodeTest extends TestCase
 {
     /**
      * @dataProvider intStringValues
+     * @param mixed $value
      */
-    function test_value_should_be_converted_to_float($value, int $result)
+    public function test_value_should_be_converted_to_float($value, int $result): void
     {
         $node = new IntNode(0, $value);
 
@@ -23,7 +25,7 @@ class IntNodeTest extends TestCase
         return [
             ['123', 123],
             [123, 123],
-            ['123.123', 123]
+            ['123.123', 123],
         ];
     }
 }

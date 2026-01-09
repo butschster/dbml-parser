@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Butschster\Tests\Ast;
@@ -10,37 +11,23 @@ class EnumNodeTest extends TestCase
 {
     private EnumNode $node;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->node = $this->parser->parse(<<<DBML
-Enum products_status {
-  out_of_stock
-  in_stock
-  running_low [note: 'less than 20'] // add column note
-}
-DBML
-        )->getEnum('products_status');
-    }
-
-    function test_gets_offset()
+    public function test_gets_offset(): void
     {
         $this->assertEquals(0, $this->node->getOffset());
     }
 
-    function test_gets_name()
+    public function test_gets_name(): void
     {
         $this->assertEquals('products_status', $this->node->getName());
     }
 
-    function test_gets_values()
+    public function test_gets_values(): void
     {
         $this->assertCount(3, $this->node->getValues());
         $this->assertEquals(3, $this->node->count());
     }
 
-    function test_check_value_exist()
+    public function test_check_value_exist(): void
     {
         $this->assertTrue($this->node->hasValue('out_of_stock'));
         $this->assertTrue($this->node->hasValue('in_stock'));
@@ -48,18 +35,19 @@ DBML
         $this->assertFalse($this->node->hasValue('test'));
     }
 
-    function test_gets_non_exists_value_should_throw_an_exception()
+    public function test_gets_non_exists_value_should_throw_an_exception(): void
     {
         $this->expectException(EnumValueNotFoundException::class);
-        $this->expectErrorMessage('Enum value [test] not found.');
+        $this->expectExceptionMessage('Enum value [test] not found.');
 
         $this->node->getValue('test');
     }
 
     /**
      * @dataProvider enumValuesDataProvider
+     * @param mixed $note
      */
-    function test_gets_value_by_name(string $value, $note)
+    public function test_gets_value_by_name(string $value, $note): void
     {
         $this->assertEquals($value, $this->node->getValue($value)->getValue());
         $this->assertEquals($note, $this->node->getValue($value)->getNote());
@@ -70,8 +58,22 @@ DBML
         return [
             ['running_low', 'less than 20'],
             ['out_of_stock', null],
-            ['in_stock', null]
+            ['in_stock', null],
         ];
     }
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->node = $this->parser->parse(
+            <<<DBML
+Enum products_status {
+  out_of_stock
+  in_stock
+  running_low [note: 'less than 20'] // add column note
+}
+DBML,
+        )->getEnum('products_status');
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Butschster\Dbml\Ast\Table;
@@ -17,43 +18,45 @@ use Butschster\Dbml\Ast\Values\AbstractValue;
 class ColumnNode
 {
     private string $name;
-    private TypeNode $type;
     private ?string $note = null;
     private ?AbstractValue $default = null;
     private bool $primaryKey = false;
     private bool $increment = false;
     private bool $unique = false;
     private bool $null = true;
+
     /** @var SettingWithValueNode[] */
     private array $settings = [];
+
     /** @var RefNode[]  */
     private array $refs = [];
 
     public function __construct(
-        private int $offset, \Butschster\Dbml\Ast\Table\Column\NameNode $name, TypeNode $type, array $settings = []
-    )
-    {
+        private int $offset,
+        \Butschster\Dbml\Ast\Table\Column\NameNode $name,
+        private TypeNode $type,
+        array $settings = [],
+    ) {
         $this->name = $name->getValue();
-        $this->type = $type;
 
         foreach ($settings as $setting) {
             if ($setting instanceof NoteNode) {
                 $this->note = $setting->getDescription();
-            } else if ($setting instanceof UniqueNode) {
+            } elseif ($setting instanceof UniqueNode) {
                 $this->unique = true;
-            } else if ($setting instanceof NotNullNode) {
+            } elseif ($setting instanceof NotNullNode) {
                 $this->null = false;
-            } else if ($setting instanceof NullNode) {
+            } elseif ($setting instanceof NullNode) {
                 $this->null = true;
-            } else if ($setting instanceof IncrementNode) {
+            } elseif ($setting instanceof IncrementNode) {
                 $this->increment = true;
-            } else if ($setting instanceof PrimaryKeyNode) {
+            } elseif ($setting instanceof PrimaryKeyNode) {
                 $this->primaryKey = true;
-            } else if ($setting instanceof SettingWithValueNode && $setting->getName() === 'default') {
+            } elseif ($setting instanceof SettingWithValueNode && $setting->getName() === 'default') {
                 $this->default = $setting->getValue();
-            } else if ($setting instanceof SettingWithValueNode) {
+            } elseif ($setting instanceof SettingWithValueNode) {
                 $this->settings[] = $setting;
-            } else if ($setting instanceof RefNode) {
+            } elseif ($setting instanceof RefNode) {
                 $this->refs[] = $setting;
             }
         }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Butschster\Dbml\Ast;
@@ -10,21 +11,22 @@ use Butschster\Dbml\Exceptions\ProjectSettingNotFoundException;
 class ProjectNode
 {
     private ?string $note = null;
+
     /** @var SettingNode[] */
     private array $settings = [];
+
     private string $name;
 
     public function __construct(
         private int $offset,
-        array $children
-    )
-    {
+        array $children,
+    ) {
         foreach ($children as $child) {
             if ($child instanceof NoteNode) {
                 $this->note = $child->getDescription();
-            } else if ($child instanceof SettingNode) {
+            } elseif ($child instanceof SettingNode) {
                 $this->settings[$child->getKey()] = $child;
-            } else if ($child instanceof NameNode) {
+            } elseif ($child instanceof NameNode) {
                 $this->name = $child->getValue();
             }
         }

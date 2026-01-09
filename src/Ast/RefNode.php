@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Butschster\Dbml\Ast;
@@ -17,26 +18,26 @@ class RefNode
     private ?TypeNode $type = null;
     private ?LeftTableNode $leftTable = null;
     private ?RightTableNode $rightTable = null;
+
     /** @var ActionNode[] */
     private array $actions = [];
 
-
     public function __construct(
-        private int $offset, array $children = []
-    )
-    {
+        private int $offset,
+        array $children = [],
+    ) {
         foreach ($children as $child) {
             if ($child instanceof NameNode) {
                 $this->name = $child->getValue();
-            } else if ($child instanceof ColumnsNode) {
+            } elseif ($child instanceof ColumnsNode) {
                 foreach ($child->getColumns() as $column) {
                     if ($column instanceof LeftTableNode) {
                         $this->leftTable = $column;
-                    } else if ($column instanceof RightTableNode) {
+                    } elseif ($column instanceof RightTableNode) {
                         $this->rightTable = $column;
-                    } else if ($column instanceof TypeNode) {
+                    } elseif ($column instanceof TypeNode) {
                         $this->type = $column;
-                    } else if ($column instanceof ActionNode) {
+                    } elseif ($column instanceof ActionNode) {
                         $this->actions[$column->getName()] = $column;
                     }
                 }

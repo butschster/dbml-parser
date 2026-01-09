@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Butschster\Tests\Ast;
@@ -12,29 +13,7 @@ class RefNodeTest extends TestCase
 {
     private SchemaNode $node;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->node = $this->parser->parse(<<<DBML
-Ref name_optional: table1.column1 < table2.column2
-Ref: table1.column1 - table2.(id, name)
-
-Ref name_optional {
-  U.country_code > countries.code
-  merchants.country_code > C.test
-}
-
-Ref {
-  table1.column1 < table2.column2
-}
-
-Ref: products.merchant_id > merchants.id [delete: cascade, update: no action]
-DBML
-        );
-    }
-
-    function test_ref_with_single_columns()
+    public function test_ref_with_single_columns(): void
     {
         // Ref name_optional: table1.column1 < table2.column2
         $ref = $this->node->getRefs()[0];
@@ -49,7 +28,7 @@ DBML
         $this->assertEquals(['column2'], $ref->getRightTable()->getColumns());
     }
 
-    function test_ref_with_composite_columns()
+    public function test_ref_with_composite_columns(): void
     {
         // Ref: table1.column1 < table2.(id, name)
         $ref = $this->node->getRefs()[1];
@@ -64,7 +43,7 @@ DBML
         $this->assertEquals(['id', 'name'], $ref->getRightTable()->getColumns());
     }
 
-    function test_ref_long_form()
+    public function test_ref_long_form(): void
     {
         // Ref name_optional {
         //    U.country_code > countries.code
@@ -95,7 +74,7 @@ DBML
         $this->assertEquals(['test'], $ref->getRightTable()->getColumns());
     }
 
-    function test_ref_long_form_without_name()
+    public function test_ref_long_form_without_name(): void
     {
         // Ref {
         //    table1.column1 < table2.column2
@@ -113,7 +92,7 @@ DBML
         $this->assertEquals(['column2'], $ref->getRightTable()->getColumns());
     }
 
-    function test_ref_with_actions()
+    public function test_ref_with_actions(): void
     {
         // Ref: products.merchant_id > merchants.id [delete: cascade, update: no action]
 
@@ -134,5 +113,28 @@ DBML
 
         $onUpdate = $ref->getAction('update');
         $this->assertEquals('no action', $onUpdate->getAction());
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->node = $this->parser->parse(
+            <<<DBML
+Ref name_optional: table1.column1 < table2.column2
+Ref: table1.column1 - table2.(id, name)
+
+Ref name_optional {
+  U.country_code > countries.code
+  merchants.country_code > C.test
+}
+
+Ref {
+  table1.column1 < table2.column2
+}
+
+Ref: products.merchant_id > merchants.id [delete: cascade, update: no action]
+DBML,
+        );
     }
 }

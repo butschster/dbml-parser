@@ -1,14 +1,16 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Butschster\Tests\Parsers;
 
 class FullSchemaParserTest extends TestCase
 {
-    function test_parse_schema()
+    public function test_parse_schema(): void
     {
-        $this->assertAst(file_get_contents(__DIR__.'/../schema.dbml')
-            , <<<AST
+        $this->assertAst(
+            \file_get_contents(__DIR__ . '/../schema.dbml'),
+            <<<AST
 <Schema offset="0">
     <Project offset="0">
         <ProjectName offset="8">
@@ -493,7 +495,7 @@ class FullSchemaParserTest extends TestCase
         </TableName>
     </TableGroup>
 </Schema>
-AST
+AST,
         );
     }
 }

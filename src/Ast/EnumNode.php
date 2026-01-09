@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Butschster\Dbml\Ast;
@@ -12,9 +13,10 @@ class EnumNode
     private array $values = [];
 
     public function __construct(
-        private int $offset, private string $name, array $values = []
-    )
-    {
+        private int $offset,
+        private string $name,
+        array $values = [],
+    ) {
         foreach ($values as $value) {
             $this->values[$value->getValue()] = $value;
         }
@@ -38,7 +40,7 @@ class EnumNode
      */
     public function count(): int
     {
-        return count($this->values);
+        return \count($this->values);
     }
 
     /**
@@ -52,12 +54,10 @@ class EnumNode
 
     /**
      * Check if enum contains value
-     * @param string $name
-     * @return bool
      */
     public function hasValue(string $name): bool
     {
-        return array_key_exists($name, $this->values);
+        return \array_key_exists($name, $this->values);
     }
 
     /**

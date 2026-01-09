@@ -1,13 +1,15 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Butschster\Tests\Parsers;
 
 class TableIndexParserTest extends TestCase
 {
-    function test_simple_index_should_be_parsed()
+    public function test_simple_index_should_be_parsed(): void
     {
-        $this->assertAst(<<<DBML
+        $this->assertAst(
+            <<<DBML
 Table bookings {
     id integer
 
@@ -15,8 +17,8 @@ Table bookings {
       id
   }
 }
-DBML
-            , <<<AST
+DBML,
+            <<<AST
 <Schema offset="0">
     <Table offset="0">
         <TableName offset="6">
@@ -41,13 +43,14 @@ DBML
         </TableIndex>
     </Table>
 </Schema>
-AST
+AST,
         );
     }
 
-    function test_index_with_settings_should_be_parsed()
+    public function test_index_with_settings_should_be_parsed(): void
     {
-        $this->assertAst(<<<DBML
+        $this->assertAst(
+            <<<DBML
 Table bookings {
     id integer
 
@@ -55,8 +58,8 @@ Table bookings {
       id [name: 'created_at_index', note: 'Date', type: hash, pk]
     }
 }
-DBML
-            , <<<AST
+DBML,
+            <<<AST
 <Schema offset="0">
     <Table offset="0">
         <TableName offset="6">
@@ -103,13 +106,14 @@ DBML
         </TableIndex>
     </Table>
 </Schema>
-AST
+AST,
         );
     }
 
-    function test_composite_index_should_be_parsed()
+    public function test_composite_index_should_be_parsed(): void
     {
-        $this->assertAst(<<<DBML
+        $this->assertAst(
+            <<<DBML
 Table bookings {
     id integer
 
@@ -117,8 +121,8 @@ Table bookings {
       (country, booking_date) [pk]
   }
 }
-DBML
-            , <<<AST
+DBML,
+            <<<AST
 <Schema offset="0">
     <Table offset="0">
         <TableName offset="6">
@@ -151,13 +155,14 @@ DBML
         </TableIndex>
     </Table>
 </Schema>
-AST
+AST,
         );
     }
 
-    function test_composite_index_with_expression_should_be_parsed()
+    public function test_composite_index_with_expression_should_be_parsed(): void
     {
-        $this->assertAst(<<<DBML
+        $this->assertAst(
+            <<<DBML
 Table bookings {
     id integer
 
@@ -165,8 +170,8 @@ Table bookings {
       (`id*2`,`getdate()`)
   }
 }
-DBML
-            , <<<AST
+DBML,
+            <<<AST
 <Schema offset="0">
     <Table offset="0">
         <TableName offset="6">
@@ -194,13 +199,14 @@ DBML
         </TableIndex>
     </Table>
 </Schema>
-AST
+AST,
         );
     }
 
-    function test_full_example_should_be_parsed()
+    public function test_full_example_should_be_parsed(): void
     {
-        $this->assertAst(<<<DBML
+        $this->assertAst(
+            <<<DBML
 Table bookings {
   id integer
 
@@ -215,8 +221,8 @@ Table bookings {
       (`id*3`,id)
   }
 }
-DBML
-            , <<<AST
+DBML,
+            <<<AST
 <Schema offset="0">
     <Table offset="0">
         <TableName offset="6">
@@ -333,7 +339,7 @@ DBML
         </TableIndex>
     </Table>
 </Schema>
-AST
+AST,
         );
     }
 }

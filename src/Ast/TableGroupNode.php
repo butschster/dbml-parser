@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Butschster\Dbml\Ast;
@@ -9,9 +10,10 @@ class TableGroupNode
     private array $tables = [];
 
     public function __construct(
-        private int $offset, private string $name, array $tables
-    )
-    {
+        private int $offset,
+        private string $name,
+        array $tables,
+    ) {
         foreach ($tables as $table) {
             $this->tables[] = $table->getValue();
         }
@@ -22,7 +24,7 @@ class TableGroupNode
      */
     public function hasTable(string $table): bool
     {
-        return in_array($table, $this->tables);
+        return \in_array($table, $this->tables);
     }
 
     public function getOffset(): int

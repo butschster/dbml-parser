@@ -1,19 +1,21 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Butschster\Tests\Parsers;
 
 class TableGroupTest extends TestCase
 {
-    function test_table_group_should_be_parsed()
+    public function test_table_group_should_be_parsed(): void
     {
-        $this->assertAst(<<<DBML
+        $this->assertAst(
+            <<<DBML
 TableGroup test {
     merchants
     countries
 }
-DBML
-            , <<<AST
+DBML,
+            <<<AST
 <Schema offset="0">
     <TableGroup offset="0">
         <TableGroupName offset="11">
@@ -27,20 +29,20 @@ DBML
         </TableName>
     </TableGroup>
 </Schema>
-AST
+AST,
         );
     }
 
-
-    function test_table_group_with_extra_symbols_should_be_parsed()
+    public function test_table_group_with_extra_symbols_should_be_parsed(): void
     {
-        $this->assertAst(<<<DBML
+        $this->assertAst(
+            <<<DBML
 TableGroup ecommerce1 {
     merchants
     countries
 }
-DBML
-            , <<<AST
+DBML,
+            <<<AST
 <Schema offset="0">
     <TableGroup offset="0">
         <TableGroupName offset="11">
@@ -54,7 +56,7 @@ DBML
         </TableName>
     </TableGroup>
 </Schema>
-AST
+AST,
         );
     }
 }
