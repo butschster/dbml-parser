@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Butschster\Dbml\Ast\Ref;
@@ -13,11 +14,12 @@ abstract class TableNode
     private array $columns = [];
 
     public function __construct(
-        private int $offset, NameNode $table, array $columns = []
-    )
-    {
+        private int $offset,
+        NameNode $table,
+        array $columns = [],
+    ) {
         $this->table = $table->getValue();
-        $this->columns = array_map(fn(\Butschster\Dbml\Ast\Table\Column\NameNode $column) => $column->getValue(), $columns);
+        $this->columns = \array_map(static fn(\Butschster\Dbml\Ast\Table\Column\NameNode $column) => $column->getValue(), $columns);
     }
 
     /**

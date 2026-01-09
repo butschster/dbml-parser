@@ -1,19 +1,21 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Butschster\Tests\Parsers;
 
 class TableParserTest extends TestCase
 {
-    function test_table_should_be_parsed()
+    public function test_table_should_be_parsed(): void
     {
-        $this->assertAst(<<<DBML
+        $this->assertAst(
+            <<<DBML
 Table countries {
     address varchar(255) [unique, not null, note: 'to include unit number']
     id integer [ pk, unique, default: 123, note: 'Number' ]
 }
-DBML
-            , <<<AST
+DBML,
+            <<<AST
 <Schema offset="0">
     <Table offset="0">
         <TableName offset="6">
@@ -62,18 +64,19 @@ DBML
         </TableColumn>
     </Table>
 </Schema>
-AST
+AST,
         );
     }
 
-    function test_table_with_alias_should_be_parsed()
+    public function test_table_with_alias_should_be_parsed(): void
     {
-        $this->assertAst(<<<DBML
+        $this->assertAst(
+            <<<DBML
 Table countries as C {
   name varchar
 }
-DBML
-            , <<<AST
+DBML,
+            <<<AST
 <Schema offset="0">
     <Table offset="0">
         <TableName offset="6">
@@ -94,18 +97,19 @@ DBML
         </TableColumn>
     </Table>
 </Schema>
-AST
+AST,
         );
     }
 
-    function test_table_with_default_string_should_be_parsed()
+    public function test_table_with_default_string_should_be_parsed(): void
     {
-        $this->assertAst(<<<DBML
+        $this->assertAst(
+            <<<DBML
 Table countries {
   name varchar [default: 'h']
 }
-DBML
-            , <<<AST
+DBML,
+            <<<AST
 <Schema offset="0">
     <Table offset="0">
         <TableName offset="6">
@@ -127,18 +131,19 @@ DBML
         </TableColumn>
     </Table>
 </Schema>
-AST
+AST,
         );
     }
 
-    function test_table_with_default_int_should_be_parsed()
+    public function test_table_with_default_int_should_be_parsed(): void
     {
-        $this->assertAst(<<<DBML
+        $this->assertAst(
+            <<<DBML
 Table countries {
   name varchar [default: 1]
 }
-DBML
-            , <<<AST
+DBML,
+            <<<AST
 <Schema offset="0">
     <Table offset="0">
         <TableName offset="6">
@@ -160,18 +165,19 @@ DBML
         </TableColumn>
     </Table>
 </Schema>
-AST
+AST,
         );
     }
 
-    function test_table_with_default_float_should_be_parsed()
+    public function test_table_with_default_float_should_be_parsed(): void
     {
-        $this->assertAst(<<<DBML
+        $this->assertAst(
+            <<<DBML
 Table countries {
   name varchar [default: 123.456]
 }
-DBML
-            , <<<AST
+DBML,
+            <<<AST
 <Schema offset="0">
     <Table offset="0">
         <TableName offset="6">
@@ -193,18 +199,19 @@ DBML
         </TableColumn>
     </Table>
 </Schema>
-AST
+AST,
         );
     }
 
-    function test_table_with_default_expression_should_be_parsed()
+    public function test_table_with_default_expression_should_be_parsed(): void
     {
-        $this->assertAst(<<<DBML
+        $this->assertAst(
+            <<<DBML
 Table countries {
   name varchar [default: `now() - interval '5 days'`]
 }
-DBML
-            , <<<AST
+DBML,
+            <<<AST
 <Schema offset="0">
     <Table offset="0">
         <TableName offset="6">
@@ -226,18 +233,19 @@ DBML
         </TableColumn>
     </Table>
 </Schema>
-AST
+AST,
         );
     }
 
-    function test_table_with_default_null_should_be_parsed()
+    public function test_table_with_default_null_should_be_parsed(): void
     {
-        $this->assertAst(<<<DBML
+        $this->assertAst(
+            <<<DBML
 Table countries {
   name varchar [default: null]
 }
-DBML
-            , <<<AST
+DBML,
+            <<<AST
 <Schema offset="0">
     <Table offset="0">
         <TableName offset="6">
@@ -259,18 +267,19 @@ DBML
         </TableColumn>
     </Table>
 </Schema>
-AST
+AST,
         );
     }
 
-    function test_table_with_default_true_should_be_parsed()
+    public function test_table_with_default_true_should_be_parsed(): void
     {
-        $this->assertAst(<<<DBML
+        $this->assertAst(
+            <<<DBML
 Table countries {
   name varchar [default: true]
 }
-DBML
-            , <<<AST
+DBML,
+            <<<AST
 <Schema offset="0">
     <Table offset="0">
         <TableName offset="6">
@@ -292,18 +301,19 @@ DBML
         </TableColumn>
     </Table>
 </Schema>
-AST
+AST,
         );
     }
 
-    function test_table_with_default_false_should_be_parsed()
+    public function test_table_with_default_false_should_be_parsed(): void
     {
-        $this->assertAst(<<<DBML
+        $this->assertAst(
+            <<<DBML
 Table countries {
   name varchar [default: false]
 }
-DBML
-            , <<<AST
+DBML,
+            <<<AST
 <Schema offset="0">
     <Table offset="0">
         <TableName offset="6">
@@ -325,18 +335,19 @@ DBML
         </TableColumn>
     </Table>
 </Schema>
-AST
+AST,
         );
     }
 
-    function test_table_name_can_be_int_should_be_parsed()
+    public function test_table_name_can_be_int_should_be_parsed(): void
     {
-        $this->assertAst(<<<DBML
+        $this->assertAst(
+            <<<DBML
 Table 1 {
   id int
 }
-DBML
-            , <<<AST
+DBML,
+            <<<AST
 <Schema offset="0">
     <Table offset="0">
         <TableName offset="6">
@@ -354,18 +365,19 @@ DBML
         </TableColumn>
     </Table>
 </Schema>
-AST
+AST,
         );
     }
 
-    function test_column_name_with_int()
+    public function test_column_name_with_int(): void
     {
-        $this->assertAst(<<<DBML
+        $this->assertAst(
+            <<<DBML
 Table 1 {
   2fa_enabled tinyint(1) [not null, default: 0]
 }
-DBML
-            , <<<AST
+DBML,
+            <<<AST
 <Schema offset="0">
     <Table offset="0">
         <TableName offset="6">
@@ -391,18 +403,19 @@ DBML
         </TableColumn>
     </Table>
 </Schema>
-AST
+AST,
         );
     }
 
-    function test_column_name_with_decimal()
+    public function test_column_name_with_decimal(): void
     {
-        $this->assertAst(<<<DBML
+        $this->assertAst(
+            <<<DBML
 Table account {
   balance decimal(8,2) [default: 0.00]
 }
-DBML
-            , <<<AST
+DBML,
+            <<<AST
 <Schema offset="0">
     <Table offset="0">
         <TableName offset="6">
@@ -427,7 +440,7 @@ DBML
         </TableColumn>
     </Table>
 </Schema>
-AST
+AST,
         );
     }
 }

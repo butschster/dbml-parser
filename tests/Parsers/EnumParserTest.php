@@ -9,7 +9,7 @@ class EnumParserTest extends TestCase
     /**
      * @dataProvider enumKeyNames
      */
-    function test_enum_should_be_parsed(string $name)
+    public function test_enum_should_be_parsed(string $name): void
     {
         $this->assertAst(
             <<<DBML
@@ -19,8 +19,7 @@ class EnumParserTest extends TestCase
     done
     failure
 }
-DBML
-            ,
+DBML,
             <<<AST
 <Schema offset="0">
     <Enum offset="0">

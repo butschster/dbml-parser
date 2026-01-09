@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Butschster\Tests\Ast\Project;
@@ -13,6 +14,21 @@ class SettingNodeTest extends TestCase
 {
     private SettingNode $node;
 
+    public function test_gets_offset(): void
+    {
+        $this->assertEquals(123, $this->node->getOffset());
+    }
+
+    public function test_gets_key(): void
+    {
+        $this->assertEquals('key', $this->node->getKey());
+    }
+
+    public function test_gets_value(): void
+    {
+        $this->assertEquals('value', $this->node->getValue());
+    }
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -20,22 +36,7 @@ class SettingNodeTest extends TestCase
         $this->node = new SettingNode(
             123,
             new SettingKeyNode(234, 'key'),
-            new StringNode(345, new Token('T_WORD', 'value', 123))
+            new StringNode(345, new Token('T_WORD', 'value', 123)),
         );
-    }
-
-    function test_gets_offset()
-    {
-        $this->assertEquals(123, $this->node->getOffset());
-    }
-
-    function test_gets_key()
-    {
-        $this->assertEquals('key', $this->node->getKey());
-    }
-
-    function test_gets_value()
-    {
-        $this->assertEquals('value', $this->node->getValue());
     }
 }

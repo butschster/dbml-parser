@@ -1,0 +1,20 @@
+$schema: 'https://raw.githubusercontent.com/context-hub/generator/refs/heads/main/json-schema.json'
+
+documents:
+  - description: 'PHP Project Structure'
+    outputPath: structure.md
+    sources:
+      - type: tree
+        sourcePaths:
+          - src
+          - README.md
+
+  - description: SDK
+    outputPath: sdk.md
+    sources:
+      - type: file
+        sourcePaths:
+          - src
+          - ebnf.pp2
+        excludePatterns:
+          - grammar.php

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Butschster\Dbml\Ast;
@@ -11,24 +12,28 @@ use Butschster\Dbml\Exceptions\ColumnNotFoundException;
 class TableNode
 {
     private ?string $alias = null;
+
     /** @var ColumnNode[] */
     private array $columns = [];
+
     /** @var IndexNode[] */
     private array $indexes = [];
+
     private ?string $note = null;
 
     public function __construct(
-        private int $offset, private string $name, array $children
-    )
-    {
+        private int $offset,
+        private string $name,
+        array $children,
+    ) {
         foreach ($children as $child) {
             if ($child instanceof AliasNode) {
                 $this->alias = $child->getValue();
-            } else if ($child instanceof NoteNode) {
+            } elseif ($child instanceof NoteNode) {
                 $this->note = $child->getDescription();
-            } else if ($child instanceof ColumnNode) {
+            } elseif ($child instanceof ColumnNode) {
                 $this->columns[$child->getName()] = $child;
-            } else if ($child instanceof IndexNode) {
+            } elseif ($child instanceof IndexNode) {
                 $this->indexes[] = $child;
             }
         }
@@ -74,8 +79,6 @@ class TableNode
 
     /**
      * Get column by name
-     * @param string $name
-     * @return ColumnNode
      * @throws ColumnNotFoundException
      */
     public function getColumn(string $name): ColumnNode
@@ -89,7 +92,6 @@ class TableNode
 
     /**
      * Get table note
-     * @return string|null
      */
     public function getNote(): ?string
     {

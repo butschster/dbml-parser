@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Butschster\Tests\Ast\Values;
@@ -9,7 +10,7 @@ use Phplrt\Lexer\Token\Token;
 
 class StringNodeTest extends TestCase
 {
-    function test_T_WORD_should_be_return_as_is()
+    public function test_T_WORD_should_be_return_as_is(): void
     {
         $node = new StringNode(0, new Token('T_WORD', 'project_name', 0));
         $this->assertEquals('project_name', $node->getValue());
@@ -18,7 +19,7 @@ class StringNodeTest extends TestCase
     /**
      * @dataProvider quotedStrings
      */
-    function test_T_QUOTED_STRING_should_be_unquoted(string $string)
+    public function test_T_QUOTED_STRING_should_be_unquoted(string $string): void
     {
         $node = new StringNode(0, new Token('T_QUOTED_STRING', $string, 0));
 
@@ -36,7 +37,7 @@ class StringNodeTest extends TestCase
 PostgreSql
 '''
 EOL
-]
+            ],
         ];
     }
 }

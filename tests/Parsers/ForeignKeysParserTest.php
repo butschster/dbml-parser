@@ -1,19 +1,21 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Butschster\Tests\Parsers;
 
 class ForeignKeysParserTest extends TestCase
 {
-    function test_column_many_to_one_relation_should_be_parsed()
+    public function test_column_many_to_one_relation_should_be_parsed(): void
     {
-        $this->assertAst(<<<DBML
+        $this->assertAst(
+            <<<DBML
 Table posts {
     id integer
     user_id integer [ref: > users.id] // many-to-one
 }
-DBML
-            , <<<AST
+DBML,
+            <<<AST
 <Schema offset="0">
     <Table offset="0">
         <TableName offset="6">
@@ -52,19 +54,20 @@ DBML
         </TableColumn>
     </Table>
 </Schema>
-AST
+AST,
         );
     }
 
-    function test_column_relation_with_composite_key_should_be_parsed()
+    public function test_column_relation_with_composite_key_should_be_parsed(): void
     {
-        $this->assertAst(<<<DBML
+        $this->assertAst(
+            <<<DBML
 Table posts {
     id integer
     user_id integer [ref: > users.(id, country_code)] // many-to-one
 }
-DBML
-            , <<<AST
+DBML,
+            <<<AST
 <Schema offset="0">
     <Table offset="0">
         <TableName offset="6">
@@ -106,18 +109,19 @@ DBML
         </TableColumn>
     </Table>
 </Schema>
-AST
+AST,
         );
     }
 
-    function test_column_one_tomany_relation_should_be_parsed()
+    public function test_column_one_tomany_relation_should_be_parsed(): void
     {
-        $this->assertAst(<<<DBML
+        $this->assertAst(
+            <<<DBML
 Table users {
     id integer [ref: < posts.user_id, ref: < reviews.user_id] // one to many
 }
-DBML
-            , <<<AST
+DBML,
+            <<<AST
 <Schema offset="0">
     <Table offset="0">
         <TableName offset="6">
@@ -157,16 +161,17 @@ DBML
         </TableColumn>
     </Table>
 </Schema>
-AST
+AST,
         );
     }
 
-    function test_relationship_short_form_without_name_should_be_parsed()
+    public function test_relationship_short_form_without_name_should_be_parsed(): void
     {
-        $this->assertAst(<<<DBML
+        $this->assertAst(
+            <<<DBML
 Ref: merchant_periods.(merchant_id, country_code) > merchants.(id, country_code)
-DBML
-            , <<<AST
+DBML,
+            <<<AST
 <Schema offset="0">
     <Ref offset="0">
         <RefLeftTable offset="5">
@@ -194,16 +199,17 @@ DBML
         </RefRightTable>
     </Ref>
 </Schema>
-AST
+AST,
         );
     }
 
-    function test_relationship_short_form_with_name_should_be_parsed()
+    public function test_relationship_short_form_with_name_should_be_parsed(): void
     {
-        $this->assertAst(<<<DBML
+        $this->assertAst(
+            <<<DBML
 Ref name_optional: tabla.column < tabla.column
-DBML
-            , <<<AST
+DBML,
+            <<<AST
 <Schema offset="0">
     <Ref offset="0">
         <RefName offset="4">
@@ -228,19 +234,20 @@ DBML
         </RefRightTable>
     </Ref>
 </Schema>
-AST
+AST,
         );
     }
 
-    function test_relationship_long_form_without_name_should_be_parsed()
+    public function test_relationship_long_form_without_name_should_be_parsed(): void
     {
-        $this->assertAst(<<<DBML
+        $this->assertAst(
+            <<<DBML
 Ref {
     tabla.column < tabla.column
     table_second.column < table_second.column
 }
-DBML
-            , <<<AST
+DBML,
+            <<<AST
 <Schema offset="0">
     <Ref offset="0">
         <RefLeftTable offset="10">
@@ -279,19 +286,19 @@ DBML
         </RefRightTable>
     </Ref>
 </Schema>
-AST
+AST,
         );
     }
 
-
-    function test_relationship_long_form_with_name_should_be_parsed()
+    public function test_relationship_long_form_with_name_should_be_parsed(): void
     {
-        $this->assertAst(<<<DBML
+        $this->assertAst(
+            <<<DBML
 Ref name_optional {
     tabla.column < tabla.column
 }
-DBML
-            , <<<AST
+DBML,
+            <<<AST
 <Schema offset="0">
     <Ref offset="0">
         <RefName offset="4">
@@ -316,16 +323,17 @@ DBML
         </RefRightTable>
     </Ref>
 </Schema>
-AST
+AST,
         );
     }
 
-    function test_relationship_with_settings()
+    public function test_relationship_with_settings(): void
     {
-        $this->assertAst(<<<DBML
+        $this->assertAst(
+            <<<DBML
 Ref: products.merchant_id > merchants.id [delete: cascade, update: no action, destroy: cascade]
-DBML
-            , <<<AST
+DBML,
+            <<<AST
 <Schema offset="0">
     <Ref offset="0">
         <RefLeftTable offset="5">
@@ -353,7 +361,7 @@ DBML
         <T_REF_ACTION_CASCADE offset="87">cascade</T_REF_ACTION_CASCADE>
     </Ref>
 </Schema>
-AST
+AST,
         );
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Butschster\Dbml\Ast;
@@ -14,10 +15,13 @@ class SchemaNode
 
     /** @var TableNode[] */
     private array $tables = [];
+
     /** @var EnumNode[] */
     private array $enums = [];
+
     /** @var RefNode[] */
     private array $refs = [];
+
     /** @var TableGroupNode[] */
     private array $tableGroups = [];
 
@@ -26,15 +30,15 @@ class SchemaNode
         foreach ($children as $child) {
             if ($child instanceof ProjectNode) {
                 $this->project = $child;
-            } else if ($child instanceof TableNode) {
+            } elseif ($child instanceof TableNode) {
                 $this->tables[$child->getName()] = $child;
-            } else if ($child instanceof TableGroupNode) {
+            } elseif ($child instanceof TableGroupNode) {
                 $this->tableGroups[$child->getName()] = $child;
-            } else if ($child instanceof EnumNode) {
+            } elseif ($child instanceof EnumNode) {
                 $this->enums[$child->getName()] = $child;
-            } else if ($child instanceof RefNode) {
+            } elseif ($child instanceof RefNode) {
                 $this->refs[] = $child;
-            } else if ($child instanceof GroupNode) {
+            } elseif ($child instanceof GroupNode) {
                 foreach ($child->getRefs() as $ref) {
                     $this->refs[] = $ref;
                 }

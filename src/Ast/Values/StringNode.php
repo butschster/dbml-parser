@@ -8,7 +8,6 @@ use Phplrt\Lexer\Token\Token;
 
 class StringNode extends AbstractValue
 {
-
     public function __construct(int $offset, Token $token)
     {
         $value = match ($token->getName()) {
@@ -21,16 +20,16 @@ class StringNode extends AbstractValue
 
     private function convertType(string $value): mixed
     {
-        if (ctype_digit($value)) {
-            return (int)$value;
+        if (\ctype_digit($value)) {
+            return (int) $value;
         }
 
-        if (is_numeric($value)) {
-            return (float)$value;
+        if (\is_numeric($value)) {
+            return (float) $value;
         }
 
-        if (in_array(strtolower($value), ['true', 'false'])) {
-            return strtolower($value) === 'true';
+        if (\in_array(\strtolower($value), ['true', 'false'])) {
+            return \strtolower($value) === 'true';
         }
 
         return $value;
@@ -38,6 +37,6 @@ class StringNode extends AbstractValue
 
     private function unquoteTokenValue(string $value): string
     {
-        return trim(preg_replace('/(\'{3}|[\"\']{1})([^\'\"][\s\S]*?)\1/i', '$2', $value));
+        return \trim(\preg_replace('/(\'{3}|[\"\']{1})([^\'\"][\s\S]*?)\1/i', '$2', $value));
     }
 }

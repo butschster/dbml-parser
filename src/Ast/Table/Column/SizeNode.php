@@ -9,8 +9,7 @@ class SizeNode
     public function __construct(
         private int $offset,
         private string $value,
-    ) {
-    }
+    ) {}
 
     public function getOffset(): int
     {
@@ -19,6 +18,6 @@ class SizeNode
 
     public function getValue(): array
     {
-        return array_map('intval', explode(',', substr($this->value, 1, -1)));
+        return \array_map('intval', \explode(',', \substr($this->value, 1, -1)));
     }
 }

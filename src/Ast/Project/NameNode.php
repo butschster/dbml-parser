@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Butschster\Dbml\Ast\Project;
@@ -10,9 +11,9 @@ class NameNode
     private string $value;
 
     public function __construct(
-        private int $offset, StringNode $string
-    )
-    {
+        private int $offset,
+        StringNode $string,
+    ) {
         $this->value = $string->getValue();
     }
 

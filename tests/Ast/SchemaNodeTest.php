@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Butschster\Tests\Ast;
@@ -12,11 +13,93 @@ class SchemaNodeTest extends TestCase
 {
     private ?SchemaNode $node;
 
+    public function test_gets_project(): void
+    {
+        $this->assertEquals('project_test', $this->node->getProject()->getName());
+    }
+
+    public function test_check_if_project_exists(): void
+    {
+        $this->assertTrue($this->node->hasProject());
+    }
+
+    public function test_gets_not_exists_table_should_throw_an_exception(): void
+    {
+        $this->expectException(TableNotFoundException::class);
+        $this->expectErrorMessage('Table [test] not found.');
+        $this->node->getTable('test');
+    }
+
+    public function test_gets_table_list(): void
+    {
+        $this->assertCount(2, $this->node->getTables());
+    }
+
+    public function test_gets_table_by_name(): void
+    {
+        $this->assertEquals('merchants', $this->node->getTable('merchants')->getName());
+    }
+
+    public function test_has_table_should_return_true_if_it_exists(): void
+    {
+        $this->assertTrue($this->node->hasTable('merchants'));
+    }
+
+    public function test_has_table_should_return_false_if_it_not_exist(): void
+    {
+        $this->assertFalse($this->node->hasTable('bar'));
+    }
+
+    public function test_gets_not_exists_table_group_should_throw_an_exception(): void
+    {
+        $this->expectException(TableGroupNotFoundException::class);
+        $this->expectErrorMessage('Table group [test] not found.');
+        $this->node->getTableGroup('test');
+    }
+
+    public function test_gets_table_group_by_name(): void
+    {
+        $this->assertEquals('foo_bar', $this->node->getTableGroup('foo_bar')->getName());
+    }
+
+    public function test_has_table_group_should_return_true_if_it_exist(): void
+    {
+        $this->assertTrue($this->node->hasTableGroup('foo_bar'));
+    }
+
+    public function test_has_table_group_should_return_false_if_it_not_exist(): void
+    {
+        $this->assertFalse($this->node->hasTableGroup('bar'));
+    }
+
+    public function test_gets_not_exists_enums_should_throw_an_exception(): void
+    {
+        $this->expectException(EnumNotFoundException::class);
+        $this->expectErrorMessage('Enum [test] not found.');
+        $this->node->getEnum('test');
+    }
+
+    public function test_gets_enum_by_name(): void
+    {
+        $this->assertEquals('products_status', $this->node->getEnum('products_status')->getName());
+    }
+
+    public function test_has_enum_should_return_true_if_it_exist(): void
+    {
+        $this->assertTrue($this->node->hasEnum('products_status'));
+    }
+
+    public function test_has_enum_should_return_false_if_it_not_exist(): void
+    {
+        $this->assertFalse($this->node->hasEnum('bar'));
+    }
+
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->node = $this->parser->parse(<<<DBML
+        $this->node = $this->parser->parse(
+            <<<DBML
 Project project_test {
   database_type: 'PostgreSQL'
   Note: 'Description of the project'
@@ -42,88 +125,7 @@ Enum products_status {
 }
 
 Ref: order_items.product_id > products.id
-DBML
+DBML,
         );
-    }
-
-    function test_gets_project()
-    {
-        $this->assertEquals('project_test', $this->node->getProject()->getName());
-    }
-
-    function test_check_if_project_exists()
-    {
-        $this->assertTrue($this->node->hasProject());
-    }
-
-    function test_gets_not_exists_table_should_throw_an_exception()
-    {
-        $this->expectException(TableNotFoundException::class);
-        $this->expectErrorMessage('Table [test] not found.');
-        $this->node->getTable('test');
-    }
-
-    function test_gets_table_list()
-    {
-        $this->assertCount(2, $this->node->getTables());
-    }
-
-    function test_gets_table_by_name()
-    {
-        $this->assertEquals('merchants', $this->node->getTable('merchants')->getName());
-    }
-
-    function test_has_table_should_return_true_if_it_exists()
-    {
-        $this->assertTrue($this->node->hasTable('merchants'));
-    }
-
-    function test_has_table_should_return_false_if_it_not_exist()
-    {
-        $this->assertFalse($this->node->hasTable('bar'));
-    }
-
-    function test_gets_not_exists_table_group_should_throw_an_exception()
-    {
-        $this->expectException(TableGroupNotFoundException::class);
-        $this->expectErrorMessage('Table group [test] not found.');
-        $this->node->getTableGroup('test');
-    }
-
-    function test_gets_table_group_by_name()
-    {
-        $this->assertEquals('foo_bar', $this->node->getTableGroup('foo_bar')->getName());
-    }
-
-    function test_has_table_group_should_return_true_if_it_exist()
-    {
-        $this->assertTrue($this->node->hasTableGroup('foo_bar'));
-    }
-
-    function test_has_table_group_should_return_false_if_it_not_exist()
-    {
-        $this->assertFalse($this->node->hasTableGroup('bar'));
-    }
-
-    function test_gets_not_exists_enums_should_throw_an_exception()
-    {
-        $this->expectException(EnumNotFoundException::class);
-        $this->expectErrorMessage('Enum [test] not found.');
-        $this->node->getEnum('test');
-    }
-
-    function test_gets_enum_by_name()
-    {
-        $this->assertEquals('products_status', $this->node->getEnum('products_status')->getName());
-    }
-
-    function test_has_enum_should_return_true_if_it_exist()
-    {
-        $this->assertTrue($this->node->hasEnum('products_status'));
-    }
-
-    function test_has_enum_should_return_false_if_it_not_exist()
-    {
-        $this->assertFalse($this->node->hasEnum('bar'));
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Butschster\Tests\Ast;
@@ -10,35 +11,22 @@ class ProjectNodeTest extends TestCase
 {
     private ?ProjectNode $node;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->node = $this->parser->parse(<<<DBML
-Project project_test {
-  database_type: 'PostgreSQL'
-  Note: 'Description of the project'
-}
-DBML
-        )->getProject();
-    }
-
-    function test_gets_name()
+    public function test_gets_name(): void
     {
         $this->assertEquals('project_test', $this->node->getName());
     }
 
-    function test_gets_node()
+    public function test_gets_node(): void
     {
         $this->assertEquals('Description of the project', $this->node->getNote());
     }
 
-    function test_gets_settings()
+    public function test_gets_settings(): void
     {
         $this->assertCount(1, $this->node->getSettings());
     }
 
-    function test_non_exists_setting_should_throw_an_exception()
+    public function test_non_exists_setting_should_throw_an_exception(): void
     {
         $this->expectException(ProjectSettingNotFoundException::class);
         $this->expectErrorMessage('Project setting [test] not found.');
@@ -46,7 +34,7 @@ DBML
         $this->node->getSetting('test');
     }
 
-    function test_gets_setting_database_type()
+    public function test_gets_setting_database_type(): void
     {
         $setting = $this->node->getSetting('database_type');
 
@@ -55,27 +43,43 @@ DBML
         $this->assertEquals(25, $setting->getOffset());
     }
 
-    function test_parse_project_without_note()
+    public function test_parse_project_without_note(): void
     {
-        $project = $this->parser->parse(<<<DBML
+        $project = $this->parser->parse(
+            <<<DBML
 Project project_name {
   database_type: 'PostgreSQL'
 }
-DBML
+DBML,
         )->getProject();
 
         $this->assertNull($project->getNote());
     }
 
-    function test_parse_project_without_settings()
+    public function test_parse_project_without_settings(): void
     {
-        $project = $this->parser->parse(<<<DBML
+        $project = $this->parser->parse(
+            <<<DBML
 Project project_name {
 }
-DBML
+DBML,
         )->getProject();
 
         $this->assertEquals('project_name', $project->getName());
         $this->assertCount(0, $project->getSettings());
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->node = $this->parser->parse(
+            <<<DBML
+Project project_test {
+  database_type: 'PostgreSQL'
+  Note: 'Description of the project'
+}
+DBML,
+        )->getProject();
     }
 }

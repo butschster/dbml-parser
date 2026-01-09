@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Butschster\Dbml;
@@ -26,9 +27,6 @@ class DbmlParser
 
     /**
      * Parse DBML schema
-     * @param string $dbml
-     * @param array $options
-     * @return SchemaNode|null
      * @throws \Phplrt\Contracts\Exception\RuntimeExceptionInterface
      */
     public function parse(string $dbml, array $options = []): ?SchemaNode
@@ -43,7 +41,7 @@ class DbmlParser
     {
         return new Lexer(
             $data['tokens']['default'],
-            $data['skip']
+            $data['skip'],
         );
     }
 
@@ -53,9 +51,7 @@ class DbmlParser
     private function createBuilder(array $reducers)
     {
         return new class($reducers) implements BuilderInterface {
-            public function __construct(private array $reducers)
-            {
-            }
+            public function __construct(private array $reducers) {}
 
             public function build(ContextInterface $context, $result)
             {
@@ -83,14 +79,11 @@ class DbmlParser
         ]);
     }
 
-    /**
-     * @param string $grammarFilePatch
-     */
     private function ensureGrammarFileExists(string $grammarFilePatch): void
     {
-        if (!file_exists($grammarFilePatch)) {
+        if (!\file_exists($grammarFilePatch)) {
             throw new GrammarFileNotFoundException(
-                "File {$grammarFilePatch} not found"
+                "File {$grammarFilePatch} not found",
             );
         }
     }

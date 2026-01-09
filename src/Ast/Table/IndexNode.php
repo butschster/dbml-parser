@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Butschster\Dbml\Ast\Table;
@@ -14,6 +15,7 @@ class IndexNode
 {
     /** @var AbstractValue[] */
     private array $columns = [];
+
     private array $settings = [];
     private ?string $name = null;
     private ?string $type = null;
@@ -22,21 +24,22 @@ class IndexNode
     private ?string $note = null;
 
     public function __construct(
-        private int $offset, FieldsNode $fields, array $settings = []
-    )
-    {
+        private int $offset,
+        FieldsNode $fields,
+        array $settings = [],
+    ) {
         $this->columns = $fields->getFields();
 
         foreach ($settings as $setting) {
             if ($setting instanceof PrimaryKeyNode) {
                 $this->primaryKey = true;
-            } else if ($setting instanceof NoteNode) {
+            } elseif ($setting instanceof NoteNode) {
                 $this->note = $setting->getDescription();
-            } else if ($setting instanceof UniqueNode) {
+            } elseif ($setting instanceof UniqueNode) {
                 $this->unique = true;
-            } else if ($setting instanceof SettingWithValueNode && $setting->getName() === 'name') {
+            } elseif ($setting instanceof SettingWithValueNode && $setting->getName() === 'name') {
                 $this->name = $setting->getValue()->getValue();
-            } else if ($setting instanceof SettingWithValueNode && $setting->getName() === 'type') {
+            } elseif ($setting instanceof SettingWithValueNode && $setting->getName() === 'type') {
                 $this->type = $setting->getValue()->getValue();
             }
         }

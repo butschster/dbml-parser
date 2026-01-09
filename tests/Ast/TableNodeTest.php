@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Butschster\Tests\Ast;
@@ -10,24 +11,24 @@ class TableNodeTest extends TestCase
 {
     private TableNode $node;
 
-    function test_fields_should_be_parsed()
+    public function test_fields_should_be_parsed(): void
     {
         $this->assertCount(7, $this->node->getColumns());
     }
 
-    function test_indexed_should_be_parsed()
+    public function test_indexed_should_be_parsed(): void
     {
         $this->assertCount(2, $this->node->getIndexes());
     }
 
-    function test_non_exists_column_should_throw_an_exception()
+    public function test_non_exists_column_should_throw_an_exception(): void
     {
         $this->expectException(ColumnNotFoundException::class);
         $this->expectErrorMessage("Column [not_exists] not found.");
         $this->node->getColumn('not_exists');
     }
 
-    function test_gets_id_column()
+    public function test_gets_id_column(): void
     {
         // id int [pk, unique, increment, note: 'hello world'] // auto-increment
         $column = $this->node->getColumn('id');
@@ -43,7 +44,7 @@ class TableNodeTest extends TestCase
         $this->assertFalse($column->isNull());
     }
 
-    function test_gets_full_name_column()
+    public function test_gets_full_name_column(): void
     {
         // full_name varchar(150) [not null, unique, default: 1, ref: > profiles.id, ref: > countries.(id, name)]
         $column = $this->node->getColumn('full_name');
@@ -73,7 +74,7 @@ class TableNodeTest extends TestCase
         $this->assertEquals(['id', 'name'], $ref->getRightTable()->getColumns());
     }
 
-    function test_gets_created_at_column()
+    public function test_gets_created_at_column(): void
     {
         // created_at timestamp
         $column = $this->node->getColumn('created_at');
@@ -90,32 +91,32 @@ class TableNodeTest extends TestCase
         $this->assertFalse($column->isNull());
     }
 
-    function test_gets_name()
+    public function test_gets_name(): void
     {
         $this->assertEquals('users', $this->node->getName());
     }
 
-    function test_gets_alias()
+    public function test_gets_alias(): void
     {
         $this->assertEquals('U', $this->node->getAlias());
     }
 
-    function test_gets_note()
+    public function test_gets_note(): void
     {
         $this->assertEquals('khong hieu duoc', $this->node->getNote());
     }
 
-    function test_gets_columns()
+    public function test_gets_columns(): void
     {
         $this->assertCount(7, $this->node->getColumns());
     }
 
-    function test_gets_indexes()
+    public function test_gets_indexes(): void
     {
         $this->assertCount(2, $this->node->getIndexes());
     }
 
-    function test_gets_id_index()
+    public function test_gets_id_index(): void
     {
         // id [name: 'created_at_index', note: 'Date', type: hash, pk]
         $index = $this->node->getIndexes()[0];
@@ -130,7 +131,7 @@ class TableNodeTest extends TestCase
         $this->assertEquals('Date', $index->getNote());
     }
 
-    function test_gets_id_name_index()
+    public function test_gets_id_name_index(): void
     {
         // (id, name)
         $index = $this->node->getIndexes()[1];
@@ -146,18 +147,18 @@ class TableNodeTest extends TestCase
         $this->assertNull($index->getNote());
     }
 
-    function test_ref_is_allowed_in_column_name()
+    public function test_ref_is_allowed_in_column_name(): void
     {
         $column = $this->node->getColumn('reference_name');
         $this->assertEquals('reference_name', $column->getName());
     }
 
-
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->node = $this->parser->parse(<<<DBML
+        $this->node = $this->parser->parse(
+            <<<DBML
 Table users as U {
     id int [pk, not null, unique, increment, note: 'hello world'] // auto-increment
     full_name varchar(150) [not null, unique, default: 1, ref: > profiles.id, ref: > countries.(id, name)]
@@ -173,7 +174,7 @@ Table users as U {
         (id, name)
     }
 }
-DBML
+DBML,
         )->getTable('users');
 
     }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Butschster\Dbml\Ast\Ref;
@@ -11,9 +12,9 @@ class GroupNode
     private array $refs = [];
 
     public function __construct(
-        private int $offset, array $children = []
-    )
-    {
+        private int $offset,
+        array $children = [],
+    ) {
         $name = null;
         foreach ($children as $child) {
             if ($child instanceof NameNode) {
@@ -25,7 +26,7 @@ class GroupNode
             if ($child instanceof ColumnsNode) {
                 $this->refs[] = new RefNode($offset, [
                     $name,
-                    $child
+                    $child,
                 ]);
             }
         }

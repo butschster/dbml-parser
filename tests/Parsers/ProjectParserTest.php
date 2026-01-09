@@ -1,19 +1,21 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Butschster\Tests\Parsers;
 
 class ProjectParserTest extends TestCase
 {
-    function test_project_with_single_line_note_should_be_parsed()
+    public function test_project_with_single_line_note_should_be_parsed(): void
     {
-        $this->assertAst(<<<DBML
+        $this->assertAst(
+            <<<DBML
 Project project_name {
     Note: 'Description of the project'
     database_type: 'PostgreSQL'
 }
-DBML
-            , <<<AST
+DBML,
+            <<<AST
 <Schema offset="0">
     <Project offset="0">
         <ProjectName offset="8">
@@ -36,27 +38,28 @@ DBML
         </ProjectSetting>
     </Project>
 </Schema>
-AST
+AST,
         );
     }
 
-    function test_project_with_multi_line_note_should_be_parsed()
+    public function test_project_with_multi_line_note_should_be_parsed(): void
     {
-        $this->assertAst(<<<DBML
-Project project_name {
-    database_type: 'PostgreSQL'
-    Note: '''
-        # DBML - Database Markup Language
-        (database markup language) is a simple, readable DSL language designed to define database structures.
-
-        ## Benefits
-        * It is simple, flexible and highly human-readable
-        * It is database agnostic, focusing on the essential database structure definition without worrying about the detailed syntaxes of each database
-        * Comes with a free, simple database visualiser at [dbdiagram.io](http://dbdiagram.io)
-    '''
-}
-DBML
-            , <<<AST
+        $this->assertAst(
+            <<<DBML_WRAP
+            Project project_name {
+                database_type: 'PostgreSQL'
+                Note: '''
+                    # DBML - Database Markup Language
+                    (database markup language) is a simple, readable DSL language designed to define database structures.
+            
+                    ## Benefits
+                    * It is simple, flexible and highly human-readable
+                    * It is database agnostic, focusing on the essential database structure definition without worrying about the detailed syntaxes of each database
+                    * Comes with a free, simple database visualiser at [dbdiagram.io](http://dbdiagram.io)
+                '''
+            }
+            DBML_WRAP,
+            <<<AST
 <Schema offset="0">
     <Project offset="0">
         <ProjectName offset="8">
@@ -87,21 +90,22 @@ DBML
         </Note>
     </Project>
 </Schema>
-AST
+AST,
         );
     }
 
-    function test_project_with_block_note_should_be_parsed()
+    public function test_project_with_block_note_should_be_parsed(): void
     {
-        $this->assertAst(<<<DBML
+        $this->assertAst(
+            <<<DBML
 Project project_name {
     database_type: 'PostgreSQL'
     Note {
         'This is a note of this table'
     }
 }
-DBML
-            , <<<AST
+DBML,
+            <<<AST
 <Schema offset="0">
     <Project offset="0">
         <ProjectName offset="8">
@@ -124,7 +128,7 @@ DBML
         </Note>
     </Project>
 </Schema>
-AST
+AST,
         );
     }
 }
